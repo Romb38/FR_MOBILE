@@ -20,7 +20,11 @@ export class TopicService {
   };
 
   addTopic(topic: Topic): void {
-    this.topics.push(topic)
+    if (topic?.name.length) {
+      const maxId = this.topics.reduce((max, topic) => Math.max(max, parseInt(topic.id || '0', 10)), 0);
+      topic.id = (maxId + 1).toString();
+      this.topics.push(topic);
+    }
   };
 
   addPost(post: Post, topicId: string): void {

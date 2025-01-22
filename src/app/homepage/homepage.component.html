@@ -3,3 +3,6 @@
     <ion-label [title]="topic.id">{{ topic.name }}</ion-label>
   </ion-item>
 </ion-list>
+
+<ion-button (click)="showModal()">Créer un topic</ion-button>
+<app-topic-modal-creation [isVisible]="isModalVisible" (close)="closeModal()"></app-topic-modal-creation>

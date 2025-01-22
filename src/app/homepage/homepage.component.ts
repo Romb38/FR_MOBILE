@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { TopicService } from '../services/topic.service';
-import { IonItem, IonLabel, IonList } from '@ionic/angular/standalone';
+import { IonItem, IonLabel, IonList, IonButton } from '@ionic/angular/standalone';
 import { NgFor } from '@angular/common';
+import { TopicModalCreationComponent } from "../topic-modal-creation/topic-modal-creation.component";
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],
-  imports: [IonItem, IonLabel, IonList, NgFor],
+  imports: [IonItem, IonLabel, IonList, IonButton, NgFor, TopicModalCreationComponent],
 })
 export class HomepageComponent  implements OnInit {
+  isModalVisible: boolean = false;
   constructor(protected topicService: TopicService) {}
 
   ngOnInit() {
@@ -21,6 +23,14 @@ export class HomepageComponent  implements OnInit {
         {id: 'p2', name: 'Post #2', description: 'This is a description'},
       ]
     });
+  }
+
+  showModal(): void {
+    this.isModalVisible = true;
+  }
+
+  closeModal(): void {
+    this.isModalVisible = false;
   }
 
 }
