@@ -1,14 +1,26 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TopicService } from '../services/topic.service';
-import { IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonButton } from '@ionic/angular/standalone';
+import { IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { TopicModalCreationComponent } from "../topic-modal-creation/topic-modal-creation.component";
 import { Router } from '@angular/router';
+import { Topic } from '../models/topic';
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],
-  imports: [IonItem, IonLabel, IonList, IonButton, IonHeader, IonToolbar, IonTitle, IonContent, TopicModalCreationComponent],
+  imports: [
+    IonItem, 
+    IonLabel, 
+    IonList, 
+    IonButton, 
+    IonHeader, 
+    IonToolbar, 
+    IonTitle, 
+    IonContent, 
+    TopicModalCreationComponent, 
+    IonIcon
+  ],
 })
 export class HomepageComponent  implements OnInit {
   isModalVisible: boolean = false;
@@ -37,5 +49,9 @@ export class HomepageComponent  implements OnInit {
 
   closeModal(): void {
     this.isModalVisible = false;
+  }
+
+  deleteItem(topic : Topic): void {
+    this.topicService.removeTopic(topic)
   }
 }
