@@ -1,3 +1,9 @@
-<p>
-  topic-details works!
-</p>
+<h1>{{this.topic.name}} ({{this.topic.id}})/h1>
+  
+<ion-list lines="full">
+  @for (post of this.topic.posts; track post.id) {
+    <ion-item>
+      <ion-label [title]="post.id">{{ post.name }}</ion-label>
+    </ion-item>
+  }
+</ion-list>

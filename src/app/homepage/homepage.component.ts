@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { TopicService } from '../services/topic.service';
 import { IonItem, IonLabel, IonList } from '@ionic/angular/standalone';
 import { NgFor } from '@angular/common';
-import { Topic } from '../models/topic';
-
 
 @Component({
   selector: 'app-homepage',
