@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { TopicService } from '../services/topic.service';
 import { IonItem, IonLabel, IonList } from '@ionic/angular/standalone';
+import { NgFor } from '@angular/common';
+import { Topic } from '../models/topic';
 
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],
-  imports: [IonItem, IonLabel, IonList],
+  imports: [IonItem, IonLabel, IonList, NgFor],
 })
 export class HomepageComponent  implements OnInit {
-
-  constructor(private topicService: TopicService) {}
+  constructor(protected topicService: TopicService) {}
 
   ngOnInit() {
     this.topicService.addTopic({

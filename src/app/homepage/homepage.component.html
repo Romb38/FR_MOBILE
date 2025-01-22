@@ -1,5 +1,5 @@
-<ion-list *[lines]="this.topics as topic">
-  <ion-item>
-    <ion-label [title]="topic.id"></ion-label>
+<ion-list lines="full">
+  <ion-item *ngFor="let topic of this.topicService.getAll()">
+    <ion-label [title]="topic.id">{{ topic.name }}</ion-label>
   </ion-item>
 </ion-list>
