@@ -1,5 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goHome()">
+        <ion-icon src="../assets/icon/arrow-back-outline.svg" color="white"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>
       {{this.topic.name}} -- {{this.topic.id}} 
     </ion-title>
