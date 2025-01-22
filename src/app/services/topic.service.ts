@@ -9,14 +9,21 @@ export class TopicService {
   topics: Topics = [];
   constructor() { }
 
+  private findTopic(topicId: string): Topic | undefined{
+    for (let topic of this.topics){
+      if (topic.id == topicId){
+        return topic
+      }
+    }
+    return undefined
+  }
+
   getAll(): Topics {
     return this.topics
   };
 
   get(topicId: string): Topic {
-    return this.topics.find((t) => {
-      t.id == topicId
-    }) as Topic
+    return this.findTopic(topicId) as Topic
   };
 
   addTopic(topic: Topic): void {
@@ -28,9 +35,7 @@ export class TopicService {
   };
 
   addPost(post: Post, topicId: string): void {
-    let topic : Topic | undefined = this.topics.find((t) => {
-      t.id == topicId
-    })
+    let topic : Topic | undefined = this.findTopic(topicId)
 
     if (!topic){
       return

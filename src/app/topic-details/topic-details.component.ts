@@ -1,14 +1,27 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { IonItem, IonLabel, IonList } from '@ionic/angular/standalone';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
 import { TopicService } from '../services/topic.service';
 import { Topic } from '../models/topic';
+import { arrowBack } from 'ionicons/icons';
 
 @Component({
   selector: 'app-topic-details',
   templateUrl: './topic-details.component.html',
   styleUrls: ['./topic-details.component.scss'],
-  imports: [IonItem, IonLabel, IonList],
+  imports: [
+    IonItem, 
+    IonLabel, 
+    IonList, 
+    IonHeader, 
+    IonToolbar, 
+    IonTitle, 
+    IonContent, 
+    IonButton, 
+    IonButtons, 
+    IonIcon,
+  ],
+
 })
 export class TopicDetailsComponent  implements OnInit {
 
@@ -16,15 +29,20 @@ export class TopicDetailsComponent  implements OnInit {
 
   private route: ActivatedRoute = inject(ActivatedRoute)
   private topicService : TopicService = inject(TopicService)
+  private router: Router = inject(Router)
   topicId: string = "";
   topic: Topic = {} as Topic
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-         this.topicId = params.get('id') ?? "";
+    this.route.params.subscribe(params => {
+         this.topicId = params['id'] ?? ""
          this.topic = this.topicService.get(this.topicId)
 
     });
+  }
+
+  goHome(): void {
+    this.router.navigate([""])
   }
 
 }

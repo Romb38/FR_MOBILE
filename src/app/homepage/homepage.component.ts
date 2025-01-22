@@ -1,18 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TopicService } from '../services/topic.service';
-import { IonItem, IonLabel, IonList, IonButton } from '@ionic/angular/standalone';
-import { NgFor } from '@angular/common';
+import { IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
 import { TopicModalCreationComponent } from "../topic-modal-creation/topic-modal-creation.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],
-  imports: [IonItem, IonLabel, IonList, IonButton, NgFor, TopicModalCreationComponent],
+  imports: [IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent, TopicModalCreationComponent],
 })
 export class HomepageComponent  implements OnInit {
   isModalVisible: boolean = false;
   constructor(protected topicService: TopicService) {}
+
+  constructor() {}
+
+  private router: Router = inject(Router)
+  protected topicService = inject(TopicService)
 
   ngOnInit() {
     this.topicService.addTopic({
@@ -24,6 +29,10 @@ export class HomepageComponent  implements OnInit {
       ]
     });
   }
+  
+  seeDetails(topicId: string): void{
+    this.router.navigate(['/topic', topicId]); // Navigue vers /topic/{topicId}
+  }
 
   showModal(): void {
     this.isModalVisible = true;
@@ -32,5 +41,4 @@ export class HomepageComponent  implements OnInit {
   closeModal(): void {
     this.isModalVisible = false;
   }
-
 }

@@ -1,8 +1,28 @@
-<ion-list lines="full">
-  <ion-item *ngFor="let topic of this.topicService.getAll()">
-    <ion-label [title]="topic.id">{{ topic.name }}</ion-label>
-  </ion-item>
-</ion-list>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Reddot
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+  <div id="container">
+    <ion-list lines="full">
+      @for (topic of this.topicService.getAll(); track topic.id) {
+        <ion-item>
+          <ion-label 
+          [title]="topic.id"
+          (click)="seeDetails(topic.id)"
+          >
+            {{ topic.name }}
+          </ion-label>
+        </ion-item>
+      }
+    </ion-list>
+  </div>
+</ion-content>
 
 <ion-button (click)="showModal()">Créer un topic</ion-button>
 <app-topic-modal-creation [isVisible]="isModalVisible" (close)="closeModal()"></app-topic-modal-creation>
