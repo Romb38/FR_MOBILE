@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonItem, IonLabel, IonList } from '@ionic/angular/standalone';
+import { IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
 import { TopicService } from '../services/topic.service';
 import { Topic } from '../models/topic';
 
@@ -8,7 +8,7 @@ import { Topic } from '../models/topic';
   selector: 'app-topic-details',
   templateUrl: './topic-details.component.html',
   styleUrls: ['./topic-details.component.scss'],
-  imports: [IonItem, IonLabel, IonList],
+  imports: [IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent],
 })
 export class TopicDetailsComponent  implements OnInit {
 

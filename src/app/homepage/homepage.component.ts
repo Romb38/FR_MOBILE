@@ -1,13 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TopicService } from '../services/topic.service';
-import { IonItem, IonLabel, IonList } from '@ionic/angular/standalone'; 
+import { IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone'; 
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],
-  imports: [IonItem, IonLabel, IonList],
+  imports: [IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent],
 })
 export class HomepageComponent  implements OnInit {
 
