@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Topic } from '../models/topic';
+import { Topic, Topics } from '../models/topic';
 import { Post } from '../models/post';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TopicService {
-
-  topics : Topic[] = []
-
+  topics: Topics = [];
   constructor() { }
 
-  getAll(): Topic[] {
+  getAll(): Topics {
     return this.topics
   };
 
