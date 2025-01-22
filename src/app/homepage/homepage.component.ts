@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TopicService } from '../services/topic.service';
-import { IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
+import { IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonButton } from '@ionic/angular/standalone';
 import { TopicModalCreationComponent } from "../topic-modal-creation/topic-modal-creation.component";
 import { Router } from '@angular/router';
 
@@ -8,13 +8,10 @@ import { Router } from '@angular/router';
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],
-  imports: [IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent, TopicModalCreationComponent],
+  imports: [IonItem, IonLabel, IonList, IonButton, IonHeader, IonToolbar, IonTitle, IonContent, TopicModalCreationComponent],
 })
 export class HomepageComponent  implements OnInit {
   isModalVisible: boolean = false;
-  constructor(protected topicService: TopicService) {}
-
-  constructor() {}
 
   private router: Router = inject(Router)
   protected topicService = inject(TopicService)
