@@ -20,8 +20,8 @@ export class TopicDetailsComponent  implements OnInit {
   topic: Topic = {} as Topic
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-         this.topicId = params.get('id') ?? "";
+    this.route.params.subscribe(params => {
+         this.topicId = params['id'] ?? ""
          this.topic = this.topicService.get(this.topicId)
 
     });

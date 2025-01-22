@@ -1,5 +1,12 @@
 <ion-list lines="full">
-  <ion-item *ngFor="let topic of this.topicService.getAll()">
-    <ion-label [title]="topic.id">{{ topic.name }}</ion-label>
-  </ion-item>
+  @for (topic of this.topicService.getAll(); track topic.id) {
+    <ion-item>
+      <ion-label 
+      [title]="topic.id"
+      (click)="seeDetails(topic.id)"
+      >
+        {{ topic.name }}
+      </ion-label>
+    </ion-item>
+  }
 </ion-list>

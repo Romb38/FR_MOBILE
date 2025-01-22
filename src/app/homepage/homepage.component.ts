@@ -1,16 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TopicService } from '../services/topic.service';
-import { IonItem, IonLabel, IonList } from '@ionic/angular/standalone';
-import { NgFor } from '@angular/common';
+import { IonItem, IonLabel, IonList } from '@ionic/angular/standalone'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],
-  imports: [IonItem, IonLabel, IonList, NgFor],
+  imports: [IonItem, IonLabel, IonList],
 })
 export class HomepageComponent  implements OnInit {
-  constructor(protected topicService: TopicService) {}
+
+  constructor() {}
+
+  private router: Router = inject(Router)
+  protected topicService = inject(TopicService)
 
   ngOnInit() {
     this.topicService.addTopic({
@@ -21,6 +25,10 @@ export class HomepageComponent  implements OnInit {
         {id: 'p2', name: 'Post #2', description: 'This is a description'},
       ]
     });
+  }
+
+  seeDetails(topicId: string): void{
+    this.router.navigate(['/topic', topicId]); // Navigue vers /topic/{topicId}
   }
 
 }
