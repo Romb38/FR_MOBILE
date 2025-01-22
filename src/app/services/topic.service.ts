@@ -36,4 +36,16 @@ export class TopicService {
     
     topic.posts.push(post)
   };
+
+  getPostFromTopic(topicId: string): Post[] {
+    let topic : Topic | undefined = this.topics.find((t) => {
+      t.id == topicId
+    })
+    
+    if (!topic){
+      return []
+    }
+
+    return topic.posts
+  }
 }
