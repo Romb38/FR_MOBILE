@@ -5,3 +5,5 @@ export interface Topic {
   name : string,
   posts : Post[]
 }
+
+export type Topics = Topic[];
