@@ -30,6 +30,15 @@ export class TopicService {
     this.topics.push(topic)
   };
 
+
+  removeTopic(topic: Topic): void {
+    const index = this.topics.findIndex(otherTopic => topic.id === otherTopic.id);
+    
+    if (index !== -1) {
+      this.topics.splice(index, 1);
+    }
+  }
+
   addPost(post: Post, topicId: string): void {
     let topic : Topic | undefined = this.findTopic(topicId)
 
@@ -38,5 +47,18 @@ export class TopicService {
     }
     
     topic.posts.push(post)
+  };
+
+  removePost(post: Post, topicId: string): void {
+    let topic : Topic | undefined = this.findTopic(topicId)
+
+    if (!topic){
+      return
+    }
+    
+    const index = topic.posts.findIndex(otherPost => post.id === otherPost.id);
+    if (index !== -1) {
+      topic.posts.splice(index, 1);
+    }
   };
 }

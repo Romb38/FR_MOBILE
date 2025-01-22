@@ -4,6 +4,7 @@ import { IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent
 import { TopicService } from '../services/topic.service';
 import { Topic } from '../models/topic';
 import { arrowBack } from 'ionicons/icons';
+import { Post } from '../models/post';
 
 @Component({
   selector: 'app-topic-details',
@@ -19,7 +20,7 @@ import { arrowBack } from 'ionicons/icons';
     IonContent, 
     IonButton, 
     IonButtons, 
-    IonIcon,
+    IonIcon
   ],
 
 })
@@ -43,6 +44,10 @@ export class TopicDetailsComponent  implements OnInit {
 
   goHome(): void {
     this.router.navigate([""])
+  }
+
+  deleteItem(post : Post): void {
+    this.topicService.removePost(post,this.topicId)
   }
 
 }

@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="goHome()">
-        <ion-icon src="../assets/icon/arrow-back-outline.svg" color="white"></ion-icon>
+        <ion-icon src="../../assets/icon/arrow-back-outline.svg" color="negative"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>
@@ -16,7 +16,12 @@
     @for (post of this.topic.posts; track post.id) {
       <ion-item>
         <ion-label [title]="post.id">{{ post.name }}</ion-label>
+        <ion-label>{{post.description}}</ion-label>
+        <ion-button fill="clear" slot="end" (click)="deleteItem(post)">
+          <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
+        </ion-button>
       </ion-item>
-    }
+      }
+
   </ion-list>
 </ion-content>
