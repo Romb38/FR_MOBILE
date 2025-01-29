@@ -1,22 +1,10 @@
-<ion-header [translucent]="true" *ngIf="this.topic && this.topic.id !== ''">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button (click)="goHome()">
-        <ion-icon src="../../assets/icon/arrow-back-outline.svg" color="negative"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>
-      {{this.topic.name}} -- {{this.topic.id}} 
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-top-bar [title]="this.topic.name + ' -- #' + this.topic.id"></app-top-bar>
 
 <ion-content [fullscreen]="true">
   <ion-list lines="full">
     @for (post of this.topic.posts; track post.id) {
       <ion-item class="post-item">
-        <ion-label [title]="post.id">{{ post.name }}</ion-label>
-        <ion-label>{{post.description}}</ion-label>
+        <ion-label [title]="post.id" (click)='goToPost(post)'>{{ post.name }}</ion-label>
         <ion-button fill="clear" slot="end" (click)="deleteItem(post)">
           <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
         </ion-button>

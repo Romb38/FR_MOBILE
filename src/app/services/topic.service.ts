@@ -31,8 +31,8 @@ export class TopicService {
     return this.topics
   };
 
-  get(topicId: string): Topic {
-    return this.findTopic(topicId) as Topic
+  get(topicId: string): Topic | undefined {
+    return this.findTopic(topicId)
   };
 
   addTopic(topic: Topic): void {
@@ -74,4 +74,26 @@ export class TopicService {
       topic.posts.splice(index, 1);
     }
   };
+
+  getPost(topicId : string, postId: string) : Post | undefined {
+    let topic : Topic | undefined = this.findTopic(topicId)
+
+    if (!topic){
+      return undefined
+    }
+    
+    const index = topic.posts.findIndex(otherPost => postId === otherPost.id);
+    return topic.posts[index]
+  }
+
+  editPost(post:  Post, topicId : string) : void{
+    let topic : Topic | undefined = this.findTopic(topicId)
+
+    if (!topic){
+      return
+    }
+    const index = topic.posts.findIndex(otherPost => post.id === otherPost.id);
+    topic.posts[index] = post
+  }
+
 }

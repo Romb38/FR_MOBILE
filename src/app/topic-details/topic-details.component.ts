@@ -1,11 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
+import { IonItem, IonLabel, IonList, IonContent, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { TopicService } from '../services/topic.service';
 import { Topic } from '../models/topic';
 import { Post } from '../models/post';
 import { ModalCreationComponent } from "../modal-creation/modal-creation.component";
-import { NgIf } from '@angular/common';
+import { TopBarComponent } from "../top-bar/top-bar.component";
 
 @Component({
   selector: 'app-topic-details',
@@ -15,15 +15,11 @@ import { NgIf } from '@angular/common';
     IonItem,
     IonLabel,
     IonList,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
     IonContent,
     IonButton,
-    IonButtons,
     IonIcon,
     ModalCreationComponent,
-    NgIf
+    TopBarComponent
 ],
 
 })
@@ -38,17 +34,20 @@ export class TopicDetailsComponent  implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.topicId = params['id'] ?? '';
-      if (this.topicId) {
-        this.topic = this.topicService.get(this.topicId);
-      }
-    });
-    console.log('ngOnInit');
-    console.log(this.topic);
+        let tempTopic : Topic | undefined;
+        this.topicId = params['id'] ?? ""
+        tempTopic = this.topicService.get(this.topicId)
+
+        if (!tempTopic){
+          this.router.navigate(['404'])
+        } else {
+          this.topic = tempTopic
+        }
   }
 
-  goHome(): void {
-    this.router.navigate([""])
+
+  goToPost(post : Post) : void {
+    this.router.navigate([`topic/${this.topicId}/${post.id}`]);
   }
 
   deleteItem(post: Post): void {
