@@ -1,4 +1,4 @@
-<app-top-bar [backRoute]="'topic/' + this.topicId"  [title]="this.post?.name + '-- #' + this.post?.id"></app-top-bar>
+<app-top-bar [backRoute]="'topic/' + this.topicId"  [title]="this.post?.name ?? ''"></app-top-bar>
 
 
 <ion-content [fullscreen]="true">
