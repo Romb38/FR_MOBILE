@@ -28,7 +28,7 @@ export class ModalEditionComponent implements OnInit {
     if (!entity){
       this.closeModal()
     } else {
-      this.newEntity = entity
+      this.newEntity = structuredClone(entity)
       console.log(this.newEntity)
     }
   }

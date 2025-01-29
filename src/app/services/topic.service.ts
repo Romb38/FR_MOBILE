@@ -58,6 +58,8 @@ export class TopicService {
     if (!topic){
       return
     }
+    const maxId = topic.posts.reduce((max, post) => Math.max(max, parseInt(post.id || '0', 10)), 0);
+    post.id = String(maxId)
     
     topic.posts.push(post)
   };
