@@ -25,13 +25,11 @@ import { TopBarComponent } from "../top-bar/top-bar.component";
 })
 export class TopicDetailsComponent  implements OnInit {
 
-  constructor() { }
-
-  private route: ActivatedRoute = inject(ActivatedRoute)
-  private topicService : TopicService = inject(TopicService)
-  private router: Router = inject(Router)
+  private route: ActivatedRoute = inject(ActivatedRoute);
+  private topicService : TopicService = inject(TopicService);
+  private router: Router = inject(Router);
   topicId: string = "";
-  topic: Topic = {} as Topic
+  topic: Topic = {} as Topic;
   isModalVisible: boolean = false;
 
   ngOnInit() {
@@ -45,7 +43,6 @@ export class TopicDetailsComponent  implements OnInit {
         } else {
           this.topic = tempTopic
         }
-    });
   }
 
 
@@ -53,7 +50,7 @@ export class TopicDetailsComponent  implements OnInit {
     this.router.navigate([`topic/${this.topicId}/${post.id}`]);
   }
 
-  deleteItem(post : Post): void {
+  deleteItem(post: Post): void {
     this.topicService.removePost(post,this.topicId)
   }
 

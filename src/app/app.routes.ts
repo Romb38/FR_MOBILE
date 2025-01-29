@@ -1,29 +1,21 @@
 import { Routes } from '@angular/router';
-import { TopicDetailsComponent } from './topic-details/topic-details.component';
-import { PostDetailsComponent } from './post-details/post-details.component';
-import { NotFoundComponent } from './not-found/not-found.component';
 
 export const routes: Routes = [
   {
-    path: 'home',
-    loadComponent: () => import('./homepage/homepage.component').then((m) => m.HomepageComponent),
-  },
-  {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
+    loadComponent: () => import('./homepage/homepage.component').then((m) => m.HomepageComponent),
   },
   { 
     path: 'topic/:id', 
-    component: TopicDetailsComponent 
+    loadComponent: () => import('./topic-details/topic-details.component').then((m) => m.TopicDetailsComponent),
   },
   {
     path: 'topic/:id/:postId',
-    component : PostDetailsComponent
+    loadComponent: () => import('./post-details/post-details.component').then((m) => m.PostDetailsComponent),
   },
   {
     path: '404',
-    component : NotFoundComponent
+    loadComponent: () => import('./not-found/not-found.component').then((m) => m.NotFoundComponent),
   },
   {
     path: '**',

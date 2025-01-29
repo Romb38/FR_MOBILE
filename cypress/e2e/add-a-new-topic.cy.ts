@@ -1,7 +1,7 @@
 describe('Topic testing', () => {
 
   beforeEach(() => {
-    cy.visit('http://localhost:8100');
+    cy.visit('/');
     cy.contains('Créer un topic').click()
     cy.contains('Renseignez un nom').type('MyTestingTopic')
     cy.contains('Ajouter').click()
