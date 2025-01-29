@@ -50,7 +50,7 @@ export class TopicService {
   addPost(post: Post, topicId: string): void {
     const topic: Topic | undefined = this.topicsSubject.value.find(t => t.id === topicId);
     if (typeof topic === undefined) return;
-    
+
     post.id = generateUID();
     topic?.posts.push(post);
   };
@@ -58,7 +58,7 @@ export class TopicService {
   removePost(post: Post, topicId: string): void {
     this.get(topicId).subscribe((topic: Topic | undefined) => {
       if (!topic) return;
-      
+
       const index = topic.posts.findIndex(otherPost => post.id === otherPost.id);
       if (index !== -1) {
         topic.posts.splice(index, 1);
