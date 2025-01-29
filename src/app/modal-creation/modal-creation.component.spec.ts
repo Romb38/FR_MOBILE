@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { TopicModalCreationComponent } from './topic-modal-creation.component';
+import { TopicModalCreationComponent } from './modal-creation.component';
 
 describe('TopicModalCreationComponent', () => {
   let component: TopicModalCreationComponent;

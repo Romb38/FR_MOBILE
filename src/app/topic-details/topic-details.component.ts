@@ -3,9 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
 import { TopicService } from '../services/topic.service';
 import { Topic } from '../models/topic';
-import { arrowBack } from 'ionicons/icons';
 import { Post } from '../models/post';
-import { TopicModalCreationComponent } from "../topic-modal-creation/topic-modal-creation.component";
+import { ModalCreationComponent } from "../modal-creation/modal-creation.component";
 
 @Component({
   selector: 'app-topic-details',
@@ -22,7 +21,7 @@ import { TopicModalCreationComponent } from "../topic-modal-creation/topic-modal
     IonButton,
     IonButtons,
     IonIcon,
-    TopicModalCreationComponent
+    ModalCreationComponent
 ],
 
 })

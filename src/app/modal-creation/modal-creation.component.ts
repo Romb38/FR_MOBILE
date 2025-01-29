@@ -8,12 +8,12 @@ import { NgIf } from '@angular/common';
 
 
 @Component({
-  selector: 'app-topic-modal-creation',
-  templateUrl: './topic-modal-creation.component.html',
-  styleUrls: ['./topic-modal-creation.component.scss'],
+  selector: 'app-modal-creation',
+  templateUrl: './modal-creation.component.html',
+  styleUrls: ['./modal-creation.component.scss'],
   imports: [IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonContent, IonItem, IonInput, FormsModule, NgIf],
 })
-export class TopicModalCreationComponent {
+export class ModalCreationComponent {
   @Input() isVisible: boolean = false;
   @Input() topicId: string = '';
   @Output() close = new EventEmitter<void>();
