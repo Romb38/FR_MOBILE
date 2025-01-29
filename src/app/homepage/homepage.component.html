@@ -18,7 +18,7 @@
           >
             {{ topic.name }}
           </ion-label>
-          <ion-button fill="clear" slot="end" (click)="deleteItem(topic)">
+          <ion-button [id]="'delete-' + topic.id" fill="clear" slot="end" (click)="deleteItem(topic)">
             <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
           </ion-button>
         </ion-item>
