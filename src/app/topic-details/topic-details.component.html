@@ -22,6 +22,9 @@
         </ion-button>
       </ion-item>
       }
-
   </ion-list>
+
+  <ion-button (click)="showModal()">Créer un post</ion-button>
 </ion-content>
+
+<app-topic-modal-creation [isVisible]="isModalVisible" [topicId]="topicId" (close)="closeModal()"></app-topic-modal-creation>

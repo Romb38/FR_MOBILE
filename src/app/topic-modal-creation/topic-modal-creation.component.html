@@ -5,7 +5,8 @@
         <ion-buttons slot="start">
           <ion-button (click)="this.closeModal()">Annuler</ion-button>
         </ion-buttons>
-        <ion-title>Créer un topic</ion-title>
+        <ion-title *ngIf="!this.isPostCreation()">Créer un topic</ion-title>
+        <ion-title *ngIf="this.isPostCreation()">Créer un post</ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="this.save()" [strong]="true">Ajouter</ion-button>
         </ion-buttons>
@@ -14,11 +15,20 @@
     <ion-content class="ion-padding">
       <ion-item>
         <ion-input
-          label="Renseignez un nom de topic"
+          label="Renseignez un nom"
           labelPlacement="stacked"
           type="text"
-          placeholder="Nom du topic"
-          [(ngModel)]="newTopic.name"
+          placeholder="Nom"
+          [(ngModel)]="newEntity.name"
+        ></ion-input>
+      </ion-item>
+      <ion-item *ngIf="isPostCreation()">
+        <ion-input
+          label="Renseignez une description"
+          labelPlacement="stacked"
+          type="text"
+          placeholder="Description"
+          [(ngModel)]="newEntity.description"
         ></ion-input>
       </ion-item>
     </ion-content>

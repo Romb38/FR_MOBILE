@@ -1,34 +1,47 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonContent, IonItem, IonInput } from '@ionic/angular/standalone';
 import { Topic } from '../models/topic';
-import { Posts } from '../models/post';
+import { Post, Posts } from '../models/post';
 import { TopicService } from '../services/topic.service';
 import { FormsModule } from '@angular/forms';
+import { NgIf } from '@angular/common';
 
 
 @Component({
   selector: 'app-topic-modal-creation',
   templateUrl: './topic-modal-creation.component.html',
   styleUrls: ['./topic-modal-creation.component.scss'],
-  imports: [IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonContent, IonItem, IonInput, FormsModule],
+  imports: [IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonContent, IonItem, IonInput, FormsModule, NgIf],
 })
-export class TopicModalCreationComponent  implements OnInit {
+export class TopicModalCreationComponent {
   @Input() isVisible: boolean = false;
+  @Input() topicId: string = '';
   @Output() close = new EventEmitter<void>();
 
-  newTopic: Topic = { id: '', name: '', posts: {} as Posts };
+  newEntity: any = { name: '', description: '' };
 
   constructor(private topicService: TopicService) {}
-
-  ngOnInit() {}
 
   closeModal(): void {
     this.close.emit();
   }
 
+  isPostCreation(): boolean {
+    return this.topicId.length > 0;
+  }
+
   save(): void {
-    this.topicService.addTopic(this.newTopic);
-    this.newTopic = { id: '', name: '', posts: {} as Posts };
+    if (this.isPostCreation()) {
+      const topic = this.topicService.get(this.topicId);
+      if (topic) {
+        const newPost: Post = {id: '', ...this.newEntity};
+        this.topicService.addPost(newPost, this.topicId);
+      }
+    } else {
+      const newTopic: Topic = {id: '', name: this.newEntity.name, posts: []};
+      this.topicService.addTopic(newTopic);
+    }
+    this.newEntity = {name: '', description: ''};
     this.closeModal();
   }
 }
