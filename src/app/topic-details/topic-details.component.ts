@@ -43,6 +43,7 @@ export class TopicDetailsComponent  implements OnInit {
         } else {
           this.topic = tempTopic
         }
+    })
   }
 
 
