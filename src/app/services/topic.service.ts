@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, Signal, WritableSignal } from '@angular/core';
 import { Topic, Topics } from '../models/topic';
 import { Post } from '../models/post';
 
@@ -6,7 +6,9 @@ import { Post } from '../models/post';
   providedIn: 'root'
 })
 export class TopicService {
-  topics: Topics = [];
+  topics: WritableSignal<Topic[]> = signal([]);
+
+
   constructor() {
     this.addTopic({
       id: 't1',
@@ -19,7 +21,7 @@ export class TopicService {
   }
 
   private findTopic(topicId: string): Topic | undefined{
-    for (let topic of this.topics){
+    for (let topic of this.topics()){
       if (topic.id == topicId){
         return topic
       }
@@ -27,28 +29,28 @@ export class TopicService {
     return undefined
   }
 
-  getAll(): Topics {
+  getAll(): Signal<Topic[]> {
     return this.topics
   };
 
-  get(topicId: string): Topic | undefined {
-    return this.findTopic(topicId)
+  get(topicId: string): Signal<Topic| undefined> {
+    return signal(this.findTopic(topicId))
   };
 
   addTopic(topic: Topic): void {
     if (topic?.name.length) {
-      const maxId = this.topics.reduce((max, topic) => Math.max(max, parseInt(topic.id || '0', 10)), 0);
+      const maxId = this.topics().reduce((max, topic) => Math.max(max, parseInt(topic.id || '0', 10)), 0);
       topic.id = (maxId + 1).toString();
-      this.topics.push(topic);
+      this.topics().push(topic);
     }
   };
 
 
   removeTopic(topic: Topic): void {
-    const index = this.topics.findIndex(otherTopic => topic.id === otherTopic.id);
+    const index = this.topics().findIndex(otherTopic => topic.id === otherTopic.id);
     
     if (index !== -1) {
-      this.topics.splice(index, 1);
+      this.topics().splice(index, 1);
     }
   }
 

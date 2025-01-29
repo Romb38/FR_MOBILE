@@ -36,7 +36,7 @@ export class TopicDetailsComponent  implements OnInit {
     this.route.params.subscribe(params => {
         let tempTopic : Topic | undefined;
         this.topicId = params['id'] ?? ""
-        tempTopic = this.topicService.get(this.topicId)
+        tempTopic = this.topicService.get(this.topicId)()
 
         if (!tempTopic){
           this.router.navigate(['404'])
