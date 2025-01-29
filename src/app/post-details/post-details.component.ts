@@ -2,26 +2,23 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TopicService } from '../services/topic.service';
 import { Post } from '../models/post';
-import { IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
-import { ModalCreationComponent } from '../modal-creation/modal-creation.component';
+import {IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
+import { ModalEditionComponent } from "../modal-edition/modal-edition.component";
 
 @Component({
   selector: 'app-post-details',
   templateUrl: './post-details.component.html',
   styleUrls: ['./post-details.component.scss'],
   imports: [
-      IonItem,
-      IonLabel,
-      IonList,
-      IonHeader,
-      IonToolbar,
-      IonTitle,
-      IonContent,
-      IonButton,
-      IonButtons,
-      IonIcon,
-      ModalCreationComponent
-  ],
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonButton,
+    IonButtons,
+    IonIcon,
+    ModalEditionComponent
+],
 })
 export class PostDetailsComponent  implements OnInit {
 
@@ -31,6 +28,7 @@ export class PostDetailsComponent  implements OnInit {
   topicId: string = "";
   postId : string = "";
   post : Post| undefined;
+  isModalVisible : boolean = false;
   
   constructor() { }
   
@@ -45,5 +43,13 @@ export class PostDetailsComponent  implements OnInit {
 
   goTopic(): void {
     this.router.navigate([`topic/${this.topicId}`])
+  }
+
+  showModal() {
+    this.isModalVisible = true;
+  }
+
+  closeModal() {
+    this.isModalVisible = false;
   }
 }

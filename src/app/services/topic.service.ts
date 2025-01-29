@@ -77,4 +77,14 @@ export class TopicService {
     return topic.posts[index]
   }
 
+  editPost(post:  Post, topicId : string) : void{
+    let topic : Topic | undefined = this.findTopic(topicId)
+
+    if (!topic){
+      return
+    }
+    const index = topic.posts.findIndex(otherPost => post.id === otherPost.id);
+    topic.posts[index] = post
+  }
+
 }
