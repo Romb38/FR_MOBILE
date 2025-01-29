@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { TopicDetailsComponent } from './topic-details/topic-details.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 export const routes: Routes = [
   {
@@ -20,4 +21,12 @@ export const routes: Routes = [
     path: 'topic/:id/:postId',
     component : PostDetailsComponent
   },
+  {
+    path: '404',
+    component : NotFoundComponent
+  },
+  {
+    path: '**',
+    redirectTo: '/404',
+  }
 ];

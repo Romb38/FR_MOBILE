@@ -24,7 +24,7 @@ export class PostDetailsComponent  implements OnInit {
   private router: Router = inject(Router)
   topicId: string = "";
   postId : string = "";
-  post : Post| undefined;
+  post : Post = {} as Post;
   isModalVisible : boolean = false;
   
   constructor() { }
@@ -32,9 +32,17 @@ export class PostDetailsComponent  implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
+        let tempPost : Post| undefined;
+
         this.topicId = params['id'] ?? ""
         this.postId = params['postId'] ?? ""
-        this.post = this.topicService.getPost(this.topicId,this.postId)
+        tempPost = this.topicService.getPost(this.topicId,this.postId)
+
+        if (!tempPost){
+          this.router.navigate(['404'])
+        } else {
+          this.post = tempPost
+        }
     });
   }
 

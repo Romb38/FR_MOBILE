@@ -22,8 +22,8 @@ export class TopicService {
     return this.topics
   };
 
-  get(topicId: string): Topic {
-    return this.findTopic(topicId) as Topic
+  get(topicId: string): Topic | undefined {
+    return this.findTopic(topicId)
   };
 
   addTopic(topic: Topic): void {

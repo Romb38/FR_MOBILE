@@ -36,9 +36,15 @@ export class TopicDetailsComponent  implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-         this.topicId = params['id'] ?? ""
-         this.topic = this.topicService.get(this.topicId)
+        let tempTopic : Topic | undefined;
+        this.topicId = params['id'] ?? ""
+        tempTopic = this.topicService.get(this.topicId)
 
+        if (!tempTopic){
+          this.router.navigate(['404'])
+        } else {
+          this.topic = tempTopic
+        }
     });
   }
 
