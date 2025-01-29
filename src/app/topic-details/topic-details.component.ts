@@ -47,6 +47,10 @@ export class TopicDetailsComponent  implements OnInit {
   goHome(): void {
     this.router.navigate([""])
   }
+  
+  goToPost(post : Post) : void {
+    this.router.navigate([`topic/${this.topicId}/${post.id}`]);
+  }
 
   deleteItem(post : Post): void {
     this.topicService.removePost(post,this.topicId)

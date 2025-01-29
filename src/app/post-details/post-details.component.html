@@ -1,0 +1,19 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goTopic()">
+        <ion-icon src="../../assets/icon/arrow-back-outline.svg" color="negative"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      {{this.post?.name}} -- {{this.post?.id}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+  <div class="post-description">
+    {{ this.post?.description }}
+  </div>
+</ion-content>

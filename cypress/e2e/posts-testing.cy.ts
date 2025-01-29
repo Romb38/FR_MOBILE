@@ -3,9 +3,8 @@ describe('Testing posts features', () => {
   beforeEach(() => {
     cy.visit('http://localhost:8100');
     cy.contains('Créer un topic').click()
-    cy.contains('Renseignez un nom de topic').type('MyTestingTopic')
+    cy.contains('Renseignez un nom').type('MyTestingTopic')
     cy.contains('Ajouter').click()
-    cy.contains('MyTestingTopic').click()
     cy.contains('MyTestingTopic').click()
   });
 

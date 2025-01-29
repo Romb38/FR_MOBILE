@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { TopicDetailsComponent } from './topic-details/topic-details.component';
+import { PostDetailsComponent } from './post-details/post-details.component';
 
 export const routes: Routes = [
   {
@@ -11,5 +12,12 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
-  { path: 'topic/:id', component: TopicDetailsComponent },
+  { 
+    path: 'topic/:id', 
+    component: TopicDetailsComponent 
+  },
+  {
+    path: 'topic/:id/:postId',
+    component : PostDetailsComponent
+  },
 ];

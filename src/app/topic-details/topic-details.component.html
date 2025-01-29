@@ -15,8 +15,7 @@
   <ion-list lines="full">
     @for (post of this.topic.posts; track post.id) {
       <ion-item>
-        <ion-label [title]="post.id">{{ post.name }}</ion-label>
-        <ion-label>{{post.description}}</ion-label>
+        <ion-label [title]="post.id" (click)='goToPost(post)'>{{ post.name }}</ion-label>
         <ion-button fill="clear" slot="end" (click)="deleteItem(post)">
           <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
         </ion-button>
