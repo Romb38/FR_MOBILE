@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TopicService } from '../services/topic.service';
 import { IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { ModalCreationComponent } from "../modal-creation/modal-creation.component";
@@ -22,22 +22,11 @@ import { Topic } from '../models/topic';
     ModalCreationComponent
 ],
 })
-export class HomepageComponent  implements OnInit {
+export class HomepageComponent {
   isModalVisible: boolean = false;
 
   private router: Router = inject(Router)
   protected topicService = inject(TopicService)
-
-  ngOnInit() {
-    this.topicService.addTopic({
-      id: 't1',
-      name: 'This is my first topic',
-      posts: [
-        {id: 'p1', name: 'Post #1', description: 'This is a description'},
-        {id: 'p2', name: 'Post #2', description: 'This is a description'},
-      ]
-    });
-  }
   
   seeDetails(topicId: string): void{
     this.router.navigate(['/topic', topicId]); // Navigue vers /topic/{topicId}

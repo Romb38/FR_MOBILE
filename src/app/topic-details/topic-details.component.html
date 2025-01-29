@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" *ngIf="this.topic && this.topic.id !== ''">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="goHome()">
@@ -14,7 +14,7 @@
 <ion-content [fullscreen]="true">
   <ion-list lines="full">
     @for (post of this.topic.posts; track post.id) {
-      <ion-item>
+      <ion-item class="post-item">
         <ion-label [title]="post.id">{{ post.name }}</ion-label>
         <ion-label>{{post.description}}</ion-label>
         <ion-button fill="clear" slot="end" (click)="deleteItem(post)">

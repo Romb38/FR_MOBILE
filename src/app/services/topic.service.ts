@@ -7,7 +7,16 @@ import { Post } from '../models/post';
 })
 export class TopicService {
   topics: Topics = [];
-  constructor() { }
+  constructor() {
+    this.addTopic({
+      id: 't1',
+      name: 'This is my first topic',
+      posts: [
+        {id: 'p1', name: 'Post #1', description: 'This is a description'},
+        {id: 'p2', name: 'Post #2', description: 'This is a description'},
+      ]
+    });
+  }
 
   private findTopic(topicId: string): Topic | undefined{
     for (let topic of this.topics){

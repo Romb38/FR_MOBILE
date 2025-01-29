@@ -5,6 +5,7 @@ import { TopicService } from '../services/topic.service';
 import { Topic } from '../models/topic';
 import { Post } from '../models/post';
 import { ModalCreationComponent } from "../modal-creation/modal-creation.component";
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-topic-details',
@@ -21,34 +22,36 @@ import { ModalCreationComponent } from "../modal-creation/modal-creation.compone
     IonButton,
     IonButtons,
     IonIcon,
-    ModalCreationComponent
+    ModalCreationComponent,
+    NgIf
 ],
 
 })
 export class TopicDetailsComponent  implements OnInit {
 
-  constructor() { }
-
-  private route: ActivatedRoute = inject(ActivatedRoute)
-  private topicService : TopicService = inject(TopicService)
-  private router: Router = inject(Router)
+  private route: ActivatedRoute = inject(ActivatedRoute);
+  private topicService : TopicService = inject(TopicService);
+  private router: Router = inject(Router);
   topicId: string = "";
-  topic: Topic = {} as Topic
+  topic: Topic = {} as Topic;
   isModalVisible: boolean = false;
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-         this.topicId = params['id'] ?? ""
-         this.topic = this.topicService.get(this.topicId)
-
+      this.topicId = params['id'] ?? '';
+      if (this.topicId) {
+        this.topic = this.topicService.get(this.topicId);
+      }
     });
+    console.log('ngOnInit');
+    console.log(this.topic);
   }
 
   goHome(): void {
     this.router.navigate([""])
   }
 
-  deleteItem(post : Post): void {
+  deleteItem(post: Post): void {
     this.topicService.removePost(post,this.topicId)
   }
 
