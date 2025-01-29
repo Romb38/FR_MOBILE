@@ -3,25 +3,26 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
 import { TopicService } from '../services/topic.service';
 import { Topic } from '../models/topic';
-import { arrowBack } from 'ionicons/icons';
 import { Post } from '../models/post';
+import { ModalCreationComponent } from "../modal-creation/modal-creation.component";
 
 @Component({
   selector: 'app-topic-details',
   templateUrl: './topic-details.component.html',
   styleUrls: ['./topic-details.component.scss'],
   imports: [
-    IonItem, 
-    IonLabel, 
-    IonList, 
-    IonHeader, 
-    IonToolbar, 
-    IonTitle, 
-    IonContent, 
-    IonButton, 
-    IonButtons, 
-    IonIcon
-  ],
+    IonItem,
+    IonLabel,
+    IonList,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonButton,
+    IonButtons,
+    IonIcon,
+    ModalCreationComponent
+],
 
 })
 export class TopicDetailsComponent  implements OnInit {
@@ -33,6 +34,7 @@ export class TopicDetailsComponent  implements OnInit {
   private router: Router = inject(Router)
   topicId: string = "";
   topic: Topic = {} as Topic
+  isModalVisible: boolean = false;
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -48,6 +50,14 @@ export class TopicDetailsComponent  implements OnInit {
 
   deleteItem(post : Post): void {
     this.topicService.removePost(post,this.topicId)
+  }
+
+  showModal() {
+    this.isModalVisible = true;
+  }
+
+  closeModal() {
+    this.isModalVisible = false;
   }
 
 }

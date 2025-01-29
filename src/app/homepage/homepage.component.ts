@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TopicService } from '../services/topic.service';
 import { IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon } from '@ionic/angular/standalone';
-import { TopicModalCreationComponent } from "../topic-modal-creation/topic-modal-creation.component";
+import { ModalCreationComponent } from "../modal-creation/modal-creation.component";
 import { Router } from '@angular/router';
 import { Topic } from '../models/topic';
 
@@ -10,17 +10,17 @@ import { Topic } from '../models/topic';
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],
   imports: [
-    IonItem, 
-    IonLabel, 
-    IonList, 
-    IonButton, 
-    IonHeader, 
-    IonToolbar, 
-    IonTitle, 
-    IonContent, 
-    TopicModalCreationComponent, 
-    IonIcon
-  ],
+    IonItem,
+    IonLabel,
+    IonList,
+    IonButton,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonIcon,
+    ModalCreationComponent
+],
 })
 export class HomepageComponent  implements OnInit {
   isModalVisible: boolean = false;
