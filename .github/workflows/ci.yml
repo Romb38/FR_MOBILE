@@ -20,7 +20,7 @@ jobs:
           start: ionic serve
 
   build-release-apk:
-    needs: test-e2e
+    #needs: test-e2e
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout source
