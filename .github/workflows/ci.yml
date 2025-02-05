@@ -40,7 +40,6 @@ jobs:
 
       - name: Build Ionic app
         run: |
-            ionic capacitor add android 
             ionic capacitor copy android && cd android && ./gradlew assembleDebug && cd ..
 
       - name: Upload Dev APK
