@@ -26,12 +26,6 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin' 
-          java-version: '17'
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -45,31 +39,10 @@ jobs:
         run: npm install
 
       - name: Build Ionic app
-        run: ionic build --prod  # Build the web assets for the app
-
-      - name: Copy web assets to Android project
-        run: npx cap copy android  # Copy the built assets to the Android platform
-
-      - name: Build Android APK (Debug)
-        run: npx cap open android && ./android/gradlew -p ./android assembleDebug  # Build debug APK
-
-      - name: Build Android APK (Release)
-        run: npx cap open android && ./android/gradlew -p ./android assembleRelease  # Build release APK
+        run: ionic capacitor build android --prod 
 
       - name: Upload Dev APK
         uses: actions/upload-artifact@v4
         with:
-            name: app-dev
-            path: android/app/build/outputs/apk/debug/app-debug.apk
-
-      - name: Upload Release APK
-        uses: actions/upload-artifact@v4
-        with:
-            name: app-release
-            path: android/app/build/outputs/apk/release/app-release-unsigned.apk  # The unsigned release APK
-
-      - name: Upload Android App Bundle
-        uses: actions/upload-artifact@v4
-        with:
-            name: app-release-bundle
-            path: android/app/build/outputs/bundle/release/app-release.aab  # Upload the AAB file for distribution
+          name: app-dev
+          path: android/app/build/intermediates/apk/debug/app-debug.apk 
