@@ -1,5 +1,5 @@
 import { computed, Injectable, signal, Signal, WritableSignal } from '@angular/core';
-import { Topic, Topics } from '../models/topic';
+import { Topic } from '../models/topic';
 import { Post } from '../models/post';
 
 @Injectable({
@@ -33,7 +33,7 @@ export class TopicService {
   };
 
   addTopic(topic: Topic): void {
-    if (topic?.name.length) {
+    if (topic.name.length) {
       const currentTopics = this.topics.asReadonly()();
       const maxId = currentTopics.reduce((max, t) => Math.max(max, parseInt(t.id || '0', 10)), 0);
       
@@ -61,7 +61,7 @@ export class TopicService {
     const maxId = topic.posts.reduce((max, post) => Math.max(max, parseInt(post.id || '0', 10)), 0);
     post.id = String(maxId)
     
-    topic.posts.push(post)
+    topic.posts = [...topic.posts, post]
   };
 
   removePost(post: Post, topicId: string): void {
@@ -95,7 +95,7 @@ export class TopicService {
       return
     }
     const index = topic.posts.findIndex(otherPost => post.id === otherPost.id);
-    topic.posts[index] = post
+    topic.posts[index] = { ...post }
   }
 
 }
