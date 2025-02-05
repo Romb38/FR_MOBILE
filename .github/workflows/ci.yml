@@ -60,3 +60,9 @@ jobs:
         with:
           name: app-dev
           path: android/app/build/outputs/apk/release/app-release-signed.apk
+
+      - name: Release with Notes
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            android/app/build/outputs/apk/release/app-release-signed.apk
