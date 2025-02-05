@@ -54,7 +54,6 @@ jobs:
             npx cap sync
             npx cap build android --keystorepath android.jks --keystorepass "$KEYSTORE_PASS" --keystorealias key0 --keystorealiaspass "$KEYSTOREALIAS_PASS" --androidreleasetype APK
     
-
       - name: Upload Dev APK
         uses: actions/upload-artifact@v4
         with:
