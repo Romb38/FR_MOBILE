@@ -31,7 +31,6 @@ jobs:
         with:
           distribution: 'temurin' 
           java-version: '17'
-          cache: 'maven'  
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
