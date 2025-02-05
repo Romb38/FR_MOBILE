@@ -51,14 +51,9 @@ jobs:
             npx cap sync
             npx cap build android --keystorepath android.jks --keystorepass 123456 --keystorealias key0 --keystorealiaspass 654321 --androidreleasetype APK
     
-      - name: Checking
-        if: always()
-        run: |
-            rgrep *.apk
-            ls android/app/build/intermediates/apk/debug/
-      
+
       - name: Upload Dev APK
         uses: actions/upload-artifact@v4
         with:
           name: app-dev
-          path: android/app/build/intermediates/apk/debug/app-debug.apk 
+          path: android/app/build/outputs/apk/release/app-release-signed.apk
