@@ -49,7 +49,7 @@ jobs:
       - name: Build Ionic app
         run: |
             npx cap sync
-            ionic build
+            ionic capacitor build android
             ls android/
             ls android/app/
             ls android/app/build/
