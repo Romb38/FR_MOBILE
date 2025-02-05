@@ -40,7 +40,7 @@ jobs:
 
       - name: Build Ionic app
         run: |
-            ionic capacitor copy android && cd android && ./gradlew assembleDebug && cd ..
+            npx cap build android
 
       - name: Upload Dev APK
         uses: actions/upload-artifact@v4
