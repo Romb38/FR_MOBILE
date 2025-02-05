@@ -64,5 +64,6 @@ jobs:
       - name: Release with Notes
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: ${{ github.sha }}
           files: |
             android/app/build/outputs/apk/release/app-release-signed.apk
