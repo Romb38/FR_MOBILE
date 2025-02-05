@@ -32,6 +32,12 @@ jobs:
           node-version: 20
           cache: npm
 
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin' 
+          java-version: '21'
+
       - name: Install Ionic and Capacitor dependencies
         run: npm install -g @ionic/cli @capacitor/core @capacitor/cli
 
