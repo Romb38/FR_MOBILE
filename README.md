@@ -1,8 +1,8 @@
 
 
 <p align="center">
-  <strong style="font-size: 28px;">🔴 Reddot 🔴</strong>
-  </p>
+    <img src=".readme/logo.png">
+</p>
 
 <p align="center">
 <img src="https://img.shields.io/github/actions/workflow/status/Romb38/FR_MOBILE/ci-tests.yml?branch=main"/>
@@ -19,21 +19,10 @@
 <hr>
 <br>
 <p align="center">
-  <a href="https://github.com/Romb38/FR_MOBILE/releases/latest" style="
-    display: inline-block;
-    padding: 8px 16px;
-    font-size: 14px;
-    font-weight: bold;
-    color: white;
-    background-color: #0366d6;
-    border-radius: 4px;
-    text-decoration: none;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15);
-    transition: background 0.3s ease;">
-    🚀 Latest Release 🚀
+  <a href="https://github.com/Romb38/FR_MOBILE/releases/latest">
+  <img src=".readme/release.png" style="max-width: 50%; height: auto; width: 500px;">
   </a>
 </p>
-<br>
 <hr>
 <br>
 
