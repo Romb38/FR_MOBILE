@@ -50,6 +50,10 @@ jobs:
         run: |
             npx cap sync
             npx cap build android --keystorepath android.jks --keystorepass 123456 --keystorealias key0 --keystorealiaspass 654321 --androidreleasetype APK
+    
+      - name: Checking
+        if: always()
+        run: |
             rgrep *.apk
             ls android/app/build/intermediates/apk/debug/
       
