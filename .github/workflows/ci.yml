@@ -63,9 +63,8 @@ jobs:
 
       - name: Release with Notes
         uses: softprops/action-gh-release@v1
-        env:
-            GITHUB_TOKEN: ${{ github.token }}
         with:
           tag_name: ${{ github.sha }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           files: |
             android/app/build/outputs/apk/release/app-release-signed.apk
