@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-<img src="https://img.shields.io/github/actions/workflow/status/Romb38/FR_MOBILE/ci-publishing.yml?branch=main"/>
+<img src="https://img.shields.io/github/actions/workflow/status/Romb38/FR_MOBILE/ci-publishing.yml"/>
 <img src="https://img.shields.io/github/last-commit/Romb38/FR_MOBILE"/>
 <img src="https://img.shields.io/github/issues/Romb38/FR_MOBILE"/>
 <img src="https://img.shields.io/github/license/Romb38/FR_MOBILE"/>
