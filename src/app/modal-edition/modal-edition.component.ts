@@ -24,13 +24,13 @@ export class ModalEditionComponent implements OnInit {
   constructor(private topicService: TopicService) {}
 
   ngOnInit() {
-    let entity : Post | undefined = this.topicService.getPost(this.topicId,this.postId)
-    if (!entity){
-      this.closeModal()
-    } else {
-      this.newEntity = structuredClone(entity)
-      console.log(this.newEntity)
-    }
+    this.topicService.getPost(this.topicId, this.postId).subscribe(p => {
+      const entity: Post | undefined = p;
+      if (typeof entity === undefined) {
+        this.closeModal();
+      }
+      this.newEntity = entity as Post;
+    });
   }
 
   closeModal(): void {

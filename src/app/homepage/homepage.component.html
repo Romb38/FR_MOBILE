@@ -10,7 +10,7 @@
 <ion-content [fullscreen]="true">
   <div id="container">
     <ion-list lines="full">
-      @for (topic of this.topicService.getAll(); track topic.id) {
+      @for (topic of this.topics | async; track topic.id) {
         <ion-item>
           <ion-label 
           [title]="topic.id"

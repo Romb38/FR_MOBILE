@@ -1,9 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TopicService } from '../services/topic.service';
 import { IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { ModalCreationComponent } from "../modal-creation/modal-creation.component";
 import { Router } from '@angular/router';
-import { Topic } from '../models/topic';
+import { Topic, Topics } from '../models/topic';
+import { Observable } from 'rxjs/internal/Observable';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-homepage',
@@ -19,15 +21,17 @@ import { Topic } from '../models/topic';
     IonTitle,
     IonContent,
     IonIcon,
-    ModalCreationComponent
+    ModalCreationComponent,
+    AsyncPipe
 ],
 })
 export class HomepageComponent {
   isModalVisible: boolean = false;
-
-  private router: Router = inject(Router)
-  protected topicService = inject(TopicService)
   
+  private router: Router = inject(Router);
+  protected topicService = inject(TopicService);
+  topics: Observable<Topics> = this.topicService.getAll();;
+
   seeDetails(topicId: string): void{
     this.router.navigate(['/topic', topicId]); // Navigue vers /topic/{topicId}
   }

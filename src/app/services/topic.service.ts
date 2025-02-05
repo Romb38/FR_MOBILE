@@ -1,101 +1,92 @@
 import { Injectable } from '@angular/core';
 import { Topic, Topics } from '../models/topic';
 import { Post } from '../models/post';
+import { Observable } from 'rxjs/internal/Observable';
+import { BehaviorSubject, map, take } from 'rxjs';
+import { generateUID } from '../utils/uuid';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TopicService {
-  topics: Topics = [];
+  private topicsSubject: BehaviorSubject<Topics> = new BehaviorSubject<Topics>([]);
+  public topics$: Observable<Topics> = this.topicsSubject.asObservable();
+
   constructor() {
-    this.addTopic({
-      id: 't1',
-      name: 'This is my first topic',
-      posts: [
-        {id: 'p1', name: 'Post #1', description: 'This is a description'},
-        {id: 'p2', name: 'Post #2', description: 'This is a description'},
-      ]
-    });
-  }
-
-  private findTopic(topicId: string): Topic | undefined{
-    for (let topic of this.topics){
-      if (topic.id == topicId){
-        return topic
+    this.topicsSubject.next([
+      {
+        id: generateUID(),
+        name: 'This is my first topic',
+        posts: [
+          {id: generateUID(), name: 'Post #1', description: 'This is a description'},
+          {id: generateUID(), name: 'Post #2', description: 'This is a description'},
+        ]
       }
-    }
-    return undefined
+    ]);
   }
 
-  getAll(): Topics {
-    return this.topics
+  getAll(): Observable<Topics> {
+    return this.topics$;
   };
 
-  get(topicId: string): Topic | undefined {
-    return this.findTopic(topicId)
+  get(topicId: string): Observable<Topic | undefined> {
+    return this.topics$.pipe(
+      map((topics: Topics) => topics.find((topic: Topic) => topic.id === topicId))
+    );
   };
 
   addTopic(topic: Topic): void {
-    if (topic?.name.length) {
-      const maxId = this.topics.reduce((max, topic) => Math.max(max, parseInt(topic.id || '0', 10)), 0);
-      topic.id = (maxId + 1).toString();
-      this.topics.push(topic);
-    }
+    if (!topic?.name.length) return;
+
+    topic.id = generateUID();
+    this.topicsSubject.next([...this.topicsSubject.value, topic]);
   };
 
-
   removeTopic(topic: Topic): void {
-    const index = this.topics.findIndex(otherTopic => topic.id === otherTopic.id);
-    
-    if (index !== -1) {
-      this.topics.splice(index, 1);
-    }
+    const updatedTopics = this.topicsSubject.value.filter(t => t.id !== topic.id);
+    this.topicsSubject.next(updatedTopics);
   }
 
   addPost(post: Post, topicId: string): void {
-    let topic : Topic | undefined = this.findTopic(topicId)
-
-    if (!topic){
-      return
-    }
-    const maxId = topic.posts.reduce((max, post) => Math.max(max, parseInt(post.id || '0', 10)), 0);
-    post.id = String(maxId)
+    const topic: Topic | undefined = this.topicsSubject.value.find(t => t.id === topicId);
+    if (typeof topic === undefined) return;
     
-    topic.posts.push(post)
+    post.id = generateUID();
+    topic?.posts.push(post);
   };
 
   removePost(post: Post, topicId: string): void {
-    let topic : Topic | undefined = this.findTopic(topicId)
-
-    if (!topic){
-      return
-    }
-    
-    const index = topic.posts.findIndex(otherPost => post.id === otherPost.id);
-    if (index !== -1) {
-      topic.posts.splice(index, 1);
-    }
+    this.get(topicId).subscribe((topic: Topic | undefined) => {
+      if (!topic) return;
+      
+      const index = topic.posts.findIndex(otherPost => post.id === otherPost.id);
+      if (index !== -1) {
+        topic.posts.splice(index, 1);
+      }
+    }).unsubscribe();
   };
 
-  getPost(topicId : string, postId: string) : Post | undefined {
-    let topic : Topic | undefined = this.findTopic(topicId)
-
-    if (!topic){
-      return undefined
-    }
-    
-    const index = topic.posts.findIndex(otherPost => postId === otherPost.id);
-    return topic.posts[index]
+  getPost(topicId : string, postId: string): Observable<Post | undefined> {
+    return this.get(topicId).pipe(
+      map(topic => topic?.posts.find(post => post.id === postId))
+    );
   }
 
-  editPost(post:  Post, topicId : string) : void{
-    let topic : Topic | undefined = this.findTopic(topicId)
+  editPost(post: Post, topicId: string): void{
+    this.get(topicId).subscribe((topic) => {
+      if (!topic) return;
 
-    if (!topic){
-      return
-    }
-    const index = topic.posts.findIndex(otherPost => post.id === otherPost.id);
-    topic.posts[index] = post
+      const index = topic.posts.findIndex(p => p.id === post.id);
+      if (index !== -1) {
+        topic.posts[index] = post;
+        this.updateTopic(topic);
+      }
+    });
+  }
+
+  private updateTopic(updatedTopic: Topic): void {
+    const topics = this.topicsSubject.value.map(topic => topic.id === updatedTopic.id ? updatedTopic : topic);
+    this.topicsSubject.next(topics);
   }
 
 }
