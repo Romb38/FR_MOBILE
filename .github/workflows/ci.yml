@@ -47,9 +47,12 @@ jobs:
             npm run build
 
       - name: Build Ionic app
+        env:
+            KEYSTOREALIAS_PASS: ${{ secrets.KEYSTOREALIAS_PASS }}
+            KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS}}
         run: |
             npx cap sync
-            npx cap build android --keystorepath android.jks --keystorepass 123456 --keystorealias key0 --keystorealiaspass 654321 --androidreleasetype APK
+            npx cap build android --keystorepath android.jks --keystorepass "$KEYSTORE_PASS" --keystorealias key0 --keystorealiaspass "$KEYSTOREALIAS_PASS" --androidreleasetype APK
     
 
       - name: Upload Dev APK
