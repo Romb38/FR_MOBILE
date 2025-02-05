@@ -51,25 +51,25 @@ jobs:
         run: npx cap copy android  # Copy the built assets to the Android platform
 
       - name: Build Android APK (Debug)
-        run: npx cap open android && ./platforms/android/gradlew assembleDebug  # Build debug APK
+        run: npx cap open android && ./android/gradlew assembleDebug  # Build debug APK
 
       - name: Build Android APK (Release)
-        run: npx cap open android && ./platforms/android/gradlew assembleRelease  # Build release APK
+        run: npx cap open android && ./android/gradlew assembleRelease  # Build release APK
 
       - name: Upload Dev APK
         uses: actions/upload-artifact@v4
         with:
             name: app-dev
-            path: platforms/android/app/build/outputs/apk/debug/app-debug.apk
+            path: android/app/build/outputs/apk/debug/app-debug.apk
 
       - name: Upload Release APK
         uses: actions/upload-artifact@v4
         with:
             name: app-release
-            path: platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk  # The unsigned release APK
+            path: android/app/build/outputs/apk/release/app-release-unsigned.apk  # The unsigned release APK
 
       - name: Upload Android App Bundle
         uses: actions/upload-artifact@v4
         with:
             name: app-release-bundle
-            path: platforms/android/app/build/outputs/bundle/release/app-release.aab  # Upload the AAB file for distribution
+            path: android/app/build/outputs/bundle/release/app-release.aab  # Upload the AAB file for distribution
