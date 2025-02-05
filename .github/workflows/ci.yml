@@ -36,7 +36,9 @@ jobs:
         run: npm install -g @ionic/cli @capacitor/core @capacitor/cli
 
       - name: Install app dependencies
-        run: npm install
+        run: |
+            npm install
+            npm run build
 
       - name: Build Ionic app
         run: |
