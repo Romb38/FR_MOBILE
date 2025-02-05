@@ -6,6 +6,7 @@ import { Topic } from '../models/topic';
 import { Post } from '../models/post';
 import { ModalCreationComponent } from "../modal-creation/modal-creation.component";
 import { TopBarComponent } from "../top-bar/top-bar.component";
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-topic-details',
@@ -34,11 +35,11 @@ export class TopicDetailsComponent  implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-        let tempTopic : Topic | undefined;
+        let tempTopic: Topic | undefined;
         this.topicId = params['id'] ?? ""
-        tempTopic = this.topicService.get(this.topicId)
+        this.topicService.get(this.topicId).subscribe((t) => tempTopic = t);
 
-        if (!tempTopic){
+        if (!tempTopic) {
           this.router.navigate(['404'])
         } else {
           this.topic = tempTopic

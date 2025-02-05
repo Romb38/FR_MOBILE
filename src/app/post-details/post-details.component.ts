@@ -17,32 +17,29 @@ import { TopBarComponent } from "../top-bar/top-bar.component";
     TopBarComponent
 ],
 })
-export class PostDetailsComponent  implements OnInit {
+export class PostDetailsComponent implements OnInit {
 
-  private route: ActivatedRoute = inject(ActivatedRoute)
-  private topicService : TopicService = inject(TopicService)
-  private router: Router = inject(Router)
+  private route: ActivatedRoute = inject(ActivatedRoute);
+  private topicService: TopicService = inject(TopicService);
+  private router: Router = inject(Router);
   topicId: string = "";
-  postId : string = "";
-  post : Post = {} as Post;
-  isModalVisible : boolean = false;
-  
-  constructor() { }
-  
+  postId: string = "";
+  post: Post = {} as Post;
+  isModalVisible: boolean = false;
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-        let tempPost : Post| undefined;
+      this.topicId = params['id'] ?? "";
+      this.postId = params['postId'] ?? "";
 
-        this.topicId = params['id'] ?? ""
-        this.postId = params['postId'] ?? ""
-        tempPost = this.topicService.getPost(this.topicId,this.postId)
-
-        if (!tempPost){
-          this.router.navigate(['404'])
-        } else {
-          this.post = tempPost
+      this.topicService.getPost(this.topicId, this.postId).subscribe(post => {
+        if (typeof post === undefined || !post) {
+          this.router.navigate(['404']);
+          console.debug('post not found');
         }
+        this.post = post as Post;
+        console.debug('post found!');
+      });
     });
   }
 
