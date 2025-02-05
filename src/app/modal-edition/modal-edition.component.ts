@@ -9,7 +9,18 @@ import { TopicService } from '../services/topic.service';
   selector: 'app-modal-edition',
   templateUrl: './modal-edition.component.html',
   styleUrls: ['./modal-edition.component.scss'],
-  imports: [IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonContent, IonItem, IonInput, FormsModule],
+  imports: [
+    IonModal, 
+    IonHeader, 
+    IonToolbar, 
+    IonTitle, 
+    IonButton, 
+    IonButtons, 
+    IonContent, 
+    IonItem, 
+    IonInput, 
+    FormsModule
+  ],
   
 })
 export class ModalEditionComponent implements OnInit {

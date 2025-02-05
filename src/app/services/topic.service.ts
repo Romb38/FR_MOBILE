@@ -1,4 +1,4 @@
-import { Injectable, signal, Signal, WritableSignal } from '@angular/core';
+import { computed, Injectable, signal, Signal, WritableSignal } from '@angular/core';
 import { Topic, Topics } from '../models/topic';
 import { Post } from '../models/post';
 
@@ -20,30 +20,28 @@ export class TopicService {
     });
   }
 
-  private findTopic(topicId: string): Topic | undefined{
-    for (let topic of this.topics()){
-      if (topic.id == topicId){
-        return topic
-      }
-    }
-    return undefined
-  }
+  findTopic = computed(() => (topicId: string): Topic | undefined => {
+    return this.topics().find(topic => topic.id === topicId);
+  });
 
   getAll(): Signal<Topic[]> {
     return this.topics
   };
 
-  get(topicId: string): Signal<Topic| undefined> {
-    return signal(this.findTopic(topicId))
+  get(topicId: string): Signal<Topic | undefined> {
+    return signal(this.findTopic()(topicId))
   };
 
   addTopic(topic: Topic): void {
     if (topic?.name.length) {
-      const maxId = this.topics().reduce((max, topic) => Math.max(max, parseInt(topic.id || '0', 10)), 0);
+      const currentTopics = this.topics.asReadonly()();
+      const maxId = currentTopics.reduce((max, t) => Math.max(max, parseInt(t.id || '0', 10)), 0);
+      
       topic.id = (maxId + 1).toString();
-      this.topics().push(topic);
+  
+      this.topics.set([...currentTopics, topic]);
     }
-  };
+  }
 
 
   removeTopic(topic: Topic): void {
@@ -55,7 +53,7 @@ export class TopicService {
   }
 
   addPost(post: Post, topicId: string): void {
-    let topic : Topic | undefined = this.findTopic(topicId)
+    let topic : Topic | undefined = this.findTopic()(topicId)
 
     if (!topic){
       return
@@ -67,7 +65,7 @@ export class TopicService {
   };
 
   removePost(post: Post, topicId: string): void {
-    let topic : Topic | undefined = this.findTopic(topicId)
+    let topic : Topic | undefined = this.findTopic()(topicId)
 
     if (!topic){
       return
@@ -80,7 +78,7 @@ export class TopicService {
   };
 
   getPost(topicId : string, postId: string) : Post | undefined {
-    let topic : Topic | undefined = this.findTopic(topicId)
+    let topic : Topic | undefined = this.findTopic()(topicId)
 
     if (!topic){
       return undefined
@@ -91,7 +89,7 @@ export class TopicService {
   }
 
   editPost(post:  Post, topicId : string) : void{
-    let topic : Topic | undefined = this.findTopic(topicId)
+    let topic : Topic | undefined = this.findTopic()(topicId)
 
     if (!topic){
       return
