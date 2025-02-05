@@ -46,18 +46,15 @@ jobs:
             npm install
             npm run build
 
+      - name: Setup Keystore for Android signing
+        run: |
+          echo "$ANDROID_KEYSTORE" > my-release-key.keystore
+
       - name: Build Ionic app
         run: |
             npx cap sync
-            ionic capacitor build android
-            ls android/
-            ls android/app/
-            ls android/app/build/
-            ls android/app/build/intermediates
-            ls android/app/build/intermediates/apk/
-            ls android/app/build/intermediates/apk/debug/
-#            npx cap build android
-
+            npx cap build android --keystorepath android.jks --keystorepass $KEYSTORE_PASS --keystorealias key0 --keystorealiaspass $KEYSTOREALIAS_PASS --androidreleasetype APK
+      
       - name: Upload Dev APK
         uses: actions/upload-artifact@v4
         with:
