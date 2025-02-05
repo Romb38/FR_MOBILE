@@ -26,10 +26,12 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Setup java
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          java-version: 1.8
+          distribution: 'temurin' 
+          java-version: '17'
+          cache: 'maven'  
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
