@@ -38,8 +38,8 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: Install Cordova
-        run: npm install -g cordova
+      - name: Install Capacitor
+        run: npm install @capacitor/core @capacitor/cli
 
       - name: Install Ionic
         run: npm install -g @ionic/cli
@@ -47,14 +47,17 @@ jobs:
       - name: Install app dependencies
         run: npm install
 
+      - name: Initialize Capacitor
+        run: npx cap init
+
       - name: Add Android platform
-        run: ionic cordova platform add android@latest
+        run: npx cap add android
 
       - name: Build Android Dev APK
-        run: ionic cordova build android
+        run: ionic build && npx cap copy android && npx cap open android
 
       - name: Build Android Release APK
-        run: ionic cordova build android --release --prod
+        run: ionic build --prod && npx cap copy android && npx cap open android && ./platforms/android/gradlew assembleRelease
 
       - name: Generate the Android App Bundle
         working-directory: ./platforms/android/
