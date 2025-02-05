@@ -50,7 +50,12 @@ jobs:
         run: |
             npx cap sync
             ionic build
-            ls android/app/build/intermediates/apk/debug/app-debug.apk
+            ls android/
+            ls android/app/
+            ls android/app/build/
+            ls android/app/build/intermediates
+            ls android/app/build/intermediates/apk/
+            ls android/app/build/intermediates/apk/debug/
 #            npx cap build android
 
       - name: Upload Dev APK
