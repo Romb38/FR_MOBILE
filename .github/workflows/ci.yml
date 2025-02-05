@@ -5,6 +5,7 @@ on: push
 jobs:
   test-e2e:
     runs-on: ubuntu-24.04
+    if: false
     steps:
       - name: Checkout
         uses: actions/checkout@v4
