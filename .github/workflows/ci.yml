@@ -29,24 +29,20 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-            distribution: 'temurin' 
-            java-version: '17'
+          distribution: 'temurin' 
+          java-version: '17'
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-            node-version: 20
-            cache: npm
+          node-version: 20
+          cache: npm
 
-      - name: Install Ionic, Capacitor, and Cordova dependencies
-        run: |
-            npm install -g @ionic/cli @capacitor/core @capacitor/cli cordova
+      - name: Install Ionic and Capacitor dependencies
+        run: npm install -g @ionic/cli @capacitor/core @capacitor/cli
 
       - name: Install app dependencies
         run: npm install
-
-      - name: Add Android platform using Cordova
-        run: ionic capacitor platform add android
 
       - name: Build Ionic app
         run: ionic build --prod  # Build the web assets for the app
@@ -54,26 +50,26 @@ jobs:
       - name: Copy web assets to Android project
         run: npx cap copy android  # Copy the built assets to the Android platform
 
-      - name: Build Android APK (Debug) using Cordova
-        run: ionic cordova build android --debug  # Build the debug APK with Cordova
+      - name: Build Android APK (Debug)
+        run: npx cap open android && ./android/gradlew -p ./android assembleDebug  # Build debug APK
 
-      - name: Build Android APK (Release) using Cordova
-        run: ionic cordova build android --release --prod  # Build the release APK with Cordova
+      - name: Build Android APK (Release)
+        run: npx cap open android && ./android/gradlew -p ./android assembleRelease  # Build release APK
 
       - name: Upload Dev APK
         uses: actions/upload-artifact@v4
         with:
             name: app-dev
-            path: platforms/android/app/build/outputs/apk/debug/app-debug.apk  # The debug APK from Cordova build
+            path: android/app/build/outputs/apk/debug/app-debug.apk
 
       - name: Upload Release APK
         uses: actions/upload-artifact@v4
         with:
             name: app-release
-            path: platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk  # The unsigned release APK from Cordova build
+            path: android/app/build/outputs/apk/release/app-release-unsigned.apk  # The unsigned release APK
 
       - name: Upload Android App Bundle
         uses: actions/upload-artifact@v4
         with:
             name: app-release-bundle
-            path: platforms/android/app/build/outputs/bundle/release/app-release.aab  # Upload the AAB file for distribution
+            path: android/app/build/outputs/bundle/release/app-release.aab  # Upload the AAB file for distribution
