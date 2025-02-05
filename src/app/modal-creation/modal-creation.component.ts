@@ -33,10 +33,8 @@ export class ModalCreationComponent {
   save(): void {
     if (this.isPostCreation()) {
       const topic = this.topicService.get(this.topicId);
-      if (topic) {
-        const newPost: Post = {id: '', ...this.newEntity};
-        this.topicService.addPost(newPost, this.topicId);
-      }
+      const newPost: Post = {id: '', ...this.newEntity};
+      this.topicService.addPost(newPost, this.topicId);
     } else {
       const newTopic: Topic = {id: '', name: this.newEntity.name, posts: []};
       this.topicService.addTopic(newTopic);
