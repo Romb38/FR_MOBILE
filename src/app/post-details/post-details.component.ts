@@ -31,15 +31,16 @@ export class PostDetailsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.topicId = params['id'] ?? "";
       this.postId = params['postId'] ?? "";
+      this.updatePost();
+    });
+  }
 
-      this.topicService.getPost(this.topicId, this.postId).subscribe(post => {
-        if (typeof post === undefined || !post) {
-          this.router.navigate(['404']);
-          console.debug('post not found');
-        }
-        this.post = post as Post;
-        console.debug('post found!');
-      });
+  updatePost() {
+    this.topicService.getPost(this.topicId, this.postId).subscribe(post => {
+      if (typeof post === undefined || !post) {
+        this.router.navigate(['404']);
+      }
+      this.post = post as Post;
     });
   }
 
@@ -49,5 +50,6 @@ export class PostDetailsComponent implements OnInit {
 
   closeModal() {
     this.isModalVisible = false;
+    this.updatePost();
   }
 }
