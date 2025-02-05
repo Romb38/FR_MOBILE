@@ -9,6 +9,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install Ionic
+        run: npm install -g @ionic/cli
+
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
