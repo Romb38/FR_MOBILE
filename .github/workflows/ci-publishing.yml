@@ -1,0 +1,65 @@
+name: Ionic CI/CD with Cypress
+on:
+  pull_request:
+     types: [closed]
+  
+
+jobs:
+  test-e2e:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Ionic
+        run: npm install -g @ionic/cli
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          build: ionic build
+          start: ionic serve
+
+  build-release-apk:
+    needs: test-e2e
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin' 
+          java-version: '21'
+
+      - name: Install Ionic and Capacitor dependencies
+        run: npm install -g @ionic/cli @capacitor/core @capacitor/cli
+
+      - name: Install app dependencies
+        run: |
+            npm install
+            npm run build
+
+      - name: Build Ionic app
+        env:
+            KEYSTOREALIAS_PASS: ${{ secrets.KEYSTOREALIAS_PASS }}
+            KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
+            KEYSTOREALIAS: ${{ secrets.KEYSTOREALIAS }}
+        run: |
+            npx cap sync
+            npx cap build android --keystorepath official.jks --keystorepass "$KEYSTORE_PASS" --keystorealias $KEYSTOREALIAS --keystorealiaspass "$KEYSTOREALIAS_PASS" --androidreleasetype APK
+
+      - name: Release with Notes
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: |
+            android/app/build/outputs/apk/release/app-release-signed.apk
