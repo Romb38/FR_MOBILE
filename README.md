@@ -20,7 +20,7 @@
 <br>
 <p align="center">
   <a href="https://github.com/Romb38/FR_MOBILE/releases/latest">
-  <img src=".readme/release.png" style="max-width: 25%; height: auto; width: 500px;">
+  <img src=".readme/release.png" style="max-width: 25%; height: auto;">
   </a>
 </p>
 <hr>
