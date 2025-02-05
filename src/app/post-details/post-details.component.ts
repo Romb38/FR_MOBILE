@@ -32,18 +32,22 @@ export class PostDetailsComponent  implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-        let tempPost : Post| undefined;
 
         this.topicId = params['id'] ?? ""
         this.postId = params['postId'] ?? ""
-        tempPost = this.topicService.getPost(this.topicId,this.postId)
-
-        if (!tempPost){
-          this.router.navigate(['404'])
-        } else {
-          this.post = tempPost
-        }
+        this.updatePost()
     });
+  }
+
+  updatePost(){
+    let tempPost : Post| undefined;
+    tempPost = this.topicService.getPost(this.topicId,this.postId)
+
+    if (!tempPost){
+      this.router.navigate(['404'])
+    } else {
+      this.post = tempPost
+    }
   }
 
   showModal() {
@@ -52,5 +56,6 @@ export class PostDetailsComponent  implements OnInit {
 
   closeModal() {
     this.isModalVisible = false;
+    this.updatePost()
   }
 }
