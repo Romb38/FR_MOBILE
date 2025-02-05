@@ -39,7 +39,7 @@ jobs:
           cache: npm
 
       - name: Install Ionic and Capacitor dependencies
-        run: npm install @ionic/cli @capacitor/core @capacitor/cli
+        run: npm install -g @ionic/cli @capacitor/core @capacitor/cli
 
       - name: Install app dependencies
         run: npm install
