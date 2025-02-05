@@ -46,7 +46,7 @@ jobs:
         run: npm install
 
       - name: Add Android platform using Cordova
-        run: ionic cordova platform add android
+        run: ionic capacitor platform add android
 
       - name: Build Ionic app
         run: ionic build --prod  # Build the web assets for the app
