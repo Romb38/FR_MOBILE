@@ -52,7 +52,9 @@ jobs:
             KEYSTOREALIAS_PASS: ${{ secrets.KEYSTOREALIAS_PASS }}
             KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
             KEYSTOREALIAS: ${{ secrets.KEYSTOREALIAS }}
+            KEYSTORE: ${{ secrets.KEYSTORE }}
         run: |
+            echo "$KEYSTORE" | base64 --decode > android/official.jks
             npx cap sync
             npx cap build android --keystorepath official.jks --keystorepass "$KEYSTORE_PASS" --keystorealias $KEYSTOREALIAS --keystorealiaspass "$KEYSTOREALIAS_PASS" --androidreleasetype APK
 
