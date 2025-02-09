@@ -27,10 +27,10 @@ import { AsyncPipe } from '@angular/common';
 })
 export class HomepageComponent {
   isModalVisible: boolean = false;
-  
+
   private router: Router = inject(Router);
   protected topicService = inject(TopicService);
-  topics: Observable<Topics> = this.topicService.getAll();;
+  topics: Observable<Topics> = this.topicService.getAll();
 
   seeDetails(topicId: string): void{
     this.router.navigate(['/topic', topicId]); // Navigue vers /topic/{topicId}

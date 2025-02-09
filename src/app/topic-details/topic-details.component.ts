@@ -6,7 +6,8 @@ import { Topic } from '../models/topic';
 import { Post } from '../models/post';
 import { ModalCreationComponent } from "../modal-creation/modal-creation.component";
 import { TopBarComponent } from "../top-bar/top-bar.component";
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
+import {AsyncPipe, NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-topic-details',
@@ -20,40 +21,44 @@ import { Observable } from 'rxjs';
     IonButton,
     IonIcon,
     ModalCreationComponent,
-    TopBarComponent
-],
-
+    TopBarComponent,
+    NgForOf,
+    AsyncPipe,
+  ],
 })
-export class TopicDetailsComponent  implements OnInit {
-
+export class TopicDetailsComponent implements OnInit {
   private route: ActivatedRoute = inject(ActivatedRoute);
-  private topicService : TopicService = inject(TopicService);
+  private topicService: TopicService = inject(TopicService);
   private router: Router = inject(Router);
-  topicId: string = "";
-  topic: Topic = {} as Topic;
+
+  topicId: string = '';
+  topic$: Observable<Topic | undefined> = new Observable<Topic | undefined>();
   isModalVisible: boolean = false;
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-        let tempTopic: Topic | undefined;
-        this.topicId = params['id'] ?? ""
-        this.topicService.get(this.topicId).subscribe((t) => tempTopic = t);
+    this.topic$ = this.route.params.pipe(
+      // Retrieve the topic directly from the topic service.
+      switchMap((params) => {
+        this.topicId = params['id'] ?? '';
+        return this.topicService.get(this.topicId);
+      })
+    );
 
-        if (!tempTopic) {
-          this.router.navigate(['404'])
-        } else {
-          this.topic = tempTopic
-        }
-    })
+    // Redirect to 404 if the topic is not found.
+    this.topic$.subscribe((topic) => {
+      console.debug('Received updated topic:', topic);
+      if (!topic) {
+        this.router.navigate(['404']);
+      }
+    });
   }
 
-
-  goToPost(post : Post) : void {
+  goToPost(post: Post): void {
     this.router.navigate([`topic/${this.topicId}/${post.id}`]);
   }
 
   deleteItem(post: Post): void {
-    this.topicService.removePost(post,this.topicId)
+    this.topicService.removePost(post.id, this.topicId);
   }
 
   showModal() {
@@ -64,4 +69,7 @@ export class TopicDetailsComponent  implements OnInit {
     this.isModalVisible = false;
   }
 
+  trackByPostId(index: number, item: Post): string {
+    return item.id;
+  }
 }

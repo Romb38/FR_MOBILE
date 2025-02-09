@@ -12,13 +12,13 @@
     <ion-list lines="full">
       @for (topic of this.topics | async; track topic.id) {
         <ion-item>
-          <ion-label 
+          <ion-label
           [title]="topic.id"
           (click)="seeDetails(topic.id)"
           >
             {{ topic.name }}
           </ion-label>
-          <ion-button [id]="'delete-' + topic.id" fill="clear" slot="end" (click)="deleteItem(topic)">
+          <ion-button data-action="delete" fill="clear" slot="end" (click)="deleteItem(topic)">
             <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
           </ion-button>
         </ion-item>
