@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
 import { IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonContent, IonItem, IonInput } from '@ionic/angular/standalone';
 import { Topic } from '../models/topic';
 import { Post, Posts } from '../models/post';
 import { TopicService } from '../services/topic.service';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
+import {ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -18,9 +19,8 @@ export class ModalCreationComponent {
   @Input() topicId: string = '';
   @Output() close = new EventEmitter<void>();
 
-  newEntity: any = { name: '', description: '' };
-
-  constructor(private topicService: TopicService) {}
+  private topicService: TopicService = inject(TopicService);
+  protected newEntity: { name: '', description: '' } = { name: '', description: '' };
 
   closeModal(): void {
     this.close.emit();
@@ -34,14 +34,18 @@ export class ModalCreationComponent {
     if (this.isPostCreation()) {
       const topic = this.topicService.get(this.topicId);
       if (topic) {
-        const newPost: Post = {id: '', ...this.newEntity};
+        const newPost: Post = {id: '', name: this.newEntity.name, description: this.newEntity.description};
         this.topicService.addPost(newPost, this.topicId);
       }
     } else {
       const newTopic: Topic = {id: '', name: this.newEntity.name, posts: []};
       this.topicService.addTopic(newTopic);
     }
-    this.newEntity = {name: '', description: ''};
+    this.resetFormValues();
     this.closeModal();
+  }
+
+  resetFormValues(): void {
+    this.newEntity = {name: '', description: ''};
   }
 }

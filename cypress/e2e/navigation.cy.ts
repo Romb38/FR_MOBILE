@@ -4,7 +4,7 @@ describe('Goes back and forth in the website', () => {
     cy.contains('Créer un topic').click();
     cy.contains('Renseignez un nom').type('MyTestingTopic');
     cy.contains('Ajouter').click();
-    cy.contains('MyTestingTopic').click();  
+    cy.contains('MyTestingTopic').click();
 
     cy.contains('Créer un post').click();
     cy.contains('Renseignez un nom').type('MyTestingPost');
@@ -15,7 +15,7 @@ describe('Goes back and forth in the website', () => {
 
   it('Should go to 404', () => {
 
-    // Completly impossible URL
+    // Completely impossible URL
     cy.visit("/ezubfzefuezbfu");
     cy.contains("404").should("exist");
 
