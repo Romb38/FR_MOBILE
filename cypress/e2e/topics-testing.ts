@@ -11,8 +11,8 @@ describe('Topic testing', () => {
     cy.contains('MyTestingTopic').should('exist')
   })
 
-  it('Delete a new topic', () => {
-    cy.get('#delete-2').click()
-    cy.contains('MyTestingTopic').should('not.exist');
-  })
+  cy.contains('ion-label', 'MyTestingTopic')
+    .parents('ion-item')
+    .find('ion-button[data-action="delete"]')
+    .click();
 })

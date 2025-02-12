@@ -1,8 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import {of, Subject} from 'rxjs';
+import { takeUntil, catchError } from 'rxjs/operators';
 import { TopicService } from '../services/topic.service';
 import { Post } from '../models/post';
-import {IonContent, IonButton} from '@ionic/angular/standalone';
+import { IonContent, IonButton } from '@ionic/angular/standalone';
 import { ModalEditionComponent } from "../modal-edition/modal-edition.component";
 import { TopBarComponent } from "../top-bar/top-bar.component";
 
@@ -15,39 +17,45 @@ import { TopBarComponent } from "../top-bar/top-bar.component";
     IonButton,
     ModalEditionComponent,
     TopBarComponent
-],
+  ],
 })
-export class PostDetailsComponent  implements OnInit {
+export class PostDetailsComponent implements OnInit, OnDestroy {
+  private route: ActivatedRoute = inject(ActivatedRoute);
+  private topicService: TopicService = inject(TopicService);
+  private router: Router = inject(Router);
+  private destroy$: Subject<void> = new Subject<void>();
 
-  private route: ActivatedRoute = inject(ActivatedRoute)
-  private topicService : TopicService = inject(TopicService)
-  private router: Router = inject(Router)
   topicId: string = "";
-  postId : string = "";
-  post : Post = {} as Post;
-  isModalVisible : boolean = false;
-  
-  constructor() { }
-  
+  postId: string = "";
+  post: Post = {} as Post;
+  isModalVisible: boolean = false;
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-
-        this.topicId = params['id'] ?? ""
-        this.postId = params['postId'] ?? ""
-        this.updatePost()
+    this.route.params.pipe(
+      takeUntil(this.destroy$) // Automatically unsubscribe when the destroy$ emits.
+    ).subscribe(params => {
+      this.topicId = params['id'] ?? "";
+      this.postId = params['postId'] ?? "";
+      this.updatePost();
     });
   }
 
-  updatePost(){
-    let tempPost : Post| undefined;
-    tempPost = this.topicService.getPost(this.topicId,this.postId)
-
-    if (!tempPost){
-      this.router.navigate(['404'])
-    } else {
-      this.post = tempPost
-    }
+  updatePost() {
+    this.topicService.getPost(this.topicId, this.postId)
+      .pipe(
+        takeUntil(this.destroy$), // Automatically unsubscribe when the destroy$ emits.
+        catchError(() => {
+            this.router.navigate(['404']);
+            return of(undefined);
+        })
+      )
+      .subscribe((post: Post | undefined) => {
+        if (!post) {
+          this.router.navigate(['404']);
+          return;
+        }
+        this.post = post;
+      });
   }
 
   showModal() {
@@ -56,6 +64,11 @@ export class PostDetailsComponent  implements OnInit {
 
   closeModal() {
     this.isModalVisible = false;
-    this.updatePost()
+    this.updatePost();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
