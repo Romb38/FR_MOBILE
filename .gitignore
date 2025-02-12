@@ -13,8 +13,8 @@ $RECYCLE.BIN/
 log.txt
 
 # [My Ignore] Ignoring environnement variables
-src/environments/environment.ts
-src/environments/environment.prod.ts
+/environments
+
 
 /.sourcemaps
 /.versions
