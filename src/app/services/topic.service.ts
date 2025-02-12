@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { Firestore } from '@angular/fire/firestore';
 import { Topic, Topics } from '../models/topic';
 import { Post } from '../models/post';
 import { Observable } from 'rxjs/internal/Observable';
@@ -11,7 +12,10 @@ import { generateUID } from '../utils/uuid';
 export class TopicService {
   private topicsSubject$: BehaviorSubject<Topics> = new BehaviorSubject<Topics>([]);
   public topics$: Observable<Topics> = this.topicsSubject$.asObservable(); // Exposes a safe, read-only observable to other components/services.
-
+  
+  private firestore: Firestore = inject(Firestore);
+  
+  
   constructor() {
     this.topicsSubject$.next([
       {
