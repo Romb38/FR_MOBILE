@@ -12,8 +12,10 @@ $RECYCLE.BIN/
 *.log
 log.txt
 
-# [My Ignore] Ignoring environnement variables
-/src/environments/environments.ts
+# Ignore all files in the environments/ folder
+/src/environments/*
+# Excepted for environments.sample.ts file
+!/src/environments/environments.sample.ts
 
 
 /.sourcemaps
