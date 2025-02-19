@@ -1,9 +1,15 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { Auth, User, user } from '@angular/fire/auth'
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private fireauth = inject(Auth)
 
-  constructor() { }
+  getConnectedUser() : Observable<User | null> {
+    return user(this.fireauth)
+  }
+
 }
