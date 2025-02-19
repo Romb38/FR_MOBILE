@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonItem, IonButton, IonText, IonInput } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 
@@ -17,7 +17,7 @@ export class LoginPage implements OnInit {
 
   private navCtrl = inject(Router)
   private fb = inject(FormBuilder)
-  loginForm : FormGroup = this.fb.group({
+  protected loginForm : FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
