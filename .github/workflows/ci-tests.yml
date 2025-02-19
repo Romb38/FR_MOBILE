@@ -13,9 +13,17 @@ jobs:
 
       - name: Install Ionic
         run: npm install -g @ionic/cli
+      
+      - name: Add env secrets
+        env:
+          ENVIRONNEMENTTS: ${{ secrets.ENVIRONNEMENTTS }}
+        run: 
+           echo "$KEYSTORE" | base64 --decode > src/environments/environment.ts
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           build: ionic build
           start: ionic serve
+
+      
