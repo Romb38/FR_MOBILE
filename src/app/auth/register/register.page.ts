@@ -19,11 +19,7 @@ export class RegisterPage implements OnInit {
   }
 
   private navCtrl = inject(Router)
-  private fb = inject(FormBuilder)
-  email = new FormControl('', [Validators.required, Validators.email])
-  // protected registerForm : FormGroup = this.fb.group({
-  //   email: ['', ][Validators.required, Validators.email],
-  // });
+  protected email = new FormControl('', [Validators.required, Validators.email])
   
   onLogin() {
     if (this.email.invalid) {
@@ -36,9 +32,14 @@ export class RegisterPage implements OnInit {
   }
 
   // Fonction utilitaire pour savoir si un champ est invalide
-  isInvalid(field: string): boolean {
+  isInvalid(): boolean {
     return this.email.invalid && this.email.touched;
   }
+
+  goToLogIn(){
+    this.navCtrl.navigateByUrl("/login");
+  }
+
   
 
 }

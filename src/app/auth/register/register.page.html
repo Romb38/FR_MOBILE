@@ -11,11 +11,13 @@
       <ion-label position="floating">Email</ion-label>
       <ion-input type="email" [formControl]="email"></ion-input>
     </ion-item>
-    <ion-text color="danger" *ngIf="isInvalid('email')">
+    <ion-text color="danger" *ngIf="isInvalid()">
       <p *ngIf="email.errors?.['required']">L'email est requis.</p>
       <p *ngIf="email.errors?.['email']">Format d'email invalide.</p>
     </ion-text>
 
-    <ion-button expand="full" type="submit" [disabled]="email.invalid">Login</ion-button>
+    <ion-button expand="full" type="submit" [disabled]="email.invalid">Register</ion-button>
   </form>
+  <ion-button expand="full" (click)="goToLogIn()">Log In ?</ion-button>
+
 </ion-content>
