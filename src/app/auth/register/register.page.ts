@@ -1,8 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, Validators, FormControl, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonItem, IonText, IonButton, IonInput } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
+import { has } from 'cypress/types/lodash';
 
 @Component({
   selector: 'app-register',
@@ -19,27 +20,28 @@ export class RegisterPage implements OnInit {
   }
 
   private navCtrl = inject(Router)
-  protected email = new FormControl('', [Validators.required, Validators.email])
+
+  private fb = inject(FormBuilder)
+  protected loginForm : FormGroup = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+  });
+  protected hasRegister : boolean = false;
   
   onLogin() {
-    if (this.email.invalid) {
+    if (this.loginForm.invalid) {
       console.log('Formulaire invalide');
       return;
     }
-
-    console.log('Register with:', this.email.value);
-    this.navCtrl.navigateByUrl('/');
+    
+    this.hasRegister=true;
+    console.log('Connexion avec:', this.loginForm.value);
   }
 
-  // Fonction utilitaire pour savoir si un champ est invalide
-  isInvalid(): boolean {
-    return this.email.invalid && this.email.touched;
+  isInvalid(field: string): boolean {
+    return this.loginForm.controls[field].invalid && this.loginForm.controls[field].touched;
   }
 
   goToLogIn(){
     this.navCtrl.navigateByUrl("/login");
   }
-
-  
-
 }

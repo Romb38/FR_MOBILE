@@ -18,8 +18,8 @@ export class LoginPage implements OnInit {
   private navCtrl = inject(Router)
   private fb = inject(FormBuilder)
   protected loginForm : FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]]
+    email: ['', [Validators.required]],
+    password: ['', [Validators.required]]
   });
 
   constructor() {}
@@ -34,7 +34,6 @@ export class LoginPage implements OnInit {
     this.navCtrl.navigateByUrl('/');
   }
 
-  // Fonction utilitaire pour savoir si un champ est invalide
   isInvalid(field: string): boolean {
     return this.loginForm.controls[field].invalid && this.loginForm.controls[field].touched;
   }
