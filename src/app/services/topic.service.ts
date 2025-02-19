@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Firestore } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, deleteDoc, doc, docData, Firestore, setDoc } from '@angular/fire/firestore';
 import { Topic, Topics } from '../models/topic';
 import { Post } from '../models/post';
 import { Observable } from 'rxjs/internal/Observable';
@@ -30,24 +30,33 @@ export class TopicService {
   }
 
   getAll(): Observable<Topics> {
-    return this.topics$;
+    const topicsCollection = collection(this.firestore, 'topics');
+    return collectionData(topicsCollection, {idField: 'id'}) as Observable<Topics>;
   }
 
   get(topicId: string): Observable<Topic | undefined> {
-    return this.topics$.pipe(map((topics) => topics.find((topic) => topic.id === topicId)));
+    const topicDoc = doc(this.firestore, `topics/${topicId}`);
+    return docData(topicDoc, {idField: 'id'}) as Observable<Topic>;
   }
 
   addTopic(topic: Topic): void {
     if (!topic?.name.length) return;
-
     topic.id = generateUID();
-    this.topicsSubject$.next([...this.topicsSubject$.value, topic]);
+
+    const topicsCollection = collection(this.firestore, 'topics');
+    addDoc(topicsCollection, topic)
   }
 
   removeTopic(topic: Topic): void {
-    const updatedTopics = this.topicsSubject$.value.filter((t) => t.id !== topic.id);
-    this.topicsSubject$.next(updatedTopics);
+    const topicDoc = doc(this.firestore, `topics/${topic.id}`);
+    deleteDoc(topicDoc)
   }
+
+  private updateTopic(updatedTopic: Topic): void {
+    const topicDoc = doc(this.firestore, `topics/${updatedTopic.id}`);
+    setDoc(topicDoc, updatedTopic, { merge: true });
+  }
+
 
   addPost(post: Post, topicId: string): void {
     const topicIndex = this.topicsSubject$.value.findIndex((t) => t.id === topicId);
@@ -88,10 +97,4 @@ export class TopicService {
     this.updateTopic(topic);
   }
 
-  private updateTopic(updatedTopic: Topic): void {
-    const topics: Topics = this.topicsSubject$.value.map((topic: Topic) =>
-      topic.id == updatedTopic.id ? updatedTopic : topic
-    );
-    this.topicsSubject$.next(topics);
-  }
 }
