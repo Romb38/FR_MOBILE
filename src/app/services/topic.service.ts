@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { addDoc, collection, collectionData, deleteDoc, doc, docData, Firestore, setDoc } from '@angular/fire/firestore';
 import { Topic, Topics } from '../models/topic';
-import { Post } from '../models/post';
+import { Post, Posts } from '../models/post';
 import { Observable } from 'rxjs/internal/Observable';
 import { BehaviorSubject, map, take } from 'rxjs';
 import { generateUID } from '../utils/uuid';
@@ -16,18 +16,7 @@ export class TopicService {
   private firestore: Firestore = inject(Firestore);
   
   
-  constructor() {
-    this.topicsSubject$.next([
-      {
-        id: generateUID(),
-        name: 'This is my first topic',
-        posts: [
-          { id: generateUID(), name: 'Post #1', description: 'This is a description' },
-          { id: generateUID(), name: 'Post #2', description: 'This is a description' },
-        ],
-      },
-    ]);
-  }
+  constructor() {}
 
   getAll(): Observable<Topics> {
     const topicsCollection = collection(this.firestore, 'topics');
@@ -52,49 +41,36 @@ export class TopicService {
     deleteDoc(topicDoc)
   }
 
-  private updateTopic(updatedTopic: Topic): void {
+  updateTopic(updatedTopic: Topic): void {
     const topicDoc = doc(this.firestore, `topics/${updatedTopic.id}`);
     setDoc(topicDoc, updatedTopic, { merge: true });
   }
 
-
-  addPost(post: Post, topicId: string): void {
-    const topicIndex = this.topicsSubject$.value.findIndex((t) => t.id === topicId);
-    if (topicIndex === -1) return;
-
-    const topic = structuredClone(this.topicsSubject$.value[topicIndex]); // Clone for immutability.
-    post.id = generateUID();
-    topic.posts.push(post);
-    this.updateTopic(topic);
-  }
-
-  removePost(postId: string, topicId: string): void {
-    const topicIndex = this.topicsSubject$.value.findIndex((t) => t.id === topicId);
-    if (topicIndex === -1) return;
-
-    const topic = structuredClone(this.topicsSubject$.value[topicIndex]); // Clone for immutability.
-    topic.posts = topic.posts.filter((post) => post.id !== postId);
-
-    this.updateTopic(topic);
+  getAllPost(topicId : String): Observable<Posts> {
+    const postsCollection = collection(this.firestore, `topics/${topicId}/posts`);
+    return collectionData(postsCollection, {idField: 'id'}) as Observable<Posts>;
   }
 
   getPost(topicId: string, postId: string): Observable<Post | undefined> {
-    return this.get(topicId).pipe(
-      map((topic) => topic?.posts.find((post) => post.id === postId)),
-      take(1) // Automatically completes after one emission.
-    );
+    const postDoc = doc(this.firestore, `topics/${topicId}/posts/${postId}`);
+    return docData(postDoc, {idField: 'id'}) as Observable<Post>;
   }
 
+  addPost(post: Post, topicId: string): void {
+    post.id = generateUID();
+    const postsCollection = collection(this.firestore, `topics/${topicId}/posts`);
+    addDoc(postsCollection, post)
+  }
+
+  removePost(postId: string, topicId: string): void {
+    const postDoc = doc(this.firestore, `topics/${topicId}/posts/${postId}`);
+    deleteDoc(postDoc)
+  }
+
+
   editPost(updatedPost: Post, topicId: string): void {
-    const topicIndex = this.topicsSubject$.value.findIndex((t) => t.id === topicId);
-    if (topicIndex === -1) return;
-
-    const topic = structuredClone(this.topicsSubject$.value[topicIndex]);
-    const postIndex = topic.posts.findIndex((post) => post.id === updatedPost.id);
-    if (postIndex === -1) return;
-
-    topic.posts[postIndex] = updatedPost;
-    this.updateTopic(topic);
+    const postDoc = doc(this.firestore, `topics/${topicId}/posts/${updatedPost.id}`);
+    setDoc(postDoc, updatedPost, { merge: true });
   }
 
 }
