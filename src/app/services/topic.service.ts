@@ -15,23 +15,10 @@ export class TopicService {
   
   private firestore: Firestore = inject(Firestore);
   
-  
-  constructor() {
-    this.topicsSubject$.next([
-      {
-        id: generateUID(),
-        name: 'This is my first topic',
-        posts: [
-          { id: generateUID(), name: 'Post #1', description: 'This is a description' },
-          { id: generateUID(), name: 'Post #2', description: 'This is a description' },
-        ],
-      },
-    ]);
-  }
+  constructor() {}
 
   getAll(): Observable<Topics> {
     const topicsCollection = collection(this.firestore, 'topics');
-    console.log(topicsCollection)
     return collectionData(topicsCollection, {idField: 'id'}) as Observable<Topics>;
   }
 
