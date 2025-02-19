@@ -7,7 +7,7 @@
         </ion-buttons>
         <ion-title>Édition du post</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="this.save()" [strong]="true">Sauvegarder</ion-button>
+          <ion-button (click)="this.save()" [strong]="true" [disabled]="!isFormValid()">Sauvegarder</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
@@ -18,16 +18,35 @@
           labelPlacement="stacked"
           type="text"
           placeholder="Nom"
+          minlength="4"
+          maxlength="100"
+          #name="ngModel"
           [(ngModel)]="newEntity.name"
         ></ion-input>
       </ion-item>
-      <ion-input
-        label="Renseignez une description"
-        labelPlacement="stacked"
-        type="text"
-        placeholder="Description"
-        [(ngModel)]="newEntity.description"
-      ></ion-input>
+      <div *ngIf="name.invalid && (name.dirty || name.touched)">
+        <small *ngIf="name.errors?.['required']">Le nom est requis.</small>
+        <small *ngIf="name.errors?.['minlength']">Le nom doit avoir au moins 4 caractères.</small>
+        <small *ngIf="name.errors?.['maxlength']">Le nom ne peut pas dépasser 100 caractères.</small>
+      </div>
+      <ion-item>
+        <ion-input
+          label="Renseignez une description"
+          labelPlacement="stacked"
+          type="text"
+          placeholder="Description"
+          minlength="4"
+          maxlength="100"
+          #description="ngModel"
+          [(ngModel)]="newEntity.description"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="description.invalid && (description.dirty || description.touched)">
+        <small *ngIf="description.errors?.['required']">La description est requise.</small>
+        <small *ngIf="description.errors?.['minlength']">La description doit avoir au moins 4 caractères.</small>
+        <small *ngIf="description.errors?.['maxlength']">La description ne peut pas dépasser 100 caractères.</small>
+      </div>
     </ion-content>
+    <div>test</div>
   </ng-template>
 </ion-modal>
