@@ -3,11 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IonItem, IonLabel, IonList, IonContent, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { TopicService } from '../services/topic.service';
 import { Topic } from '../models/topic';
-import { Post } from '../models/post';
+import { Post, Posts } from '../models/post';
 import { ModalCreationComponent } from "../modal-creation/modal-creation.component";
 import { TopBarComponent } from "../top-bar/top-bar.component";
 import { Observable, switchMap } from 'rxjs';
-import {AsyncPipe, NgForOf} from '@angular/common';
+import {AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-topic-details',
@@ -22,7 +22,6 @@ import {AsyncPipe, NgForOf} from '@angular/common';
     IonIcon,
     ModalCreationComponent,
     TopBarComponent,
-    NgForOf,
     AsyncPipe,
   ],
 })
@@ -33,6 +32,7 @@ export class TopicDetailsComponent implements OnInit {
 
   topicId: string = '';
   topic$: Observable<Topic | undefined> = new Observable<Topic | undefined>();
+  posts : Observable<Posts> = new Observable;
   isModalVisible: boolean = false;
 
   ngOnInit() {
@@ -51,6 +51,8 @@ export class TopicDetailsComponent implements OnInit {
         this.router.navigate(['404']);
       }
     });
+
+    this.posts = this.topicService.getAllPost(this.topicId)
   }
 
   goToPost(post: Post): void {
