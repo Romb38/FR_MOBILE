@@ -1,20 +1,49 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonItem, IonButton, IonText, IonInput } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonInput, IonText, IonButton, IonItem, IonLabel, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, ReactiveFormsModule]
 })
 export class LoginPage implements OnInit {
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
+  private navCtrl = inject(Router)
+  private fb = inject(FormBuilder)
+  loginForm : FormGroup = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]]
+  });
+
+  constructor() {}
+
+  onLogin() {
+    if (this.loginForm.invalid) {
+      console.log('Formulaire invalide');
+      return;
+    }
+
+    console.log('Connexion avec:', this.loginForm.value);
+    this.navCtrl.navigateByUrl('/');
   }
 
+  // Fonction utilitaire pour savoir si un champ est invalide
+  isInvalid(field: string): boolean {
+    return this.loginForm.controls[field].invalid && this.loginForm.controls[field].touched;
+  }
+
+  goToRegister(){
+    this.navCtrl.navigateByUrl('/register');
+  }
+
+  goToForgotPassword(){
+    this.navCtrl.navigateByUrl('/forgot-password');
+  }
 }
