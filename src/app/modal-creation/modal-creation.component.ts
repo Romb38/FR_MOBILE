@@ -31,6 +31,9 @@ export class ModalCreationComponent {
   }
 
   save(): void {
+    if (!this.isFormValid()) {
+      return;
+    }
     if (this.isPostCreation()) {
       const topic = this.topicService.get(this.topicId);
       if (topic) {
@@ -43,6 +46,13 @@ export class ModalCreationComponent {
     }
     this.resetFormValues();
     this.closeModal();
+  }
+
+  isFormValid(): boolean {
+    return (
+      this.newEntity.name.length >= 4 && this.newEntity.name.length <= 100 &&
+      (!this.isPostCreation() || (this.newEntity.description.length >= 4 && this.newEntity.description.length <= 100))
+    );
   }
 
   resetFormValues(): void {

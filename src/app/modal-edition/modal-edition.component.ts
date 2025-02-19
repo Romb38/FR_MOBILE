@@ -15,12 +15,13 @@ import { FormsModule } from '@angular/forms';
 import { TopicService } from '../services/topic.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-modal-edition',
   templateUrl: './modal-edition.component.html',
   styleUrls: ['./modal-edition.component.scss'],
-  imports: [IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonContent, IonItem, IonInput, FormsModule],
+  imports: [IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonContent, IonItem, IonInput, FormsModule, NgIf],
 })
 export class ModalEditionComponent implements OnInit, OnDestroy {
   @Input() isVisible: boolean = false;
@@ -60,7 +61,16 @@ export class ModalEditionComponent implements OnInit, OnDestroy {
   }
 
   save(): void {
+    if (!this.isFormValid()) {
+      return;
+    }
     this.topicService.editPost(this.newEntity, this.topicId);
     this.closeModal();
+  }
+
+  isFormValid(): boolean {
+    return (
+      this.newEntity.description.length >= 4 && this.newEntity.description.length <= 100
+    );
   }
 }
