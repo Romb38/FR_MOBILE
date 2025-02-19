@@ -34,7 +34,7 @@ export class RegisterPage implements OnInit {
     }
     
     this.hasRegister=true;
-    console.log('Connexion avec:', this.loginForm.value);
+    console.log('Register with :', this.loginForm.value);
   }
 
   isInvalid(field: string): boolean {

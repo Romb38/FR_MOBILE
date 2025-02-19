@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
       return;
     }
 
-    console.log('Connexion avec:', this.loginForm.value);
+    console.log('Login with :', this.loginForm.value);
     this.navCtrl.navigateByUrl('/');
   }
 

@@ -33,12 +33,13 @@ constructor() { }
     }
     
     this.hasEntered = true;
-    console.log('Connexion avec:', this.loginForm.value);
+    console.log(' Forgot password with :', this.loginForm.value);
   }
 
   isInvalid(field: string): boolean {
     return this.loginForm.controls[field].invalid && this.loginForm.controls[field].touched;
   }
+
   goToLogIn(){
     this.navCtrl.navigateByUrl("/login");
   }
