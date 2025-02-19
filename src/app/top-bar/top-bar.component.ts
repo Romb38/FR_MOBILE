@@ -16,7 +16,7 @@ import { IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonIcon } from 
 })
 export class TopBarComponent  implements OnInit {
 
-  @Input() title! : String;
+  @Input() title : String = "";
   @Input() backRoute : String = ""
   butonId : String =""
   private router: Router = inject(Router)
@@ -24,7 +24,9 @@ export class TopBarComponent  implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.butonId = this.title.trim().split(/\s+/)[0] || '';
+    if (this.title){
+      this.butonId = this.title.trim().split(/\s+/)[0] || '';
+    }
     console.log(this.butonId)
   }
 
