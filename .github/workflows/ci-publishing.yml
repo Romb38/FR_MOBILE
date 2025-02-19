@@ -16,9 +16,9 @@ jobs:
 
       - name: Add env secrets
         env:
-          ENVIRONNEMENTTS: ${{ secrets.ENVIRONNEMENTTS }}
+          ENVIRONNEMENT_TESTTS: ${{ secrets.ENVIRONNEMENT_TESTTS }}
         run: 
-           echo "$KEYSTORE" | base64 --decode > src/environments/environment.ts
+           echo "$ENVIRONNEMENT_TESTTS" | base64 --decode > src/environments/environment.ts
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
@@ -57,7 +57,7 @@ jobs:
         env:
           ENVIRONNEMENTTS: ${{ secrets.ENVIRONNEMENTTS }}
         run: 
-           echo "$KEYSTORE" | base64 --decode > src/environments/environment.ts
+           echo "$ENVIRONNEMENTTS" | base64 --decode > src/environments/environment.ts
 
       - name: Build Ionic app
         env:
