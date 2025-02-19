@@ -16,10 +16,22 @@ export class TopicService {
   private firestore: Firestore = inject(Firestore);
   
   
-  constructor() {}
+  constructor() {
+    this.topicsSubject$.next([
+      {
+        id: generateUID(),
+        name: 'This is my first topic',
+        posts: [
+          { id: generateUID(), name: 'Post #1', description: 'This is a description' },
+          { id: generateUID(), name: 'Post #2', description: 'This is a description' },
+        ],
+      },
+    ]);
+  }
 
   getAll(): Observable<Topics> {
     const topicsCollection = collection(this.firestore, 'topics');
+    console.log(topicsCollection)
     return collectionData(topicsCollection, {idField: 'id'}) as Observable<Topics>;
   }
 
@@ -66,7 +78,6 @@ export class TopicService {
     const postDoc = doc(this.firestore, `topics/${topicId}/posts/${postId}`);
     deleteDoc(postDoc)
   }
-
 
   editPost(updatedPost: Post, topicId: string): void {
     const postDoc = doc(this.firestore, `topics/${topicId}/posts/${updatedPost.id}`);
