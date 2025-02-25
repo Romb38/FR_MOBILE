@@ -8,7 +8,7 @@
   @if (this.hasRegister) {
     <p> Your account has been created ! </p>
   } @else {
-    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <form [formGroup]="loginForm" (ngSubmit)="onRegister()">
       <ion-item>
         <ion-label position="floating">Email</ion-label>
         <ion-input type="email" formControlName="email"></ion-input>

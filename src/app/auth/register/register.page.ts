@@ -4,6 +4,7 @@ import { FormBuilder, Validators, ReactiveFormsModule, FormGroup, ValidatorFn, A
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonItem, IonText, IonButton, IonInput } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { has } from 'cypress/types/lodash';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -21,8 +22,8 @@ export class RegisterPage implements OnInit {
   }
 
   private navCtrl = inject(Router)
-
   private fb = inject(FormBuilder)
+  private authController = inject(AuthService)
   protected loginForm: FormGroup = this.fb.group(
     {
       email: ['', [Validators.required, Validators.email]],
@@ -33,14 +34,14 @@ export class RegisterPage implements OnInit {
   );
   protected hasRegister : boolean = false;
   
-  onLogin() {
+  onRegister() {
     if (this.loginForm.invalid) {
       console.log('Formulaire invalide');
       return;
     }
     
     this.hasRegister=true;
-    console.log('Register with :', this.loginForm.value);
+    this.authController.registerNewUser(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value)
   }
 
   isInvalid(field: string): boolean {
