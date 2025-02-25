@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, Validators, FormControl, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule, FormGroup, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonItem, IonText, IonButton, IonInput } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { has } from 'cypress/types/lodash';
@@ -23,12 +23,14 @@ export class RegisterPage implements OnInit {
   private navCtrl = inject(Router)
 
   private fb = inject(FormBuilder)
-  protected loginForm : FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]],
-    confirmPassword: ['', [Validators.required]]
-  },
-{ validators: this.passwordMatchValidator});
+  protected loginForm: FormGroup = this.fb.group(
+    {
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, this.strongPasswordValidator()]],
+      confirmPassword: ['', [Validators.required]]
+    },
+    { validators: this.passwordMatchValidator }
+  );
   protected hasRegister : boolean = false;
   
   onLogin() {
@@ -50,6 +52,20 @@ export class RegisterPage implements OnInit {
       ? null
       : { passwordMismatch: true };
   }
+
+  strongPasswordValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const password = control.value;
+      const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}$/;
+  
+      if (!password || strongPasswordRegex.test(password)) {
+        return null;
+      }
+  
+      return { weakPassword: true };
+    };
+  }
+  
 
   goToLogIn(){
     this.navCtrl.navigateByUrl("/login");

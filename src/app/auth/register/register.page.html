@@ -24,6 +24,9 @@
       </ion-item>
       <ion-text color="danger" *ngIf="isInvalid('password')">
         <p *ngIf="loginForm.controls['password'].errors?.['required']">Password is required</p>
+        <ion-text color="danger" *ngIf="loginForm.controls['password'].hasError('weakPassword')">
+          <p>Password must be at least 8 characters long, include uppercase, lowercase, a number, and a special character.</p>
+        </ion-text>
       </ion-text>
       
       <ion-item>
@@ -31,7 +34,7 @@
         <ion-input type="password" formControlName="confirmPassword"></ion-input>
       </ion-item>
       <ion-text color="danger" *ngIf="isInvalid('confirmPassword') || loginForm.controls['confirmPassword'].touched">
-        <p *ngIf="loginForm.controls['confirmPassword'].errors?.['required']">Confirmation password is required</p>
+        <p *ngIf="loginForm.controls['confirmPassword'].errors?.['required'] && !loginForm.hasError('passwordMismatch')">Confirmation password is required</p>
         <p *ngIf="loginForm.hasError('passwordMismatch')">Passwords do not match</p>
       </ion-text>
       
