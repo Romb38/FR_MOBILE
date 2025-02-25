@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Auth, User, user } from '@angular/fire/auth'
+import { Auth, createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, User, user, UserCredential } from '@angular/fire/auth'
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,4 +12,19 @@ export class AuthService {
     return user(this.fireauth)
   }
 
+  logOutConnectedUser() : Promise<void> {
+    return signOut(this.fireauth);
+  }
+
+  sendForgotPasswordEmail(email : string) : Promise<void> {
+    return sendPasswordResetEmail(this.fireauth, email)
+  }
+
+  logInUser(email: string, password: string) : Promise<UserCredential> {
+    return signInWithEmailAndPassword(this.fireauth, email, password);
+  }
+
+  registerNewUser(email: string, password: string) : Promise<UserCredential>{
+    return createUserWithEmailAndPassword(this.fireauth, email, password);
+  }
 }
