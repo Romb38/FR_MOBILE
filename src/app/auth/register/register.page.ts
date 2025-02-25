@@ -28,7 +28,7 @@ export class RegisterPage implements OnInit {
     password: ['', [Validators.required]],
     confirmPassword: ['', [Validators.required]]
   },
-{ validators: this.passwordMatchValidator, updateOn: 'blur' });
+{ validators: this.passwordMatchValidator});
   protected hasRegister : boolean = false;
   
   onLogin() {
