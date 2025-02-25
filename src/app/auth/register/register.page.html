@@ -6,7 +6,7 @@
 
 <ion-content [fullscreen]="true">
   @if (this.hasRegister) {
-    <p> If your email coresspond to an actual account, you will receive an email with instruction to setup your password </p>
+    <p> Your account has been created ! </p>
   } @else {
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
       <ion-item>
@@ -15,8 +15,26 @@
       </ion-item>
       <ion-text color="danger" *ngIf="isInvalid('email')">
         <p *ngIf="loginForm.controls['email'].errors?.['required']">Email is required</p>
-        <p *ngIf="loginForm.controls['email'].errors?.['invalid']">Email is required</p>
+        <p *ngIf="loginForm.controls['email'].errors?.['email']">Invalid email format</p>
       </ion-text>
+      
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="isInvalid('password')">
+        <p *ngIf="loginForm.controls['password'].errors?.['required']">Password is required</p>
+      </ion-text>
+      
+      <ion-item>
+        <ion-label position="floating">Confirm Password</ion-label>
+        <ion-input type="password" formControlName="confirmPassword"></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="isInvalid('confirmPassword') || loginForm.controls['confirmPassword'].touched">
+        <p *ngIf="loginForm.controls['confirmPassword'].errors?.['required']">Confirmation password is required</p>
+        <p *ngIf="loginForm.hasError('passwordMismatch')">Passwords do not match</p>
+      </ion-text>
+      
       <ion-button expand="full" type="submit" [disabled]="loginForm.invalid">Register</ion-button>
     </form>
   }

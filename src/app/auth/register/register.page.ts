@@ -17,6 +17,7 @@ export class RegisterPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    
   }
 
   private navCtrl = inject(Router)
@@ -24,7 +25,10 @@ export class RegisterPage implements OnInit {
   private fb = inject(FormBuilder)
   protected loginForm : FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-  });
+    password: ['', [Validators.required]],
+    confirmPassword: ['', [Validators.required]]
+  },
+{ validators: this.passwordMatchValidator, updateOn: 'blur' });
   protected hasRegister : boolean = false;
   
   onLogin() {
@@ -39,6 +43,12 @@ export class RegisterPage implements OnInit {
 
   isInvalid(field: string): boolean {
     return this.loginForm.controls[field].invalid && this.loginForm.controls[field].touched;
+  }
+
+  private passwordMatchValidator(form: FormGroup) {
+    return form.get('password')?.value === form.get('confirmPassword')?.value
+      ? null
+      : { passwordMismatch: true };
   }
 
   goToLogIn(){

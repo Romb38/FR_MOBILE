@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonText, IonButton } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 
@@ -20,24 +20,23 @@ constructor() { }
 
   private navCtrl = inject(Router)
   protected hasEntered : Boolean = false;
-  
   private fb = inject(FormBuilder)
-  protected loginForm : FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
+  protected forgotloginForm : FormGroup = this.fb.group({
+    forgot_email: ['', [Validators.required, Validators.email]],
   });
   
   onLogin() {
-    if (this.loginForm.invalid) {
+    if (this.forgotloginForm.invalid) {
       console.log('Formulaire invalide');
       return;
     }
     
     this.hasEntered = true;
-    console.log(' Forgot password with :', this.loginForm.value);
+    console.log(' Forgot password with :', this.forgotloginForm.value);
   }
 
   isInvalid(field: string): boolean {
-    return this.loginForm.controls[field].invalid && this.loginForm.controls[field].touched;
+    return this.forgotloginForm.controls[field].invalid && this.forgotloginForm.controls[field].touched;
   }
 
   goToLogIn(){
