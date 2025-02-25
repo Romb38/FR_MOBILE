@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonText, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonText, IonButton, IonInput } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,20 +9,29 @@ import { Router } from '@angular/router';
   templateUrl: './forgot-password.page.html',
   styleUrls: ['./forgot-password.page.scss'],
   standalone: true,
-  imports: [IonButton, IonText, IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, ReactiveFormsModule]
+  imports: [IonInput, 
+    IonButton, 
+    IonText, 
+    IonLabel, 
+    IonItem, 
+    IonContent, 
+    IonHeader, 
+    IonTitle,
+    IonToolbar,
+    CommonModule,
+    ReactiveFormsModule,
+  ]
 })
 export class ForgotPasswordPage implements OnInit {
 
 constructor() { }
 
-  ngOnInit() {
-  }
-
-  private navCtrl = inject(Router)
+  ngOnInit() { }
   protected hasEntered : Boolean = false;
+  private navCtrl = inject(Router)
   private fb = inject(FormBuilder)
   protected forgotloginForm : FormGroup = this.fb.group({
-    forgot_email: ['', [Validators.required, Validators.email]],
+    forgot_email: ['', [Validators.required, Validators.email]]
   });
   
   onLogin() {
