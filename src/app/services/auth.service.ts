@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, User, user, UserCredential } from '@angular/fire/auth'
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,17 @@ export class AuthService {
 
   getConnectedUser() : Observable<User | null> {
     return user(this.fireauth)
+  }
+
+  isAuth() :  Observable<boolean> {
+    const _authService = inject(AuthService)
+    const _router = inject(Router)
+    return _authService.getConnectedUser().pipe(
+      map(user => {
+        if (!user) _router.navigateByUrl('/login');
+        return !!user;
+      })
+    )
   }
 
   logOutConnectedUser() : Promise<void> {
