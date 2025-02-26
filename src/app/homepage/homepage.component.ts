@@ -1,11 +1,12 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TopicService } from '../services/topic.service';
-import { IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
 import { ModalCreationComponent } from "../modal-creation/modal-creation.component";
 import { Router } from '@angular/router';
 import { Topic, Topics } from '../models/topic';
 import { Observable } from 'rxjs/internal/Observable';
 import { AsyncPipe } from '@angular/common';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-homepage',
@@ -22,7 +23,9 @@ import { AsyncPipe } from '@angular/common';
     IonContent,
     IonIcon,
     ModalCreationComponent,
-    AsyncPipe
+    AsyncPipe,
+    IonButtons,
+    IonButton
 ],
 })
 export class HomepageComponent {
@@ -30,6 +33,7 @@ export class HomepageComponent {
 
   private router: Router = inject(Router);
   protected topicService = inject(TopicService);
+  protected auth : AuthService = inject(AuthService)
   topics: Observable<Topics> = this.topicService.getAll();
 
   seeDetails(topicId: string): void{
@@ -46,5 +50,12 @@ export class HomepageComponent {
 
   deleteItem(topic : Topic): void {
     this.topicService.removeTopic(topic)
+  }
+
+  logout(){
+    this.auth.logOutConnectedUser()
+    this.router.navigate(["login"]).then(() => {
+      window.location.reload();
+    });
   }
 }

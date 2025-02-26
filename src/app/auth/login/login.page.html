@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    
+    @if (this.logOutMessage != "") {
+      <ion-text color="danger">
+        <p> {{this.logOutMessage}} </p>
+      </ion-text>
+    }
+
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="email" formControlName="email"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="isInvalid('email')">
+      <p *ngIf="loginForm.controls['email'].errors?.['required']">Email is required</p>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="isInvalid('password')">
+      <p *ngIf="loginForm.controls['password'].errors?.['required']">Password is required</p>
+    </ion-text>
+
+    @if (this.errorMessage != "") {
+      <ion-text color="danger">
+        <p> {{this.errorMessage}} </p>
+      </ion-text>
+    }
+
+    <ion-button expand="full" type="submit" [disabled]="loginForm.invalid">Login</ion-button>
+  </form>
+  <ion-button expand="full" (click)="goToForgotPassword()">Forgot Password ?</ion-button>
+  <ion-button expand="full" (click)="goToRegister()">Register</ion-button>
+
+</ion-content>

@@ -1,6 +1,7 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-top-bar',
@@ -20,6 +21,7 @@ export class TopBarComponent  implements OnInit {
   @Input() backRoute : String = ""
   butonId : String =""
   private router: Router = inject(Router)
+  protected auth : AuthService = inject(AuthService)
 
   constructor() { }
 
@@ -32,5 +34,12 @@ export class TopBarComponent  implements OnInit {
 
   goTo(){
     this.router.navigate([this.backRoute])
+  }
+
+  logout(){
+    this.auth.logOutConnectedUser()
+    this.router.navigate(["login"]).then(() => {
+      window.location.reload();
+    });
   }
 }

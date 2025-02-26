@@ -34,9 +34,14 @@ jobs:
       - name: Add env secrets
         env:
           ENVIRONNEMENTTS: ${{ secrets.ENVIRONNEMENTTS }}
-        run: 
+        run: |
            echo "$ENVIRONNEMENTTS
            " | base64 --decode > src/environments/environment.ts
+          
+           echo "$ENVIRONNEMENTTS
+           " | base64 --decode > src/environments/environment.prod.ts
+           
+           
 
       - name: Build Ionic app
         env:
