@@ -6,7 +6,7 @@
 
 <ion-content [fullscreen]="true">
   @if (this.hasRegister) {
-    <p> Your account has been created ! </p>
+    <p> Your account has been created, please check your email to verify it ! </p>
   } @else {
     <form [formGroup]="loginForm" (ngSubmit)="onRegister()">
       <ion-item>

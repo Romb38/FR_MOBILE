@@ -42,8 +42,12 @@ export class RegisterPage implements OnInit {
     }
     
     
-    this.authController.registerNewUser(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value)    .then( () => {this.navCtrl.navigateByUrl('/');})
-    .then(() => {this.hasRegister=true;})
+    this.authController.registerNewUser(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value)
+    .then(() => {
+      this.hasRegister=true;
+      this.authController.sendVerifyEmailLink()
+      this.authController.logOutConnectedUser("Please verify your email !")
+    })
     .catch( (reason : any) => {
       if (reason instanceof FirebaseError){
               let error = reason as FirebaseError;

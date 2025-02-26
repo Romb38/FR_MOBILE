@@ -1,10 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonItem, IonButton, IonText, IonInput } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirebaseError } from '@angular/fire/app';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {}
 
+  @Input() protected logOutMessage = ""
   private navCtrl = inject(Router)
   private fb = inject(FormBuilder)
   private authController = inject(AuthService)
@@ -36,7 +38,27 @@ export class LoginPage implements OnInit {
     }
 
     this.authController.logInUser(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value)
-    .then( () => {this.navCtrl.navigateByUrl('/');})
+    .then( () => {
+      
+      this.authController.getConnectedUser().pipe(take(1)).subscribe((user) => {
+        if (!user){
+          this.authController.logOutConnectedUser("An error has occured !").then(() => {
+            this.navCtrl.navigate(['/'])
+          })
+        } else {
+          if (!user.emailVerified){
+            this.authController.sendVerifyEmailLink()
+            this.authController.logOutConnectedUser("Please verify your email, we have sent you another link !").then(() => {
+              this.navCtrl.navigate(['/'])
+            })
+          } else {
+            this.navCtrl.navigate(['/'])
+          }
+        }
+
+      })
+      
+    })
     .catch( (reason : any) => {
       if (reason instanceof FirebaseError){
         let error = reason as FirebaseError;
