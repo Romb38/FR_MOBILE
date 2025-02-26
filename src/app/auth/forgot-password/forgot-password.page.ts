@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonText, IonButton, IonInput } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { FirebaseError } from '@angular/fire/app';
 
 @Component({
   selector: 'app-forgot-password',
@@ -35,6 +36,7 @@ constructor() { }
   protected forgotloginForm : FormGroup = this.fb.group({
     forgot_email: ['', [Validators.required, Validators.email]]
   });
+  protected errorMessage : String = ""
   
   onForgotPassword() {
     if (this.forgotloginForm.invalid) {
@@ -42,8 +44,24 @@ constructor() { }
       return;
     }
     
-    this.hasEntered = true;
     this.authController.sendForgotPasswordEmail(this.forgotloginForm.get('forgot_email')?.value)
+    .then(() => {    this.hasEntered = true; })
+        .catch( (reason : any) => {
+          if (reason instanceof FirebaseError){
+            let error = reason as FirebaseError;
+            console.log(error)
+            switch (error.code) {
+              case "auth/invalid-email" :
+                this.errorMessage = "This email is not valid"
+                break;
+              default:
+                this.errorMessage = "An error as occured, please retry or contact an administrator"
+                break;
+            }
+          } else {
+            this.errorMessage = "An error as occured, please retry or contact an administrator"
+          } 
+        })
   }
 
   isInvalid(field: string): boolean {
