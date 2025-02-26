@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonItem, IonButton, IonText, IonInput } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { FirebaseError } from '@angular/fire/app';
 
 @Component({
   selector: 'app-login',
@@ -23,17 +24,34 @@ export class LoginPage implements OnInit {
     email: ['', [Validators.required]],
     password: ['', [Validators.required]]
   });
+  protected errorMessage = ""
 
   constructor() {}
 
   onLogin() {
+    this.errorMessage = ""
     if (this.loginForm.invalid) {
       console.log('Formulaire invalide');
       return;
     }
 
     this.authController.logInUser(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value)
-    this.navCtrl.navigateByUrl('/');
+    .then( () => {this.navCtrl.navigateByUrl('/');})
+    .catch( (reason : any) => {
+      if (reason instanceof FirebaseError){
+        let error = reason as FirebaseError;
+        switch (error.code) {
+          case "auth/invalid-credential" :
+            this.errorMessage = "Invalid e-mail or password"
+            break;
+          default:
+            this.errorMessage = "An error as occured, please retry or contact an administrator"
+            break;
+        }
+      } else {
+        this.errorMessage = "An error as occured, please retry or contact an administrator"
+      } 
+    })
   }
 
   isInvalid(field: string): boolean {

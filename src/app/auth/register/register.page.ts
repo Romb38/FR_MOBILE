@@ -5,6 +5,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonItem, IonText
 import { Router } from '@angular/router';
 import { has } from 'cypress/types/lodash';
 import { AuthService } from 'src/app/services/auth.service';
+import { FirebaseError } from '@angular/fire/app';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +21,7 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
     
   }
-
+  
   private navCtrl = inject(Router)
   private fb = inject(FormBuilder)
   private authController = inject(AuthService)
@@ -33,6 +34,7 @@ export class RegisterPage implements OnInit {
     { validators: this.passwordMatchValidator }
   );
   protected hasRegister : boolean = false;
+  protected errorMessage : String = ""
   
   onRegister() {
     if (this.loginForm.invalid) {
@@ -40,8 +42,31 @@ export class RegisterPage implements OnInit {
       return;
     }
     
-    this.hasRegister=true;
-    this.authController.registerNewUser(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value)
+    
+    this.authController.registerNewUser(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value)    .then( () => {this.navCtrl.navigateByUrl('/');})
+    .then(() => {this.hasRegister=true;})
+    .catch( (reason : any) => {
+      if (reason instanceof FirebaseError){
+              let error = reason as FirebaseError;
+              console.log(error)
+              switch (error.code) {
+                case "auth/invalid-email" :
+                  this.errorMessage = "Invalid e-mail, please provide a valid email"
+                  break;
+                case "auth/invalid-password" : 
+                  this.errorMessage = "Invalid password, it must be at least 8 characters long, include uppercase, lowercase, a number, and a special character."
+                  break;
+                case "auth/email-already-in-use" :
+                  this.errorMessage = `This e-mail is already taken, if it's your account you can try to <a [routerLink]=\"['/forgot-password']\"> reset your password </a>`
+                  break
+                default:
+                  this.errorMessage = "An error as occured, please retry or contact an administrator"
+                  break;
+              }
+            } else {
+              this.errorMessage = "An error as occured, please retry or contact an administrator"
+            } 
+    })
   }
 
   isInvalid(field: string): boolean {

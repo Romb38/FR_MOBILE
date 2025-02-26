@@ -23,6 +23,12 @@
       <p *ngIf="loginForm.controls['password'].errors?.['required']">Password is required</p>
     </ion-text>
 
+    @if (this.errorMessage != "") {
+      <ion-text color="danger">
+        <p [innerHTML]="errorMessage"></p>
+      </ion-text>
+    }
+
     <ion-button expand="full" type="submit" [disabled]="loginForm.invalid">Login</ion-button>
   </form>
   <ion-button expand="full" (click)="goToForgotPassword()">Forgot Password ?</ion-button>
