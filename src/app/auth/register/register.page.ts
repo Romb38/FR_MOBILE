@@ -2,8 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, Validators, ReactiveFormsModule, FormGroup, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonItem, IonText, IonButton, IonInput } from '@ionic/angular/standalone';
-import { Router } from '@angular/router';
-import { has } from 'cypress/types/lodash';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirebaseError } from '@angular/fire/app';
 
@@ -12,7 +11,7 @@ import { FirebaseError } from '@angular/fire/app';
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   standalone: true,
-  imports: [IonInput, IonButton, IonText, IonItem, IonLabel, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, ReactiveFormsModule]
+  imports: [IonInput, IonButton, IonText, IonItem, IonLabel, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, ReactiveFormsModule, RouterLink]
 })
 export class RegisterPage implements OnInit {
 
@@ -48,7 +47,6 @@ export class RegisterPage implements OnInit {
     .catch( (reason : any) => {
       if (reason instanceof FirebaseError){
               let error = reason as FirebaseError;
-              console.log(error)
               switch (error.code) {
                 case "auth/invalid-email" :
                   this.errorMessage = "Invalid e-mail, please provide a valid email"
@@ -57,7 +55,7 @@ export class RegisterPage implements OnInit {
                   this.errorMessage = "Invalid password, it must be at least 8 characters long, include uppercase, lowercase, a number, and a special character."
                   break;
                 case "auth/email-already-in-use" :
-                  this.errorMessage = `This e-mail is already taken, if it's your account you can try to <a [routerLink]=\"['/forgot-password']\"> reset your password </a>`
+                  this.errorMessage = `This e-mail is already taken, if it's your account you can try to`
                   break
                 default:
                   this.errorMessage = "An error as occured, please retry or contact an administrator"

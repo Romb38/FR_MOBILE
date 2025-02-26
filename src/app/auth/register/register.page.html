@@ -40,10 +40,14 @@
       
       @if (this.errorMessage != "") {
         <ion-text color="danger">
-          <p [innerHTML]="errorMessage"></p>
+          <p> {{this.errorMessage}}
+        @if (this.errorMessage.includes("already taken")) {
+          <a [routerLink]="['/forgot-password']"> reset your password </a>
+        }
+        </p>
         </ion-text>
       }
-      
+
       <ion-button expand="full" type="submit" [disabled]="loginForm.invalid">Register</ion-button>
     </form>
   }
