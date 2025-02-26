@@ -44,6 +44,9 @@ export class LoginPage implements OnInit {
           case "auth/invalid-credential" :
             this.errorMessage = "Invalid e-mail or password"
             break;
+          case "auth/invalid-email":
+            this.errorMessage = "Invalid e-mail or password"
+            break;
           default:
             this.errorMessage = "An error as occured, please retry or contact an administrator"
             break;
