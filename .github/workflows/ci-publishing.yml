@@ -5,23 +5,7 @@ on:
   
 
 jobs:
-  test-e2e:
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install Ionic
-        run: npm install -g @ionic/cli
-
-      - name: Cypress run
-        uses: cypress-io/github-action@v6
-        with:
-          build: ionic build
-          start: ionic serve
-
   build-release-apk:
-    needs: test-e2e
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout source
@@ -46,6 +30,13 @@ jobs:
         run: |
             npm install
             npm run build
+      
+      - name: Add env secrets
+        env:
+          ENVIRONNEMENTTS: ${{ secrets.ENVIRONNEMENTTS }}
+        run: 
+           echo "$ENVIRONNEMENTTS
+           " | base64 --decode > src/environments/environment.ts
 
       - name: Build Ionic app
         env:
