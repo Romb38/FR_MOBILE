@@ -9,6 +9,7 @@ import { map, Observable, take } from 'rxjs';
 })
 export class AuthService {
   private fireauth = inject(Auth)
+  private router = inject(Router)
   private toastController = inject(ToastController)
 
   getConnectedUser() : Observable<User | null> {
@@ -16,11 +17,9 @@ export class AuthService {
   }
 
   isAuth() :  Observable<boolean> {
-    const _authService = inject(AuthService)
-    const _router = inject(Router)
-    return _authService.getConnectedUser().pipe(
+    return this.getConnectedUser().pipe(
       map(user => {
-        if (!user) _router.navigateByUrl('/login');
+        if (!user) this.router.navigateByUrl('/login');
         return !!user;
       })
     )
@@ -42,7 +41,7 @@ export class AuthService {
       position: 'bottom',
     });
     await toast.present();
-    
+
     return signOut(this.fireauth);
   }
 
