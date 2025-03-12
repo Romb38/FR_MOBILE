@@ -84,18 +84,32 @@ export class TopicService {
     setDoc(postDoc, updatedPost, { merge: true });
   }
 
-  addReader(post:Post, email:string): void{
+  addReader(topic: Topic, email:string): void{
   }
 
-  addWriter(post:Post, email:string): void {
+  addWriter(topic: Topic, email:string): void {
   }
 
-  canRead(post: Post) : boolean {
-    return true;
+  canRead(topic: Topic) : Observable<boolean> {
+    return this.authService.getUserEmail().pipe(
+      map((email) =>{
+          if(email == topic.author || email in topic.readers){
+            return true
+          }
+          return false
+      })
+    )
   }
 
-  canWrite(post: Post) : boolean {
-    return true;
+  canWrite(topic: Topic) : Observable<boolean> {
+    return this.authService.getUserEmail().pipe(
+      map((email) =>{
+          if(email == topic.author || email in topic.editors){
+            return true
+          }
+          return false
+      })
+    )
   }
 
 }
