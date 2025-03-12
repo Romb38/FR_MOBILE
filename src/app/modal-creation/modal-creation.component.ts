@@ -6,6 +6,8 @@ import { TopicService } from '../services/topic.service';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
+import {AuthService} from '../services/auth.service';
+import {firstValueFrom} from 'rxjs';
 
 
 @Component({
@@ -20,6 +22,7 @@ export class ModalCreationComponent {
   @Output() close = new EventEmitter<void>();
 
   private topicService: TopicService = inject(TopicService);
+  private authService: AuthService = inject(AuthService);
   protected newEntity: { name: '', description: '' } = { name: '', description: '' };
 
   closeModal(): void {
@@ -30,18 +33,29 @@ export class ModalCreationComponent {
     return this.topicId.length > 0;
   }
 
-  save(): void {
+  async save(): Promise<void> {
     if (!this.isFormValid()) {
       return;
     }
+    const author = await firstValueFrom(this.authService.getConnectedUser());
     if (this.isPostCreation()) {
       const topic = this.topicService.get(this.topicId);
       if (topic) {
-        const newPost: Post = {id: '', name: this.newEntity.name, description: this.newEntity.description};
+        const newPost: Post = {
+          id: '',
+          name: this.newEntity.name,
+          description: this.newEntity.description,
+          author: author!.uid
+        };
         this.topicService.addPost(newPost, this.topicId);
       }
     } else {
-      const newTopic: Topic = {id: '', name: this.newEntity.name, posts: []};
+      const newTopic: Topic = {
+        id: '',
+        name: this.newEntity.name,
+        posts: [],
+        author: author!.uid,
+      };
       this.topicService.addTopic(newTopic);
     }
     this.resetFormValues();
