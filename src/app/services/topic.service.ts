@@ -5,6 +5,7 @@ import { Post, Posts } from '../models/post';
 import { Observable } from 'rxjs/internal/Observable';
 import { BehaviorSubject, map, take } from 'rxjs';
 import { generateUID } from '../utils/uuid';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,8 @@ export class TopicService {
   public topics$: Observable<Topics> = this.topicsSubject$.asObservable(); // Exposes a safe, read-only observable to other components/services.
   
   private firestore: Firestore = inject(Firestore);
+  private authService : AuthService = inject(AuthService);
+  
   
   constructor() {}
 
@@ -28,11 +31,21 @@ export class TopicService {
   }
 
   addTopic(topic: Topic): void {
-    if (!topic?.name.length) return;
-    topic.id = generateUID();
+    this.authService.getUserEmail().pipe(
+      map((email) => {
+        if (email){
+          topic.author = email
+        } else {
+          return
+        }
 
-    const topicsCollection = collection(this.firestore, 'topics');
-    addDoc(topicsCollection, topic)
+        if (!topic?.name.length) return;
+        topic.id = generateUID();
+
+        const topicsCollection = collection(this.firestore, 'topics');
+        addDoc(topicsCollection, topic)
+      })
+    )
   }
 
   removeTopic(topic: Topic): void {
@@ -69,6 +82,20 @@ export class TopicService {
   editPost(updatedPost: Post, topicId: string): void {
     const postDoc = doc(this.firestore, `topics/${topicId}/posts/${updatedPost.id}`);
     setDoc(postDoc, updatedPost, { merge: true });
+  }
+
+  addReader(post:Post, email:string): void{
+  }
+
+  addWriter(post:Post, email:string): void {
+  }
+
+  canRead(post: Post) : boolean {
+    return true;
+  }
+
+  canWrite(post: Post) : boolean {
+    return true;
   }
 
 }
