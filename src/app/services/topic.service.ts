@@ -176,37 +176,18 @@ export class TopicService {
     setDoc(topicDoc, updatedTopic, { merge: true });
   }
 
-  isOwner(topic: Topic) : Observable<boolean> {
-    return this.authService.getUserEmail().pipe(
-      map((email) =>{
-          if(email === topic.author){
-            return true
-          }
-          return false
-      })
-    )
+  removeTopicReader(topic: Topic, old_email:string): void{
+    const {isOwner, isWriter, isReader, ...updatedTopic} = topic;
+    updatedTopic.readers = updatedTopic.readers.filter(email => email != old_email)
+    const topicDoc = doc(this.firestore, `topics/${updatedTopic.id}`);
+    setDoc(topicDoc, updatedTopic, { merge: true });
   }
 
-  canReadTopic(topic: Topic) : Observable<boolean> {
-    return this.authService.getUserEmail().pipe(
-      map((email) =>{
-          if(email === topic.author || email in topic.readers || email in topic.editors){
-            return true
-          }
-          return false
-      })
-    )
-  }
-
-  canWriteTopic(topic: Topic) : Observable<boolean> {
-    return this.authService.getUserEmail().pipe(
-      map((email) =>{
-          if(email === topic.author || email in topic.editors){
-            return true
-          }
-          return false
-      })
-    )
+  removeTopicWriter(topic: Topic, old_email:string): void {
+    const {isOwner, isWriter, isReader, ...updatedTopic} = topic;
+    updatedTopic.editors = updatedTopic.editors.filter(email => email != old_email)
+    const topicDoc = doc(this.firestore, `topics/${updatedTopic.id}`);
+    setDoc(topicDoc, updatedTopic, { merge: true });
   }
 
 }

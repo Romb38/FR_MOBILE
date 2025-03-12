@@ -1,0 +1,44 @@
+<ion-modal [isOpen]="isVisible" trigger="open-modal" (willDismiss)="this.closeModal()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="this.closeModal()">Annuler</ion-button>
+        </ion-buttons>
+        <ion-title>Gérer les partages</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      @if (this.topic.readers.length > 0) {
+        <ion-label>Lecteurs</ion-label>
+        <ion-list lines="full">
+          @for (reader of this.topic.readers; track this.topic.readers) {
+            <ion-item>
+              <ion-label [title]="reader"> {{ reader }} </ion-label>
+                <ion-button data-action="delete" fill="clear" slot="end" (click)="removeReader(reader)">
+                  <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
+                </ion-button>
+            </ion-item>
+          }
+        </ion-list>
+      }
+
+      @if (this.topic.editors.length > 0) {
+        <ion-label>Ecrivains</ion-label>
+        <ion-list lines="full">
+          @for (editor of this.topic.editors; track this.topic.editors) {
+            <ion-item>
+              <ion-label [title]="editor"> {{ editor }} </ion-label>
+                <ion-button data-action="delete" fill="clear" slot="end" (click)="removeWriter(editor)">
+                  <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
+                </ion-button>
+            </ion-item>
+          }
+        </ion-list>
+      }
+      @if (this.topic.editors.length > 0 && this.topic.readers.length > 0) {
+        <ion-label> Vous n'avez pas partagé votre topic !</ion-label>
+      }
+    </ion-content>
+  </ng-template>
+</ion-modal>

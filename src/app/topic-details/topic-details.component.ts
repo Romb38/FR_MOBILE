@@ -6,10 +6,10 @@ import { Topic } from '../models/topic';
 import { Post, Posts } from '../models/post';
 import { ModalCreationComponent } from "../modal-creation/modal-creation.component";
 import { TopBarComponent } from "../top-bar/top-bar.component";
-import { map, Observable, switchMap } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import {AsyncPipe } from '@angular/common';
 import { AddReaderWriterModalComponent } from "../add-reader-writer-modal/add-reader-writer-modal.component";
-import { is } from 'cypress/types/bluebird';
+import { EditReaderWriterModalComponent } from "../edit-reader-writer-modal/edit-reader-writer-modal.component";
 
 @Component({
   selector: 'app-topic-details',
@@ -25,7 +25,8 @@ import { is } from 'cypress/types/bluebird';
     ModalCreationComponent,
     TopBarComponent,
     AsyncPipe,
-    AddReaderWriterModalComponent
+    AddReaderWriterModalComponent,
+    EditReaderWriterModalComponent
 ],
 })
 export class TopicDetailsComponent implements OnInit {
@@ -39,6 +40,7 @@ export class TopicDetailsComponent implements OnInit {
   posts : Observable<Posts> = new Observable;
   isModalVisible: boolean = false;
   isReaderWriterModalVisible : boolean = false;
+  isEditReaderWriterModalVisible : boolean = false;
 
   ngOnInit() {
     this.topic$ = this.route.params.pipe(
@@ -85,6 +87,14 @@ export class TopicDetailsComponent implements OnInit {
 
   closeReadWriteModal(){
     this.isReaderWriterModalVisible = false;
+  }
+
+  showEditReaderWriterModal(){
+    this.isEditReaderWriterModalVisible = true;
+  }
+
+  closeEditReaderWriterModal(){
+    this.isEditReaderWriterModalVisible = false;
   }
 
   trackByPostId(index: number, item: Post): string {

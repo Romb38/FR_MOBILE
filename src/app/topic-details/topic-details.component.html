@@ -18,9 +18,11 @@
   <ion-button (click)="showModal()">Créer un post</ion-button>
   }
   @if (topic.isOwner) {
+    <ion-button (click)="showEditReaderWriterModal()">Editez les partages</ion-button>
     <ion-button (click)="showReadWriteModal()">Partager le topic</ion-button>
   }
 </ion-content>
 
 <app-modal-creation [isVisible]="isModalVisible" [topicId]="topicId" (close)="closeModal()"></app-modal-creation>
 <app-add-reader-writer-modal [isVisible]="isReaderWriterModalVisible" [topic]="topic" (close)="closeReadWriteModal()"></app-add-reader-writer-modal>
+<app-edit-reader-writer-modal [isVisible]="isEditReaderWriterModalVisible" [topic]="topic" (close)="closeEditReaderWriterModal()"></app-edit-reader-writer-modal>
