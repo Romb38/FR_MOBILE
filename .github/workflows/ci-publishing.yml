@@ -23,6 +23,18 @@ jobs:
           distribution: 'temurin' 
           java-version: '21'
 
+      - name: Add env secrets
+        env:
+          ENVIRONNEMENTTS: ${{ secrets.ENVIRONNEMENTTS }}
+        run: |
+            echo "$ENVIRONNEMENTTS
+            " | base64 --decode > src/environments/environment.ts
+          
+            echo "$ENVIRONNEMENTTS
+            " | base64 --decode > src/environments/environment.prod.ts
+            
+             
+
       - name: Install Ionic and Capacitor dependencies
         run: npm install -g @ionic/cli @capacitor/core @capacitor/cli
 
@@ -30,18 +42,7 @@ jobs:
         run: |
             npm install
             npm run build
-      
-      - name: Add env secrets
-        env:
-          ENVIRONNEMENTTS: ${{ secrets.ENVIRONNEMENTTS }}
-        run: |
-           echo "$ENVIRONNEMENTTS
-           " | base64 --decode > src/environments/environment.ts
-          
-           echo "$ENVIRONNEMENTTS
-           " | base64 --decode > src/environments/environment.prod.ts
-           
-           
+  
 
       - name: Build Ionic app
         env:
