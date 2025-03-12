@@ -10,8 +10,8 @@
     </ion-header>
     <ion-content>
       @if (!this.noReader) {
-        <ion-label>Lecteurs</ion-label>
-        <ion-list lines="full">
+        <ion-label class="columnTitle">Lecteurs</ion-label>
+        <ion-list class="scrollable-list" lines="full">
           @for (reader of this.topic.readers; track this.topic.readers) {
             <ion-item>
               <ion-label [title]="reader"> {{ reader }} </ion-label>
@@ -24,8 +24,8 @@
       }
 
       @if (!this.noWriter) {
-        <ion-label>Ecrivains</ion-label>
-        <ion-list lines="full">
+        <ion-label class="columnTitle">Ecrivains</ion-label>
+        <ion-list class="scrollable-list" lines="full">
           @for (editor of this.topic.editors; track this.topic.editors) {
             <ion-item>
               <ion-label [title]="editor"> {{ editor }} </ion-label>
@@ -37,7 +37,7 @@
         </ion-list>
       }
       @if (this.noReader && this.noWriter) {
-        <ion-label> Vous n'avez pas partagé votre topic !</ion-label>
+        <ion-label class="notFoundLabel"> Vous n'avez pas partagé votre topic !</ion-label>
       }
     </ion-content>
   </ng-template>
