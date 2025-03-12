@@ -55,6 +55,8 @@ export class ModalCreationComponent {
         name: this.newEntity.name,
         posts: [],
         author: author!.uid,
+        editors : [],
+        readers : []
       };
       this.topicService.addTopic(newTopic);
     }

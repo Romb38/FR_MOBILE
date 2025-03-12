@@ -27,7 +27,7 @@ import {AsyncPipe } from '@angular/common';
 })
 export class TopicDetailsComponent implements OnInit {
   private route: ActivatedRoute = inject(ActivatedRoute);
-  private topicService: TopicService = inject(TopicService);
+  protected topicService: TopicService = inject(TopicService);
   private router: Router = inject(Router);
 
   topicId: string = '';
@@ -36,6 +36,8 @@ export class TopicDetailsComponent implements OnInit {
   isModalVisible: boolean = false;
 
   ngOnInit() {
+
+
     this.topic$ = this.route.params.pipe(
       // Retrieve the topic directly from the topic service.
       switchMap((params) => {
@@ -47,7 +49,8 @@ export class TopicDetailsComponent implements OnInit {
     // Redirect to 404 if the topic is not found.
     this.topic$.subscribe((topic) => {
       console.debug('Received updated topic:', topic);
-      if (!topic) {
+
+      if (!topic || !this.topicService.canReadTopic(topic)) {
         this.router.navigate(['404']);
       }
     });

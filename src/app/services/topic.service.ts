@@ -36,6 +36,7 @@ export class TopicService {
         if (email){
           topic.author = email
         } else {
+          
           return
         }
 
@@ -45,7 +46,7 @@ export class TopicService {
         const topicsCollection = collection(this.firestore, 'topics');
         addDoc(topicsCollection, topic)
       })
-    )
+    ).subscribe()
   }
 
   removeTopic(topic: Topic): void {
@@ -101,7 +102,7 @@ export class TopicService {
   canReadTopic(topic: Topic) : Observable<boolean> {
     return this.authService.getUserEmail().pipe(
       map((email) =>{
-          if(email == topic.author || email in topic.readers){
+          if(email == topic.author || email in topic.readers || email in topic.editors){
             return true
           }
           return false

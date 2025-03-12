@@ -65,6 +65,7 @@ export class AuthService {
             map(user => user?.email ?? '')
           );
         } else {
+          console.log("Here")
           return of('');
         }
       })

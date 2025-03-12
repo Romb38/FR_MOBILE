@@ -7,5 +7,7 @@
   </div>
 </ion-content>
 
-<ion-button (click)="showModal()">Éditer le post</ion-button>
+@if (!this.topicService.canWriteTopic(this.topic)) {
+  <ion-button (click)="showModal()">Éditer le post</ion-button>
+}
 <app-modal-edition [isVisible]="isModalVisible" [topicId]="topicId" [postId]="postId" (close)="closeModal()"></app-modal-edition>
