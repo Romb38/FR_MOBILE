@@ -9,7 +9,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      @if (this.topic.readers.length > 0) {
+      @if (!this.noReader) {
         <ion-label>Lecteurs</ion-label>
         <ion-list lines="full">
           @for (reader of this.topic.readers; track this.topic.readers) {
@@ -23,7 +23,7 @@
         </ion-list>
       }
 
-      @if (this.topic.editors.length > 0) {
+      @if (!this.noWriter) {
         <ion-label>Ecrivains</ion-label>
         <ion-list lines="full">
           @for (editor of this.topic.editors; track this.topic.editors) {
@@ -36,7 +36,7 @@
           }
         </ion-list>
       }
-      @if (this.topic.editors.length > 0 && this.topic.readers.length > 0) {
+      @if (this.noReader && this.noWriter) {
         <ion-label> Vous n'avez pas partagé votre topic !</ion-label>
       }
     </ion-content>

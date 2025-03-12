@@ -15,11 +15,16 @@ export class EditReaderWriterModalComponent  implements OnInit {
   @Input() isVisible: boolean = false;
   @Input() topic: Topic = {} as Topic
   @Output() close = new EventEmitter<void>();
+  protected noReader : boolean = true
+  protected noWriter : boolean = true
   private topicService : TopicService = inject(TopicService)
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.noReader = !(this.topic.readers.length > 0);
+    this.noWriter = !(this.topic.editors.length > 0)
+  }
 
 
   closeModal(): void {
