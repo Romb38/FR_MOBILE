@@ -84,13 +84,21 @@ export class TopicService {
     setDoc(postDoc, updatedPost, { merge: true });
   }
 
-  addReader(topic: Topic, email:string): void{
+  addTopicReader(topic: Topic, email:string): void{
+    let updatedTopic = {...topic};
+    updatedTopic.readers.push(email)
+    const topicDoc = doc(this.firestore, `topics/${updatedTopic.id}`);
+    setDoc(topicDoc, updatedTopic, { merge: true });
   }
 
-  addWriter(topic: Topic, email:string): void {
+  addTopicWriter(topic: Topic, email:string): void {
+    let updatedTopic = {...topic};
+    updatedTopic.editors.push(email)
+    const topicDoc = doc(this.firestore, `topics/${updatedTopic.id}`);
+    setDoc(topicDoc, updatedTopic, { merge: true });
   }
 
-  canRead(topic: Topic) : Observable<boolean> {
+  canReadTopic(topic: Topic) : Observable<boolean> {
     return this.authService.getUserEmail().pipe(
       map((email) =>{
           if(email == topic.author || email in topic.readers){
@@ -101,7 +109,7 @@ export class TopicService {
     )
   }
 
-  canWrite(topic: Topic) : Observable<boolean> {
+  canWriteTopic(topic: Topic) : Observable<boolean> {
     return this.authService.getUserEmail().pipe(
       map((email) =>{
           if(email == topic.author || email in topic.editors){
