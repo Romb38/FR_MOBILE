@@ -27,7 +27,7 @@
             >
               {{ topic.name }}
             </ion-label>
-            @if (this.topicService.canWriteTopic(topic)) {
+            @if (this.topicService.isOwner(topic)) {
               <ion-button data-action="delete" fill="clear" slot="end" (click)="deleteItem(topic)">
                 <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
               </ion-button>

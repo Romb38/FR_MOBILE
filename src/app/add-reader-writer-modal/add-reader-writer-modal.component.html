@@ -1,0 +1,59 @@
+<ion-modal [isOpen]="isVisible" trigger="open-modal" (willDismiss)="this.closeModal()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="this.closeModal()">Annuler</ion-button>
+        </ion-buttons>
+        <ion-title>Partager votre topic</ion-title>
+      </ion-toolbar>
+    </ion-header>
+  <ion-content class="ion-padding">
+    <ion-item>
+      <ion-input
+        label="Renseignez votre email"
+        labelPlacement="stacked"
+        type="email"
+        placeholder="Email"
+        name="email"
+        required
+        email
+        minlength="4"
+        maxlength="100"
+        [(ngModel)]="email"
+        #emailInput="ngModel"
+      ></ion-input>
+    </ion-item>
+  
+    <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
+      <small *ngIf="emailInput.errors?.['required']">L'email est requis.</small>
+      <small *ngIf="emailInput.errors?.['email']">Le format de l'email est invalide.</small>
+    </div>
+    
+    <ion-grid>
+      <ion-row class="ion-justify-content-end">
+        <ion-col size="4">
+          <ion-button
+            expand="block"
+            color="primary"
+            [disabled]="emailInput.invalid"
+            (click)="onAddRead()"
+          >
+            Ajouter en lecture
+          </ion-button>
+        </ion-col>
+        <ion-col size="4">
+          <ion-button
+            expand="block"
+            color="secondary"
+            [disabled]="emailInput.invalid"
+            (click)="onAddWrite()"
+          >
+            Ajouter en écriture
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+  </ng-template>
+</ion-modal>

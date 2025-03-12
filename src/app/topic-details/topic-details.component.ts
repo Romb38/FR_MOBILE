@@ -8,6 +8,7 @@ import { ModalCreationComponent } from "../modal-creation/modal-creation.compone
 import { TopBarComponent } from "../top-bar/top-bar.component";
 import { Observable, switchMap } from 'rxjs';
 import {AsyncPipe } from '@angular/common';
+import { AddReaderWriterModalComponent } from "../add-reader-writer-modal/add-reader-writer-modal.component";
 
 @Component({
   selector: 'app-topic-details',
@@ -23,7 +24,8 @@ import {AsyncPipe } from '@angular/common';
     ModalCreationComponent,
     TopBarComponent,
     AsyncPipe,
-  ],
+    AddReaderWriterModalComponent
+],
 })
 export class TopicDetailsComponent implements OnInit {
   private route: ActivatedRoute = inject(ActivatedRoute);
@@ -32,8 +34,10 @@ export class TopicDetailsComponent implements OnInit {
 
   topicId: string = '';
   topic$: Observable<Topic | undefined> = new Observable<Topic | undefined>();
+  topic : Topic = {} as Topic
   posts : Observable<Posts> = new Observable;
   isModalVisible: boolean = false;
+  isReaderWriterModalVisible : boolean = false;
 
   ngOnInit() {
 
@@ -52,6 +56,8 @@ export class TopicDetailsComponent implements OnInit {
 
       if (!topic || !this.topicService.canReadTopic(topic)) {
         this.router.navigate(['404']);
+      } else {
+        this.topic = topic
       }
     });
 
@@ -72,6 +78,14 @@ export class TopicDetailsComponent implements OnInit {
 
   closeModal() {
     this.isModalVisible = false;
+  }
+
+  showReadWriteModal(){
+    this.isReaderWriterModalVisible = true;
+  }
+
+  closeReadWriteModal(){
+    this.isReaderWriterModalVisible = false;
   }
 
   trackByPostId(index: number, item: Post): string {

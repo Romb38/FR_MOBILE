@@ -5,14 +5,22 @@
     @for (post of this.posts | async; track post.id) {
       <ion-item class="post-item" >
         <ion-label [title]="post.id" (click)='goToPost(post)'><span [attr.data-cy]="post.id">{{ post.name }}</span></ion-label>
-        <ion-button fill="clear" slot="end" (click)="deleteItem(post)">
-          <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
-        </ion-button>
+        
+        @if (this.topicService.canWriteTopic(topic)) {
+          <ion-button fill="clear" slot="end" (click)="deleteItem(post)">
+            <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
+          </ion-button>
+        }
       </ion-item>
     }
   </ion-list>
-
+  @if (this.topicService.canWriteTopic(topic)) {
   <ion-button (click)="showModal()">Créer un post</ion-button>
+  }
+  @if (this.topicService.isOwner(topic)) {
+    <ion-button (click)="showReadWriteModal()">Partager le topic</ion-button>
+  }
 </ion-content>
 
 <app-modal-creation [isVisible]="isModalVisible" [topicId]="topicId" (close)="closeModal()"></app-modal-creation>
+<app-add-reader-writer-modal [isVisible]="isReaderWriterModalVisible" [topic]="topic" (close)="closeReadWriteModal()"></app-add-reader-writer-modal>

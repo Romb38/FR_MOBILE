@@ -1,11 +1,10 @@
 import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
 import { IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonContent, IonItem, IonInput } from '@ionic/angular/standalone';
 import { Topic } from '../models/topic';
-import { Post, Posts } from '../models/post';
+import { Post } from '../models/post';
 import { TopicService } from '../services/topic.service';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
-import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '../services/auth.service';
 import {firstValueFrom} from 'rxjs';
 

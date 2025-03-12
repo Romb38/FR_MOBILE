@@ -99,6 +99,17 @@ export class TopicService {
     setDoc(topicDoc, updatedTopic, { merge: true });
   }
 
+  isOwner(topic: Topic) : Observable<boolean> {
+    return this.authService.getUserEmail().pipe(
+      map((email) =>{
+          if(email == topic.author){
+            return true
+          }
+          return false
+      })
+    )
+  }
+
   canReadTopic(topic: Topic) : Observable<boolean> {
     return this.authService.getUserEmail().pipe(
       map((email) =>{
