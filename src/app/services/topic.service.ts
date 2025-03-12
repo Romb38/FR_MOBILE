@@ -163,14 +163,14 @@ export class TopicService {
   }
 
   addTopicReader(topic: Topic, email:string): void{
-    let updatedTopic = {...topic};
+    const {isOwner, isWriter, isReader, ...updatedTopic} = topic;
     updatedTopic.readers.push(email)
     const topicDoc = doc(this.firestore, `topics/${updatedTopic.id}`);
     setDoc(topicDoc, updatedTopic, { merge: true });
   }
 
   addTopicWriter(topic: Topic, email:string): void {
-    let updatedTopic = {...topic};
+    const {isOwner, isWriter, isReader, ...updatedTopic} = topic;
     updatedTopic.editors.push(email)
     const topicDoc = doc(this.firestore, `topics/${updatedTopic.id}`);
     setDoc(topicDoc, updatedTopic, { merge: true });
