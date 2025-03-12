@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { addDoc, collection, collectionData, deleteDoc, doc, docData, Firestore, setDoc } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, deleteDoc, doc, docData, Firestore, query, setDoc, where } from '@angular/fire/firestore';
 import { Topic, Topics } from '../models/topic';
 import { Post, Posts } from '../models/post';
 import { Observable } from 'rxjs/internal/Observable';
-import { BehaviorSubject, map, take } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, switchMap, take } from 'rxjs';
 import { generateUID } from '../utils/uuid';
 import { AuthService } from './auth.service';
 
@@ -20,14 +20,92 @@ export class TopicService {
   
   constructor() {}
 
-  getAll(): Observable<Topics> {
-    const topicsCollection = collection(this.firestore, 'topics');
-    return collectionData(topicsCollection, {idField: 'id'}) as Observable<Topics>;
+  getAll(): Observable<Topic[]> {
+    return combineLatest([
+      this.getTopicsByAuthor(),
+      this.getTopicsByReader(),
+      this.getTopicsByWriter()
+    ]).pipe(
+      map(([authors, readers, writers]) => {
+        const allTopics = [
+          ...authors,
+          ...readers,
+          ...writers
+        ].reduce((unique: Topic[], topic) => {
+          if (!unique.some(t => t.id === topic.id)) {
+            unique.push(topic);
+          }
+          return unique;
+        }, []);
+
+        this.topicsSubject$.next(allTopics);
+
+        return allTopics;
+      })
+    );
+  }
+
+  getTopicsByAuthor(): Observable<Topic[]> {
+    return this.authService.getConnectedUser().pipe(
+      switchMap((user) => {
+        const topicsRef = collection(this.firestore, 'topics'); // 'topics' est le nom de ta collection
+        const q = query(topicsRef, where('author', '==', user?.email));
+    
+        return collectionData(q, { idField: 'id' }) as Observable<Topic[]>;
+      }),
+      map((topics) => {
+        return topics.map((topic) => ({
+          ...topic,
+          isOwner: true,
+          isWriter:true,
+          isReader:true
+        }));
+      })
+    )
+  }
+
+
+  getTopicsByReader(): Observable<Topic[]> {
+    return this.authService.getConnectedUser().pipe(
+      switchMap((user) => {
+        const topicsRef = collection(this.firestore, 'topics'); // 'topics' est le nom de ta collection
+        const q = query(topicsRef, where('readers', 'array-contains', user?.email));
+    
+        return collectionData(q, { idField: 'id' }) as Observable<Topic[]>;
+      }),
+      map((topics) => {
+        return topics.map((topic) => ({
+          ...topic,
+          isReader: true,
+        }));
+      })
+    )
+  }
+
+  getTopicsByWriter(): Observable<Topic[]> {
+    return this.authService.getConnectedUser().pipe(
+      switchMap((user) => {
+        const topicsRef = collection(this.firestore, 'topics');
+        const q = query(topicsRef, where('editors', 'array-contains', user?.email));
+    
+        return (collectionData(q, { idField: 'id' }) as Observable<Topic[]>)
+      }),
+      map((topics) => {
+        return topics.map((topic) => ({
+          ...topic,
+          isWriter: true,
+          isReader: true
+        }));
+      })
+    )
   }
 
   get(topicId: string): Observable<Topic | undefined> {
-    const topicDoc = doc(this.firestore, `topics/${topicId}`);
-    return docData(topicDoc, {idField: 'id'}) as Observable<Topic>;
+    return this.topics$.pipe(
+      map((topics) => {
+        return topics.find(topic => topic.id === topicId);
+      })
+    );
   }
 
   addTopic(topic: Topic): void {
@@ -36,7 +114,6 @@ export class TopicService {
         if (email){
           topic.author = email
         } else {
-          
           return
         }
 
@@ -102,7 +179,7 @@ export class TopicService {
   isOwner(topic: Topic) : Observable<boolean> {
     return this.authService.getUserEmail().pipe(
       map((email) =>{
-          if(email == topic.author){
+          if(email === topic.author){
             return true
           }
           return false
@@ -113,7 +190,7 @@ export class TopicService {
   canReadTopic(topic: Topic) : Observable<boolean> {
     return this.authService.getUserEmail().pipe(
       map((email) =>{
-          if(email == topic.author || email in topic.readers || email in topic.editors){
+          if(email === topic.author || email in topic.readers || email in topic.editors){
             return true
           }
           return false
@@ -124,7 +201,7 @@ export class TopicService {
   canWriteTopic(topic: Topic) : Observable<boolean> {
     return this.authService.getUserEmail().pipe(
       map((email) =>{
-          if(email == topic.author || email in topic.editors){
+          if(email === topic.author || email in topic.editors){
             return true
           }
           return false

@@ -6,7 +6,7 @@
       <ion-item class="post-item" >
         <ion-label [title]="post.id" (click)='goToPost(post)'><span [attr.data-cy]="post.id">{{ post.name }}</span></ion-label>
         
-        @if (this.topicService.canWriteTopic(topic)) {
+        @if (topic.isWriter) {
           <ion-button fill="clear" slot="end" (click)="deleteItem(post)">
             <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
           </ion-button>
@@ -14,10 +14,10 @@
       </ion-item>
     }
   </ion-list>
-  @if (this.topicService.canWriteTopic(topic)) {
+  @if (topic.isWriter) {
   <ion-button (click)="showModal()">Créer un post</ion-button>
   }
-  @if (this.topicService.isOwner(topic)) {
+  @if (topic.isOwner) {
     <ion-button (click)="showReadWriteModal()">Partager le topic</ion-button>
   }
 </ion-content>

@@ -34,7 +34,7 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.params.pipe(
-      takeUntil(this.destroy$) // Automatically unsubscribe when the destroy$ emits.
+      takeUntil(this.destroy$)
     ).subscribe(params => {
       this.topicId = params['id'] ?? "";
       this.postId = params['postId'] ?? "";
@@ -43,14 +43,9 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
         map((topic) => {
           if (topic){
             this.topic = topic
-            this.topicService.canReadTopic(topic).pipe(
-              map((canRead) =>{
-              if (!canRead){this.router.navigate(['404']);}
-              })
-            )
           }
         })
-      )
+      ).subscribe()
 
       this.updatePost();
     });
@@ -59,7 +54,7 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
   updatePost() {
     this.topicService.getPost(this.topicId, this.postId)
       .pipe(
-        takeUntil(this.destroy$), // Automatically unsubscribe when the destroy$ emits.
+        takeUntil(this.destroy$),
         catchError(() => {
             this.router.navigate(['404']);
             return of(undefined);

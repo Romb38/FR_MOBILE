@@ -6,9 +6,10 @@ import { Topic } from '../models/topic';
 import { Post, Posts } from '../models/post';
 import { ModalCreationComponent } from "../modal-creation/modal-creation.component";
 import { TopBarComponent } from "../top-bar/top-bar.component";
-import { Observable, switchMap } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
 import {AsyncPipe } from '@angular/common';
 import { AddReaderWriterModalComponent } from "../add-reader-writer-modal/add-reader-writer-modal.component";
+import { is } from 'cypress/types/bluebird';
 
 @Component({
   selector: 'app-topic-details',
@@ -40,8 +41,6 @@ export class TopicDetailsComponent implements OnInit {
   isReaderWriterModalVisible : boolean = false;
 
   ngOnInit() {
-
-
     this.topic$ = this.route.params.pipe(
       // Retrieve the topic directly from the topic service.
       switchMap((params) => {
@@ -54,7 +53,7 @@ export class TopicDetailsComponent implements OnInit {
     this.topic$.subscribe((topic) => {
       console.debug('Received updated topic:', topic);
 
-      if (!topic || !this.topicService.canReadTopic(topic)) {
+      if (!topic) {
         this.router.navigate(['404']);
       } else {
         this.topic = topic

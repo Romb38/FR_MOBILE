@@ -19,15 +19,15 @@
   <div id="container">
     <ion-list lines="full">
       @for (topic of this.topics | async; track topic.id) {
-        @if (this.topicService.canReadTopic(topic)) {
+        @if (topic.isReader) {
           <ion-item>
             <ion-label
             [title]="topic.id"
             (click)="seeDetails(topic.id)"
             >
               {{ topic.name }}
-            </ion-label>
-            @if (this.topicService.isOwner(topic)) {
+          </ion-label>
+            @if (topic.isOwner) {
               <ion-button data-action="delete" fill="clear" slot="end" (click)="deleteItem(topic)">
                 <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
               </ion-button>
