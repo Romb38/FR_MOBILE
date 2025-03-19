@@ -15,11 +15,11 @@
     }
   </ion-list>
   @if (topic.isWriter) {
-  <ion-button (click)="showModal()">Créer un post</ion-button>
+  <ion-button (click)="showModal()">{{"CREATE_POST" | translate}}</ion-button>
   }
   @if (topic.isOwner) {
-    <ion-button (click)="showEditReaderWriterModal()">Editez les partages</ion-button>
-    <ion-button (click)="showReadWriteModal()">Partager le topic</ion-button>
+    <ion-button (click)="showEditReaderWriterModal()">{{"MANAGE_SHARE_TITLE" | translate}}</ion-button>
+    <ion-button (click)="showReadWriteModal()">{{"SHARE_TOPIC"|translate}}</ion-button>
   }
 </ion-content>
 
