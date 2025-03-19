@@ -1,8 +1,4 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>{{"LOGIN_TITLE" | translate}}</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-top-bar [title]="'LOGIN_TITLE' | translate"></app-top-bar>
 
 <ion-content class="ion-padding">
   <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
@@ -35,9 +31,9 @@
       </ion-text>
     }
 
-    <ion-button expand="full" type="submit" [disabled]="loginForm.invalid">Login</ion-button>
+    <ion-button expand="full" type="submit" [disabled]="loginForm.invalid">{{"LOGIN_LABEL" | translate}}</ion-button>
   </form>
   <ion-button expand="full" (click)="goToForgotPassword()">{{"ASK_FORGOT_PASSWORD" | translate}}</ion-button>
-  <ion-button expand="full" (click)="goToRegister()">{{"LOGIN_LABEL" | translate}}</ion-button>
+  <ion-button expand="full" (click)="goToRegister()">{{"REGISTER" | translate}}</ion-button>
 
 </ion-content>

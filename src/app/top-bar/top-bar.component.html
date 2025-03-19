@@ -17,7 +17,7 @@
       <ion-button (click)="switchLang()">
         <img [src]="icon" alt="flag" style=" width: 30px; height: auto; padding: 0;">
       </ion-button>
-    @if (this.auth.isAuth()) {
+    @if (this.isAuth$ | async) {
         <ion-button (click)="logout()">
           <ion-icon src="../../assets/icon/log-out-outline.svg" color="negative"></ion-icon>
         </ion-button> 
