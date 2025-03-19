@@ -73,6 +73,5 @@ export class TopBarComponent  implements OnInit {
         break
     }
     this.icon="../../assets/icon/"+this.language+".svg"
-    console.log(this.icon)
   }
 }
