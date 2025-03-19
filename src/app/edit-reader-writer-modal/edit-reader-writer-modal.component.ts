@@ -11,18 +11,24 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrls: ['./edit-reader-writer-modal.component.scss'],
   imports: [IonModal, IonHeader, IonToolbar, IonButton, IonButtons, IonTitle, IonContent, IonList, IonItem, IonLabel, IonIcon, TranslateModule]
 })
-export class EditReaderWriterModalComponent {
+export class EditReaderWriterModalComponent implements OnInit{
 
   @Input() isVisible: boolean = false;
-  @Input() topic: Topic = {} as Topic
+  @Input() topicId : string = ""
   @Output() close = new EventEmitter<void>();
-  protected noReader = computed(() => !(this.topic.readers?.length > 0));
-  protected noWriter = computed(() => !(this.topic.readers?.length > 0));
+  protected reader : string[] = [];
+  protected editors : string[] = [];
+  protected topic : Topic = {} as Topic;
   private topicService : TopicService = inject(TopicService)
 
-
-  constructor() { 
-    console.log(this.topic)
+  ngOnInit(){
+    this.topicService.get(this.topicId).subscribe((topic) => {
+      if(topic){
+        this.topic = topic
+        this.reader = this.topic.readers;
+        this.editors = this.topic.editors
+      }
+    })
   }
 
   closeModal(): void {
@@ -30,10 +36,26 @@ export class EditReaderWriterModalComponent {
   }
 
   removeReader(email: string){
+    this.topic.readers = this.topic.readers.filter(reader => reader !== email);
     this.topicService.removeTopicReader(this.topic,email)
+    this.topicService.get(this.topicId).subscribe((topic) => {
+      if(topic){
+        this.topic = topic
+        this.reader = this.topic.readers;
+        this.editors = this.topic.editors
+      }
+    })
   }
 
   removeWriter(email: string){
+    this.topic.editors = this.topic.editors.filter(editors => editors !== email);
     this.topicService.removeTopicWriter(this.topic,email)
+    this.topicService.get(this.topicId).subscribe((topic) => {
+      if(topic){
+        this.topic = topic
+        this.reader = this.topic.readers;
+        this.editors = this.topic.editors
+      }
+    })
   }
 }
