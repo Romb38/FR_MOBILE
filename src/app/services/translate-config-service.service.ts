@@ -22,7 +22,6 @@ export class TranslateConfigServiceService {
       this.currentLang = this.translate.getBrowserLang();
       this.translate.setDefaultLang(this.currentLang);
     }
-    console.log(this.currentLang)
     return this.currentLang;
   }
 
