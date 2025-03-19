@@ -1,18 +1,20 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonItem, IonButton, IonText, IonInput } from '@ionic/angular/standalone';
+import { IonContent, IonLabel, IonItem, IonButton, IonText, IonInput } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirebaseError } from '@angular/fire/app';
 import { take } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
+import { TopBarComponent } from 'src/app/top-bar/top-bar.component';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonInput, IonText, IonButton, IonItem, IonLabel, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, ReactiveFormsModule]
+  imports: [IonInput, IonText, IonButton, IonItem, IonLabel, IonContent, CommonModule, ReactiveFormsModule, TranslateModule, TopBarComponent]
 })
 export class LoginPage implements OnInit {
 

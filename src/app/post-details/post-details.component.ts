@@ -8,6 +8,7 @@ import { IonContent, IonButton } from '@ionic/angular/standalone';
 import { ModalEditionComponent } from "../modal-edition/modal-edition.component";
 import { TopBarComponent } from "../top-bar/top-bar.component";
 import { Topic } from '../models/topic';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-post-details',
@@ -17,7 +18,8 @@ import { Topic } from '../models/topic';
     IonContent,
     IonButton,
     ModalEditionComponent,
-    TopBarComponent
+    TopBarComponent,
+    TranslateModule
   ],
 })
 export class PostDetailsComponent implements OnInit, OnDestroy {

@@ -7,7 +7,10 @@ import { AppComponent } from './app/app.component';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth} from '@angular/fire/auth'
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { firebaseConfig } from './environments/environment'
+import { firebaseConfig } from './environments/environnement'
+import { provideHttpClient, HttpClient } from '@angular/common/http';
+import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
+import { createTranslateLoader } from 'translate.loader';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -17,5 +20,13 @@ bootstrapApplication(AppComponent, {
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
+    provideHttpClient(),
+    provideTranslateService({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+    }),
   ],
 });

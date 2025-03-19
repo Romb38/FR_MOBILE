@@ -8,30 +8,41 @@
 
         @if (topic.isWriter) {
           <ion-button fill="clear" slot="end" (click)="deleteItem(post)">
-            <ion-icon name="trash" class="ion-margin-end" color="danger"></ion-icon>
+            <ion-icon name="trash" class="ion-margin-end" aria-label="Remove post" color="danger"></ion-icon>
           </ion-button>
         }
       </ion-item>
     }
   </ion-list>
+  @if((this.posts |async)?.length === 0){
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+      <img
+        src="assets/icon/no-results.svg"
+        alt="Not found"
+        width="100"
+        height="100"
+        style="opacity: 0.2; filter: grayscale(100%);"
+      >
+    </div>
+  }
   @if (topic.isWriter) {
     <ion-button (click)="showModal()">
       <ion-icon name="create" class="ion-margin-end"></ion-icon>
-      <ion-label>Créer un post</ion-label>
+      <ion-label>{{"CREATE_POST" | translate}}</ion-label>
     </ion-button>
   }
   @if (topic.isOwner) {
     <ion-button (click)="showEditReaderWriterModal()">
       <ion-icon name="create" class="ion-margin-end"></ion-icon>
-      <ion-label>Editer les partages</ion-label>
+      <ion-label>{{"MANAGE_SHARE_TITLE" | translate}}</ion-label>
     </ion-button>
     <ion-button (click)="showReadWriteModal()">
       <ion-icon name="share" class="ion-margin-end"></ion-icon>
-      <ion-label>Partager le topic</ion-label>
+      <ion-label>{{"SHARE_TOPIC"|translate}}</ion-label>
     </ion-button>
   }
 </ion-content>
 
 <app-modal-creation [isVisible]="isModalVisible" [topicId]="topicId" (close)="closeModal()"></app-modal-creation>
 <app-add-reader-writer-modal [isVisible]="isReaderWriterModalVisible" [topic]="topic" (close)="closeReadWriteModal()"></app-add-reader-writer-modal>
-<app-edit-reader-writer-modal [isVisible]="isEditReaderWriterModalVisible" [topic]="topic" (close)="closeEditReaderWriterModal()"></app-edit-reader-writer-modal>
+<app-edit-reader-writer-modal [isVisible]="isEditReaderWriterModalVisible" [topicId]="topicId" (close)="closeEditReaderWriterModal()"></app-edit-reader-writer-modal>

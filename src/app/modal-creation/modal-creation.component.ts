@@ -7,13 +7,14 @@ import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import {AuthService} from '../services/auth.service';
 import {firstValueFrom} from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @Component({
   selector: 'app-modal-creation',
   templateUrl: './modal-creation.component.html',
   styleUrls: ['./modal-creation.component.scss'],
-  imports: [IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonContent, IonItem, IonInput, FormsModule, NgIf],
+  imports: [IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonContent, IonItem, IonInput, FormsModule, NgIf, TranslateModule],
 })
 export class ModalCreationComponent {
   @Input() isVisible: boolean = false;
