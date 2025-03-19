@@ -8,6 +8,8 @@ import { ModalCreationComponent } from "../modal-creation/modal-creation.compone
 import { TopBarComponent } from "../top-bar/top-bar.component";
 import { Observable, switchMap } from 'rxjs';
 import {AsyncPipe } from '@angular/common';
+import { AddReaderWriterModalComponent } from "../add-reader-writer-modal/add-reader-writer-modal.component";
+import { EditReaderWriterModalComponent } from "../edit-reader-writer-modal/edit-reader-writer-modal.component";
 
 @Component({
   selector: 'app-topic-details',
@@ -23,17 +25,22 @@ import {AsyncPipe } from '@angular/common';
     ModalCreationComponent,
     TopBarComponent,
     AsyncPipe,
-  ],
+    AddReaderWriterModalComponent,
+    EditReaderWriterModalComponent
+],
 })
 export class TopicDetailsComponent implements OnInit {
   private route: ActivatedRoute = inject(ActivatedRoute);
-  private topicService: TopicService = inject(TopicService);
+  protected topicService: TopicService = inject(TopicService);
   private router: Router = inject(Router);
 
   topicId: string = '';
   topic$: Observable<Topic | undefined> = new Observable<Topic | undefined>();
+  topic : Topic = {} as Topic
   posts : Observable<Posts> = new Observable;
   isModalVisible: boolean = false;
+  isReaderWriterModalVisible : boolean = false;
+  isEditReaderWriterModalVisible : boolean = false;
 
   ngOnInit() {
     this.topic$ = this.route.params.pipe(
@@ -47,8 +54,11 @@ export class TopicDetailsComponent implements OnInit {
     // Redirect to 404 if the topic is not found.
     this.topic$.subscribe((topic) => {
       console.debug('Received updated topic:', topic);
+
       if (!topic) {
         this.router.navigate(['404']);
+      } else {
+        this.topic = topic
       }
     });
 
@@ -69,6 +79,22 @@ export class TopicDetailsComponent implements OnInit {
 
   closeModal() {
     this.isModalVisible = false;
+  }
+
+  showReadWriteModal(){
+    this.isReaderWriterModalVisible = true;
+  }
+
+  closeReadWriteModal(){
+    this.isReaderWriterModalVisible = false;
+  }
+
+  showEditReaderWriterModal(){
+    this.isEditReaderWriterModalVisible = true;
+  }
+
+  closeEditReaderWriterModal(){
+    this.isEditReaderWriterModalVisible = false;
   }
 
   trackByPostId(index: number, item: Post): string {

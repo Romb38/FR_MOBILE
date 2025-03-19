@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, User, user, UserCredential } from '@angular/fire/auth'
 import { Router } from '@angular/router';
 import { ToastController } from "@ionic/angular/standalone"
-import { map, Observable, take } from 'rxjs';
+import { map, Observable, of, switchMap, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -56,4 +56,19 @@ export class AuthService {
   async registerNewUser(email: string, password: string) : Promise<UserCredential>{
     return createUserWithEmailAndPassword(this.fireauth, email, password);
   }
+
+  getUserEmail(): Observable<string> {
+    return this.isAuth().pipe(
+      switchMap((isAuthenticated) => {
+        if (isAuthenticated) {
+          return this.getConnectedUser().pipe(
+            map(user => user?.email ?? '')
+          );
+        } else {
+          return of('');
+        }
+      })
+    );
+  }
+  
 }

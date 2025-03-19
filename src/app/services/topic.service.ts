@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
-import { addDoc, collection, collectionData, deleteDoc, doc, docData, Firestore, setDoc } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, deleteDoc, doc, docData, Firestore, query, setDoc, where } from '@angular/fire/firestore';
 import { Topic, Topics } from '../models/topic';
 import { Post, Posts } from '../models/post';
 import { Observable } from 'rxjs/internal/Observable';
-import { BehaviorSubject, map, take } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, switchMap, take } from 'rxjs';
 import { generateUID } from '../utils/uuid';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,25 +15,115 @@ export class TopicService {
   public topics$: Observable<Topics> = this.topicsSubject$.asObservable(); // Exposes a safe, read-only observable to other components/services.
   
   private firestore: Firestore = inject(Firestore);
+  private authService : AuthService = inject(AuthService);
+  
   
   constructor() {}
 
-  getAll(): Observable<Topics> {
-    const topicsCollection = collection(this.firestore, 'topics');
-    return collectionData(topicsCollection, {idField: 'id'}) as Observable<Topics>;
+  getAll(): Observable<Topic[]> {
+    return combineLatest([
+      this.getTopicsByAuthor(),
+      this.getTopicsByReader(),
+      this.getTopicsByWriter()
+    ]).pipe(
+      map(([authors, readers, writers]) => {
+        const allTopics = [
+          ...authors,
+          ...readers,
+          ...writers
+        ].reduce((unique: Topic[], topic) => {
+          if (!unique.some(t => t.id === topic.id)) {
+            unique.push(topic);
+          }
+          return unique;
+        }, []);
+
+        this.topicsSubject$.next(allTopics);
+
+        return allTopics;
+      })
+    );
+  }
+
+  getTopicsByAuthor(): Observable<Topic[]> {
+    return this.authService.getConnectedUser().pipe(
+      switchMap((user) => {
+        const topicsRef = collection(this.firestore, 'topics'); // 'topics' est le nom de ta collection
+        const q = query(topicsRef, where('author', '==', user?.email));
+    
+        return collectionData(q, { idField: 'id' }) as Observable<Topic[]>;
+      }),
+      map((topics) => {
+        return topics.map((topic) => ({
+          ...topic,
+          isOwner: true,
+          isWriter:true,
+          isReader:true
+        }));
+      })
+    )
+  }
+
+
+  getTopicsByReader(): Observable<Topic[]> {
+    return this.authService.getConnectedUser().pipe(
+      switchMap((user) => {
+        const topicsRef = collection(this.firestore, 'topics'); // 'topics' est le nom de ta collection
+        const q = query(topicsRef, where('readers', 'array-contains', user?.email));
+    
+        return collectionData(q, { idField: 'id' }) as Observable<Topic[]>;
+      }),
+      map((topics) => {
+        return topics.map((topic) => ({
+          ...topic,
+          isReader: true,
+        }));
+      })
+    )
+  }
+
+  getTopicsByWriter(): Observable<Topic[]> {
+    return this.authService.getConnectedUser().pipe(
+      switchMap((user) => {
+        const topicsRef = collection(this.firestore, 'topics');
+        const q = query(topicsRef, where('editors', 'array-contains', user?.email));
+    
+        return (collectionData(q, { idField: 'id' }) as Observable<Topic[]>)
+      }),
+      map((topics) => {
+        return topics.map((topic) => ({
+          ...topic,
+          isWriter: true,
+          isReader: true
+        }));
+      })
+    )
   }
 
   get(topicId: string): Observable<Topic | undefined> {
-    const topicDoc = doc(this.firestore, `topics/${topicId}`);
-    return docData(topicDoc, {idField: 'id'}) as Observable<Topic>;
+    return this.topics$.pipe(
+      map((topics) => {
+        return topics.find(topic => topic.id === topicId);
+      })
+    );
   }
 
   addTopic(topic: Topic): void {
-    if (!topic?.name.length) return;
-    topic.id = generateUID();
+    this.authService.getUserEmail().pipe(
+      map((email) => {
+        if (email){
+          topic.author = email
+        } else {
+          return
+        }
 
-    const topicsCollection = collection(this.firestore, 'topics');
-    addDoc(topicsCollection, topic)
+        if (!topic?.name.length) return;
+        topic.id = generateUID();
+
+        const topicsCollection = collection(this.firestore, 'topics');
+        addDoc(topicsCollection, topic)
+      })
+    ).subscribe()
   }
 
   removeTopic(topic: Topic): void {
@@ -69,6 +160,34 @@ export class TopicService {
   editPost(updatedPost: Post, topicId: string): void {
     const postDoc = doc(this.firestore, `topics/${topicId}/posts/${updatedPost.id}`);
     setDoc(postDoc, updatedPost, { merge: true });
+  }
+
+  addTopicReader(topic: Topic, email:string): void{
+    const {isOwner, isWriter, isReader, ...updatedTopic} = topic;
+    updatedTopic.readers.push(email)
+    const topicDoc = doc(this.firestore, `topics/${updatedTopic.id}`);
+    setDoc(topicDoc, updatedTopic, { merge: true });
+  }
+
+  addTopicWriter(topic: Topic, email:string): void {
+    const {isOwner, isWriter, isReader, ...updatedTopic} = topic;
+    updatedTopic.editors.push(email)
+    const topicDoc = doc(this.firestore, `topics/${updatedTopic.id}`);
+    setDoc(topicDoc, updatedTopic, { merge: true });
+  }
+
+  removeTopicReader(topic: Topic, old_email:string): void{
+    const {isOwner, isWriter, isReader, ...updatedTopic} = topic;
+    updatedTopic.readers = updatedTopic.readers.filter(email => email != old_email)
+    const topicDoc = doc(this.firestore, `topics/${updatedTopic.id}`);
+    setDoc(topicDoc, updatedTopic, { merge: true });
+  }
+
+  removeTopicWriter(topic: Topic, old_email:string): void {
+    const {isOwner, isWriter, isReader, ...updatedTopic} = topic;
+    updatedTopic.editors = updatedTopic.editors.filter(email => email != old_email)
+    const topicDoc = doc(this.firestore, `topics/${updatedTopic.id}`);
+    setDoc(topicDoc, updatedTopic, { merge: true });
   }
 
 }
