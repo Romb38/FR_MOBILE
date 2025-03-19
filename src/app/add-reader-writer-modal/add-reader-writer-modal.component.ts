@@ -4,13 +4,29 @@ import { FormsModule } from '@angular/forms';
 import { IonModal, IonButton, IonHeader, IonToolbar,  IonButtons, IonTitle, IonContent, IonItem, IonInput, IonGrid, IonCol, IonRow } from '@ionic/angular/standalone';
 import { Topic } from '../models/topic';
 import { TopicService } from '../services/topic.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @Component({
   selector: 'app-add-reader-writer-modal',
   templateUrl: './add-reader-writer-modal.component.html',
   styleUrls: ['./add-reader-writer-modal.component.scss'],
-  imports: [IonModal, IonHeader, IonToolbar, IonButton, IonButtons,IonTitle, IonContent, IonItem, IonInput, IonGrid, IonCol, IonRow ,FormsModule, NgIf],
+  imports: [
+    IonModal, 
+    IonHeader,
+    IonToolbar,
+    IonButton, 
+    IonButtons,
+    IonTitle, 
+    IonContent, 
+    IonItem, 
+    IonInput, 
+    IonGrid, 
+    IonCol, 
+    IonRow,
+    FormsModule, 
+    NgIf,
+    TranslateModule],
 })
 export class AddReaderWriterModalComponent  implements OnInit {
 

@@ -3,15 +3,15 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button (click)="this.closeModal()">Annuler</ion-button>
+          <ion-button (click)="this.closeModal()">{{"CANCEL" | translate}}</ion-button>
         </ion-buttons>
-        <ion-title>Partager votre topic</ion-title>
+        <ion-title>{{"SHARE_TOPIC" | translate}}</ion-title>
       </ion-toolbar>
     </ion-header>
   <ion-content class="ion-padding">
     <ion-item>
       <ion-input
-        label="Renseignez votre email"
+        [label]="'FILL_EMAIL' | translate"
         labelPlacement="stacked"
         type="email"
         placeholder="Email"
@@ -26,8 +26,8 @@
     </ion-item>
   
     <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
-      <small *ngIf="emailInput.errors?.['required']">L'email est requis.</small>
-      <small *ngIf="emailInput.errors?.['email']">Le format de l'email est invalide.</small>
+      <small *ngIf="emailInput.errors?.['required']">{{"EMAIL_REQUIRED" | translate}}</small>
+      <small *ngIf="emailInput.errors?.['email']">{{"INVALID_EMAIL_FORMAT" | translate}}</small>
     </div>
     
     <ion-grid>
@@ -39,7 +39,7 @@
             [disabled]="emailInput.invalid"
             (click)="onAddRead()"
           >
-            Ajouter en lecture
+          {{"ADD_TO_READER" | translate}}
           </ion-button>
         </ion-col>
         <ion-col size="4">
@@ -49,7 +49,7 @@
             [disabled]="emailInput.invalid"
             (click)="onAddWrite()"
           >
-            Ajouter en écriture
+          {{"ADD_TO_WRITER" | translate}}
           </ion-button>
         </ion-col>
       </ion-row>

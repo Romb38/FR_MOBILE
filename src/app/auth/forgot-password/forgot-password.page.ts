@@ -5,6 +5,8 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonText
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirebaseError } from '@angular/fire/app';
+import { TranslateModule } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-forgot-password',
@@ -22,6 +24,7 @@ import { FirebaseError } from '@angular/fire/app';
     IonToolbar,
     CommonModule,
     ReactiveFormsModule,
+    TranslateModule
   ]
 })
 export class ForgotPasswordPage implements OnInit {

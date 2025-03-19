@@ -1,18 +1,4 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Reddot
-    </ion-title>
-
-      <ion-buttons slot="end">
-        <ion-button (click)="logout()">
-          <ion-icon src="../../assets/icon/log-out-outline.svg" color="negative"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-
-
-  </ion-toolbar>
-</ion-header>
+<app-top-bar title="Reddot"></app-top-bar>
 
 
 <ion-content [fullscreen]="true">
@@ -40,5 +26,5 @@
   </div>
 </ion-content>
 
-<ion-button (click)="showModal()">Créer un topic</ion-button>
+<ion-button (click)="showModal()">{{"CREATE_TOPIC" | translate }}</ion-button>
 <app-modal-creation [isVisible]="isModalVisible" (close)="closeModal()"></app-modal-creation>

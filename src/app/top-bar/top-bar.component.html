@@ -1,23 +1,28 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
 
-    <ion-buttons slot="start">
-      <ion-button [id]="'backRoute-' + butonId" (click)="goTo()">
-        <ion-icon src="../../assets/icon/arrow-back-outline.svg" color="negative"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-
+    @if (!this.isHomePage) {
+      <ion-buttons slot="start">
+        <ion-button [id]="'backRoute-' + butonId" (click)="goTo()">
+          <ion-icon src="../../assets/icon/arrow-back-outline.svg" color="negative"></ion-icon>
+        </ion-button>
+      </ion-buttons>  
+    }
+    
     <ion-title>
       {{this.title}}
     </ion-title>
 
+    <ion-buttons slot="end">
+      <ion-button (click)="switchLang()">
+        <img [src]="icon" alt="flag" style=" width: 30px; height: auto; padding: 0;">
+      </ion-button>
     @if (this.auth.isAuth()) {
-      <ion-buttons slot="end">
         <ion-button (click)="logout()">
           <ion-icon src="../../assets/icon/log-out-outline.svg" color="negative"></ion-icon>
-        </ion-button>
-      </ion-buttons>
+        </ion-button> 
     }
-    
+  </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
