@@ -14,6 +14,17 @@
       </ion-item>
     }
   </ion-list>
+  @if((this.posts |async)?.length === 0){
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+      <img
+        src="assets/icon/no-results.svg"
+        alt="Not found"
+        width="100"
+        height="100"
+        style="opacity: 0.2; filter: grayscale(100%);"
+      >
+    </div>
+  }
   @if (topic.isWriter) {
     <ion-button (click)="showModal()">
       <ion-icon name="create" class="ion-margin-end"></ion-icon>

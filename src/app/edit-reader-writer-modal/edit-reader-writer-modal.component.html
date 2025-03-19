@@ -37,7 +37,15 @@
         </ion-list>
       }
       @if (!(this.reader.length > 0)  && !(this.editors.length > 0)) {
-        <ion-label class="notFoundLabel"> {{"NO_SHARE_MESSAGE" | translate}}</ion-label>
+        <div style="display: flex; justify-content: center; align-items: center; margin-top: 5rem;">
+          <img
+            src="assets/icon/no-results.svg"
+            alt="Not found"
+            width="150"
+            height="150"
+            style="opacity: 0.2; filter: grayscale(100%);"
+          >
+        </div>
       }
     </ion-content>
   </ng-template>

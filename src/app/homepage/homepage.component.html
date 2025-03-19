@@ -2,6 +2,17 @@
 
 <ion-content [fullscreen]="true">
   <div id="container">
+    @if ((topics |async)?.length === 0 ) {
+      <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <img
+          src="assets/icon/no-results.svg"
+          alt="Not found"
+          width="100"
+          height="100"
+          style="opacity: 0.2; filter: grayscale(100%);"
+        >
+      </div>
+    }
     <ion-list lines="full">
       @for (topic of this.topics | async; track topic.id) {
         @if (topic.isReader) {
