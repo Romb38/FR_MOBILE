@@ -3,23 +3,32 @@
 <ion-content [fullscreen]="true">
   <ion-list lines="full">
     @for (post of this.posts | async; track post.id) {
-      <ion-item class="post-item" >
+      <ion-item class="post-item">
         <ion-label [title]="post.id" (click)='goToPost(post)'><span [attr.data-cy]="post.id">{{ post.name }}</span></ion-label>
-        
+
         @if (topic.isWriter) {
           <ion-button fill="clear" slot="end" (click)="deleteItem(post)">
-            <ion-icon src="../../assets/icon/trash-outline.svg" aria-label="Remove post" color="danger"></ion-icon>
+            <ion-icon name="trash" class="ion-margin-end" aria-label="Remove post" color="danger"></ion-icon>
           </ion-button>
         }
       </ion-item>
     }
   </ion-list>
   @if (topic.isWriter) {
-  <ion-button (click)="showModal()">{{"CREATE_POST" | translate}}</ion-button>
+    <ion-button (click)="showModal()">
+      <ion-icon name="create" class="ion-margin-end"></ion-icon>
+      <ion-label>{{"CREATE_POST" | translate}}</ion-label>
+    </ion-button>
   }
   @if (topic.isOwner) {
-    <ion-button (click)="showEditReaderWriterModal()">{{"MANAGE_SHARE_TITLE" | translate}}</ion-button>
-    <ion-button (click)="showReadWriteModal()">{{"SHARE_TOPIC"|translate}}</ion-button>
+    <ion-button (click)="showEditReaderWriterModal()">
+      <ion-icon name="create" class="ion-margin-end"></ion-icon>
+      <ion-label>{{"MANAGE_SHARE_TITLE" | translate}}</ion-label>
+    </ion-button>
+    <ion-button (click)="showReadWriteModal()">
+      <ion-icon name="share" class="ion-margin-end"></ion-icon>
+      <ion-label>{{"SHARE_TOPIC"|translate}}</ion-label>
+    </ion-button>
   }
 </ion-content>
 
