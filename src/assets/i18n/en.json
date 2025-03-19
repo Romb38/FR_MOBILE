@@ -3,6 +3,7 @@
     "CANCEL": "Cancel",
     "SHARE_TOPIC": "Share your topic",
     "FILL_EMAIL": "Fill your email",
+    "EMAIL_LABEL": "Email",
     "EMAIL_REQUIRED": "Email is required",
     "INVALID_EMAIL_FORMAT": "Invalid email format",
     "ADD_TO_READER": "Add to readers",
@@ -10,7 +11,14 @@
     "FORGOT_PASSWORD_TITLE": "Forgot password",
     "CORRESPONDING_EMAIL_MESSAGE" :"If your email coresspond to an actual account, you will receive an email with instruction to reset your password",
     "SEND_RESET_LINK": "Send password reseting link",
-    "ASK_TO_CONNECT":"Log in ?"
+    "ASK_TO_CONNECT":"Log in ?",
+    "LOGIN_TITLE": "Login",
+    "LOGIN_LABEL": "Log in",
+    "PASSWORD_TITLE": "Password",
+    "PASSWORD_REQUIRED": "Password is required",
+    "ASK_FORGOT_PASSWORD": "Forgot password ?",
+    "REGISTER": "Register"
+
 
 
 }

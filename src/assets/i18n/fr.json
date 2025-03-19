@@ -3,6 +3,7 @@
     "CANCEL": "Annuler",
     "SHARE_TOPIC": "Partager votre topic",
     "FILL_EMAIL": "Renseignez votre email",
+    "EMAIL_LABEL": "Email",
     "EMAIL_REQUIRED": "L'email est requis",
     "INVALID_EMAIL_FORMAT": "Le format de l'email est invalide",
     "ADD_TO_READER": "Ajouter aux lecteurs",
@@ -10,7 +11,13 @@
     "FORGOT_PASSWORD_TITLE": "Mot de passe oublié",
     "CORRESPONDING_EMAIL_MESSAGE": "Si votre email coresspond à un compte, vous allez recevoir un message avec les instructions pour réinitialiser votre mot de passe",
     "SEND_RESET_LINK": "Envoyer le mail de réinitialisation",
-    "ASK_TO_CONNECT":"Se connecter ?"
+    "ASK_TO_CONNECT":"Se connecter ?",
+    "LOGIN_TITLE": "Se connecter",
+    "LOGIN_LABEL": "Se connecter",
+    "PASSWORD_TITLE": "Mot de passe",
+    "PASSWORD_REQUIRED": "Le mot de passe est requis",
+    "ASK_FORGOT_PASSWORD": "Mot de passe oublié ?",
+    "REGISTER": "Créer un compte"
 
 
 }

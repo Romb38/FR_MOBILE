@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Login</ion-title>
+    <ion-title>{{"LOGIN_TITLE" | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,19 +14,19 @@
     }
 
     <ion-item>
-      <ion-label position="floating">Email</ion-label>
+      <ion-label position="floating">{{"EMAIL_LABEL" | translate}}</ion-label>
       <ion-input type="email" formControlName="email"></ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="isInvalid('email')">
-      <p *ngIf="loginForm.controls['email'].errors?.['required']">Email is required</p>
+      <p *ngIf="loginForm.controls['email'].errors?.['required']">{{"EMAIL_REQUIRED" | translate}}</p>
     </ion-text>
 
     <ion-item>
-      <ion-label position="floating">Password</ion-label>
+      <ion-label position="floating">{{"PASSWORD_TITLE" | translate}}</ion-label>
       <ion-input type="password" formControlName="password"></ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="isInvalid('password')">
-      <p *ngIf="loginForm.controls['password'].errors?.['required']">Password is required</p>
+      <p *ngIf="loginForm.controls['password'].errors?.['required']">{{"PASSWORD_REQUIRED" | translate}}</p>
     </ion-text>
 
     @if (this.errorMessage != "") {
@@ -37,7 +37,7 @@
 
     <ion-button expand="full" type="submit" [disabled]="loginForm.invalid">Login</ion-button>
   </form>
-  <ion-button expand="full" (click)="goToForgotPassword()">Forgot Password ?</ion-button>
-  <ion-button expand="full" (click)="goToRegister()">Register</ion-button>
+  <ion-button expand="full" (click)="goToForgotPassword()">{{"ASK_FORGOT_PASSWORD" | translate}}</ion-button>
+  <ion-button expand="full" (click)="goToRegister()">{{"LOGIN_LABEL" | translate}}</ion-button>
 
 </ion-content>
