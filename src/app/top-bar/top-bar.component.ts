@@ -22,6 +22,7 @@ export class TopBarComponent  implements OnInit {
   butonId : String =""
   private router: Router = inject(Router)
   protected auth : AuthService = inject(AuthService)
+  isAuth: boolean = false;
 
   constructor() { }
 
@@ -29,7 +30,9 @@ export class TopBarComponent  implements OnInit {
     if (this.title){
       this.butonId = this.title.trim().split(/\s+/)[0] || '';
     }
-    console.log(this.butonId)
+    this.auth.isAuth().subscribe(isAuth => {
+      this.isAuth = isAuth;
+    });
   }
 
   goTo(){
