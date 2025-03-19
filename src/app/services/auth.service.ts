@@ -35,13 +35,15 @@ export class AuthService {
   }
 
   async logOutConnectedUser(toastMessage : string = "") : Promise<void> {
-    const toast = await this.toastController.create({
-      message: toastMessage,
-      duration: 1500,
-      position: 'bottom',
-    });
-    await toast.present();
-
+    if (toastMessage){
+      const toast = await this.toastController.create({
+        message: toastMessage,
+        duration: 1500,
+        position: 'bottom',
+      });
+      await toast.present();  
+    }
+    
     return signOut(this.fireauth);
   }
 
