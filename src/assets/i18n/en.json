@@ -27,7 +27,23 @@
     "ERROR_INVALID_PASSWORD": "Invalid password, it must be at least 8 characters long, include uppercase, lowercase, a number, and a special character.",
     "ERROR_EMAIL_ALREADY_IN_USE": "This e-mail is already taken, if it's your account you can try to ",
     "ERROR_EMAIL_ALREADY_IN_USE_P2": "reset your password.",
-    "ERROR_GENERAL": "An error has occurred, please retry or contact an administrator."
+    "ERROR_GENERAL": "An error has occurred, please retry or contact an administrator.",
+    "MANAGE_SHARE_TITLE": "Manage shares",
+    "READERS": "Readers",
+    "WRITERS": "Writers",
+    "NO_SHARE_MESSAGE": "You haven't shared your topic !",
+    "ADD": "Add",
+    "CREATE_POST": "Create a post",
+    "NAME_LABEL": "Add a name",
+    "NAME_PLACEHOLDER": "Name",
+    "NAME_REQUIRED": "Name is required",
+    "NAME_CANT_UNDER_4": "Name lenght must be more than 4 characters",
+    "NAME_CANT_UPPER_100": "Name lenght must be less than 100 characters",
+    "FILL_DESC_LABEL": "Fill a description",
+    "DESC_PLACEHOLDER": "Description",
+    "DESC_REQUIRED": "Description is required",
+    "DESC_CANT_UNDER_4": "Description lenght must be more than 4 characters",
+    "DESC_CANT_UPPER_100": "Description lenght must be less than 100 characters"
 
 
 

@@ -27,7 +27,23 @@
     "ERROR_INVALID_PASSWORD": "Mot de passe invalide, il doit comporter au moins 8 caractères, inclure des majuscules, des minuscules, un chiffre et un caractère spécial.",
     "ERROR_EMAIL_ALREADY_IN_USE": "Cet e-mail est déjà utilisé, si c'est votre compte, vous pouvez essayer de ",
     "ERROR_EMAIL_ALREADY_IN_USE_P2": "réinitialiser votre mot de passe.",
-    "ERROR_GENERAL": "Une erreur est survenue, veuillez réessayer ou contacter un administrateur."
+    "ERROR_GENERAL": "Une erreur est survenue, veuillez réessayer ou contacter un administrateur.",
+    "MANAGE_SHARE_TITLE": "Gérer les partages",
+    "READERS": "Lecteurs",
+    "WRITERS": "Écrivains",
+    "NO_SHARE_MESSAGE": "Vous n'avez pas partager votre topic !",
+    "ADD": "Ajouter",
+    "CREATE_POST": "Créer un post",
+    "NAME_LABEL": "Ajouter un nom",
+    "NAME_PLACEHOLDER": "Nom",
+    "NAME_REQUIRED": "Le nom est requis",
+    "NAME_CANT_UNDER_4": "Le nom doit avoir au moins 4 caractères.",
+    "NAME_CANT_UPPER_100": "Le nom doit avoir moins de 100 caractères",
+    "FILL_DESC_LABEL": "Renseignez une description",
+    "DESC_PLACEHOLDER": "Description",
+    "DESC_REQUIRED": "La description est requise",
+    "DESC_CANT_UNDER_4": "La description doit avoir au moins 4 caractères.",
+    "DESC_CANT_UPPER_100": "La description doit avoir moins de 100 caractères"
 
 
 

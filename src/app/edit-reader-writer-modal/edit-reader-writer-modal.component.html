@@ -3,14 +3,14 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button (click)="this.closeModal()">Annuler</ion-button>
+          <ion-button (click)="this.closeModal()">{{"CANCEL" | translate}}</ion-button>
         </ion-buttons>
-        <ion-title>Gérer les partages</ion-title>
+        <ion-title>{{"MANAGE_SHARE_TITLE" | translate}}</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
       @if (!this.noReader) {
-        <ion-label class="columnTitle">Lecteurs</ion-label>
+        <ion-label class="columnTitle">{{"READERS" | translate}}</ion-label>
         <ion-list class="scrollable-list" lines="full">
           @for (reader of this.topic.readers; track this.topic.readers) {
             <ion-item>
@@ -24,7 +24,7 @@
       }
 
       @if (!this.noWriter) {
-        <ion-label class="columnTitle">Ecrivains</ion-label>
+        <ion-label class="columnTitle">{{"WRITERS" | translate}}</ion-label>
         <ion-list class="scrollable-list" lines="full">
           @for (editor of this.topic.editors; track this.topic.editors) {
             <ion-item>
@@ -37,7 +37,7 @@
         </ion-list>
       }
       @if (this.noReader && this.noWriter) {
-        <ion-label class="notFoundLabel"> Vous n'avez pas partagé votre topic !</ion-label>
+        <ion-label class="notFoundLabel"> {{"NO_SHARE_MESSAGE" | translate}}</ion-label>
       }
     </ion-content>
   </ng-template>

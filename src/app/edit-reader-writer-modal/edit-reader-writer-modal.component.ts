@@ -2,13 +2,14 @@ import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular
 import { Topic } from '../models/topic';
 import {IonModal, IonButton, IonHeader, IonToolbar,  IonButtons, IonTitle, IonContent, IonList, IonItem, IonLabel, IonIcon} from '@ionic/angular/standalone'
 import { TopicService } from '../services/topic.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @Component({
   selector: 'app-edit-reader-writer-modal',
   templateUrl: './edit-reader-writer-modal.component.html',
   styleUrls: ['./edit-reader-writer-modal.component.scss'],
-  imports: [IonModal, IonHeader, IonToolbar, IonButton, IonButtons, IonTitle, IonContent, IonList, IonItem, IonLabel, IonIcon]
+  imports: [IonModal, IonHeader, IonToolbar, IonButton, IonButtons, IonTitle, IonContent, IonList, IonItem, IonLabel, IonIcon, TranslateModule]
 })
 export class EditReaderWriterModalComponent  implements OnInit {
 
