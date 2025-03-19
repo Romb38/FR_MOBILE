@@ -60,11 +60,11 @@ export class TopicDetailsComponent implements OnInit {
       if (!topic) {
         this.router.navigate(['404']);
       } else {
-        this.topic = topic
+        this.topic = topic;
       }
     });
 
-    this.posts = this.topicService.getAllPost(this.topicId)
+    this.posts = this.topicService.getAllPost(this.topicId);
   }
 
   goToPost(post: Post): void {
