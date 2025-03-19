@@ -43,7 +43,12 @@
     "DESC_PLACEHOLDER": "Description",
     "DESC_REQUIRED": "Description is required",
     "DESC_CANT_UNDER_4": "Description lenght must be more than 4 characters",
-    "DESC_CANT_UPPER_100": "Description lenght must be less than 100 characters"
+    "DESC_CANT_UPPER_100": "Description lenght must be less than 100 characters",
+    "SAVE": "Save",
+    "POST_EDITION_TITLE": "Post edition",
+    "NOT_FOUND": "404 - Not found",
+    "GO_HOME": "Go home"
+
 
 
 

@@ -16,12 +16,14 @@ import { TopicService } from '../services/topic.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import {NgIf} from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-modal-edition',
   templateUrl: './modal-edition.component.html',
   styleUrls: ['./modal-edition.component.scss'],
-  imports: [IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonContent, IonItem, IonInput, FormsModule, NgIf],
+  imports: [IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonContent, IonItem, IonInput, FormsModule, NgIf,TranslateModule],
 })
 export class ModalEditionComponent implements OnInit, OnDestroy {
   @Input() isVisible: boolean = false;

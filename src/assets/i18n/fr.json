@@ -43,8 +43,9 @@
     "DESC_PLACEHOLDER": "Description",
     "DESC_REQUIRED": "La description est requise",
     "DESC_CANT_UNDER_4": "La description doit avoir au moins 4 caractères.",
-    "DESC_CANT_UPPER_100": "La description doit avoir moins de 100 caractères"
-
-
-
+    "DESC_CANT_UPPER_100": "La description doit avoir moins de 100 caractères",
+    "SAVE": "Sauvegarder",
+    "POST_EDITION_TITLE": "Édition du post",
+    "NOT_FOUND": "404 - Introuvable",
+    "GO_HOME": "Retour à l'acceuil"
 }
