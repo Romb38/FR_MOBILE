@@ -9,7 +9,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      @if (!this.noReader) {
+      @if (!this.noReader()) {
         <ion-label class="columnTitle">{{"READERS" | translate}}</ion-label>
         <ion-list class="scrollable-list" lines="full">
           @for (reader of this.topic.readers; track this.topic.readers) {
@@ -23,7 +23,7 @@
         </ion-list>
       }
 
-      @if (!this.noWriter) {
+      @if (!this.noWriter()) {
         <ion-label class="columnTitle">{{"WRITERS" | translate}}</ion-label>
         <ion-list class="scrollable-list" lines="full">
           @for (editor of this.topic.editors; track this.topic.editors) {
@@ -36,7 +36,7 @@
           }
         </ion-list>
       }
-      @if (this.noReader && this.noWriter) {
+      @if (this.noReader()  && this.noWriter()) {
         <ion-label class="notFoundLabel"> {{"NO_SHARE_MESSAGE" | translate}}</ion-label>
       }
     </ion-content>

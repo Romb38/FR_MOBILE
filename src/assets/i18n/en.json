@@ -48,5 +48,7 @@
     "POST_EDITION_TITLE": "Post edition",
     "NOT_FOUND": "404 - Not found",
     "GO_HOME": "Go home",
-    "POST_EDITION": "Edit post"
+    "POST_EDITION": "Edit post",
+    "USER_ALREADY_READER" : "This user is already a reader",
+    "USER_ALREADY_WRITER": "This user is already a writer"
 }
