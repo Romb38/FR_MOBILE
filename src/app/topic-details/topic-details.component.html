@@ -3,23 +3,32 @@
 <ion-content [fullscreen]="true">
   <ion-list lines="full">
     @for (post of this.posts | async; track post.id) {
-      <ion-item class="post-item" >
+      <ion-item class="post-item">
         <ion-label [title]="post.id" (click)='goToPost(post)'><span [attr.data-cy]="post.id">{{ post.name }}</span></ion-label>
-        
+
         @if (topic.isWriter) {
           <ion-button fill="clear" slot="end" (click)="deleteItem(post)">
-            <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
+            <ion-icon name="trash" class="ion-margin-end" color="danger"></ion-icon>
           </ion-button>
         }
       </ion-item>
     }
   </ion-list>
   @if (topic.isWriter) {
-  <ion-button (click)="showModal()">Créer un post</ion-button>
+    <ion-button (click)="showModal()">
+      <ion-icon name="create" class="ion-margin-end"></ion-icon>
+      <ion-label>Créer un post</ion-label>
+    </ion-button>
   }
   @if (topic.isOwner) {
-    <ion-button (click)="showEditReaderWriterModal()">Editez les partages</ion-button>
-    <ion-button (click)="showReadWriteModal()">Partager le topic</ion-button>
+    <ion-button (click)="showEditReaderWriterModal()">
+      <ion-icon name="create" class="ion-margin-end"></ion-icon>
+      <ion-label>Editer les partages</ion-label>
+    </ion-button>
+    <ion-button (click)="showReadWriteModal()">
+      <ion-icon name="share" class="ion-margin-end"></ion-icon>
+      <ion-label>Partager le topic</ion-label>
+    </ion-button>
   }
 </ion-content>
 

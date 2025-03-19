@@ -11,13 +11,13 @@
       {{this.title}}
     </ion-title>
 
-    @if (this.auth.isAuth()) {
+    @if (this.isAuth) {
       <ion-buttons slot="end">
         <ion-button (click)="logout()">
           <ion-icon src="../../assets/icon/log-out-outline.svg" color="negative"></ion-icon>
         </ion-button>
       </ion-buttons>
     }
-    
+
   </ion-toolbar>
 </ion-header>
