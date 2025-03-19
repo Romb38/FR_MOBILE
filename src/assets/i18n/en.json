@@ -14,10 +14,20 @@
     "ASK_TO_CONNECT":"Log in ?",
     "LOGIN_TITLE": "Login",
     "LOGIN_LABEL": "Log in",
-    "PASSWORD_TITLE": "Password",
+    "PASSWORD_LABEL": "Password",
     "PASSWORD_REQUIRED": "Password is required",
     "ASK_FORGOT_PASSWORD": "Forgot password ?",
-    "REGISTER": "Register"
+    "REGISTER": "Register",
+    "ACCOUNT_CREATED": "Your account has been created, check your email to verify it, otherwise, you will not be able to connect",
+    "PASSWORD_REQUIREMENTS": "Password must be at least 8 characters long, include uppercase, lowercase, a number, and a special character.",
+    "PASSWORD_CONFIRMATION_LABEL": "Confirmation du mot de passe",
+    "PASSWORD_CONFIRMATION_REQUIRED": "La confirmation du mot de passe est requise",
+    "PASSWORDS_NOT_MATCH": "Les mots de passe ne coresspondent pas",
+    "ERROR_INVALID_EMAIL": "Invalid e-mail, please provide a valid email",
+    "ERROR_INVALID_PASSWORD": "Invalid password, it must be at least 8 characters long, include uppercase, lowercase, a number, and a special character.",
+    "ERROR_EMAIL_ALREADY_IN_USE": "This e-mail is already taken, if it's your account you can try to ",
+    "ERROR_EMAIL_ALREADY_IN_USE_P2": "reset your password.",
+    "ERROR_GENERAL": "An error has occurred, please retry or contact an administrator."
 
 
 

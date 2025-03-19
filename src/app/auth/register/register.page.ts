@@ -6,7 +6,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirebaseError } from '@angular/fire/app';
 import { TopBarComponent } from 'src/app/top-bar/top-bar.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register',
@@ -26,6 +26,7 @@ export class RegisterPage implements OnInit {
   private navCtrl = inject(Router)
   private fb = inject(FormBuilder)
   private authController = inject(AuthService)
+  private translate = inject(TranslateService)
   protected loginForm: FormGroup = this.fb.group(
     {
       email: ['', [Validators.required, Validators.email]],
@@ -54,21 +55,31 @@ export class RegisterPage implements OnInit {
       if (reason instanceof FirebaseError){
               let error = reason as FirebaseError;
               switch (error.code) {
-                case "auth/invalid-email" :
-                  this.errorMessage = "Invalid e-mail, please provide a valid email"
+                case "auth/invalid-email":
+                  this.translate.get('ERROR_INVALID_EMAIL').subscribe((translation: string) => {
+                    this.errorMessage = translation;
+                  });
                   break;
-                case "auth/invalid-password" : 
-                  this.errorMessage = "Invalid password, it must be at least 8 characters long, include uppercase, lowercase, a number, and a special character."
+                case "auth/invalid-password":
+                  this.translate.get('ERROR_INVALID_PASSWORD').subscribe((translation: string) => {
+                    this.errorMessage = translation;
+                  });
                   break;
-                case "auth/email-already-in-use" :
-                  this.errorMessage = `This e-mail is already taken, if it's your account you can try to`
-                  break
+                case "auth/email-already-in-use":
+                  this.translate.get('ERROR_EMAIL_ALREADY_IN_USE').subscribe((translation: string) => {
+                    this.errorMessage = translation;
+                  });
+                  break;
                 default:
-                  this.errorMessage = "An error as occured, please retry or contact an administrator"
+                  this.translate.get('ERROR_GENERAL').subscribe((translation: string) => {
+                    this.errorMessage = translation;
+                  });
                   break;
               }
             } else {
-              this.errorMessage = "An error as occured, please retry or contact an administrator"
+              this.translate.get('ERROR_GENERAL').subscribe((translation: string) => {
+                this.errorMessage = translation;
+              });
             } 
     })
   }
