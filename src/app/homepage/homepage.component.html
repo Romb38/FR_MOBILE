@@ -14,7 +14,7 @@
               {{ topic.name }}
           </ion-label>
             @if (topic.isOwner) {
-              <ion-button data-action="delete" fill="clear" slot="end" (click)="deleteItem(topic)">
+              <ion-button data-action="delete" aria-label="Remove a post" fill="clear" slot="end" (click)="deleteItem(topic)">
                 <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
               </ion-button>
             }

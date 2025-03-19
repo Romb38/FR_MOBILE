@@ -15,7 +15,7 @@
           @for (reader of this.topic.readers; track this.topic.readers) {
             <ion-item>
               <ion-label [title]="reader"> {{ reader }} </ion-label>
-                <ion-button data-action="delete" fill="clear" slot="end" (click)="removeReader(reader)">
+                <ion-button data-action="delete" aria-label="Remove a reader" fill="clear" slot="end" (click)="removeReader(reader)">
                   <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
                 </ion-button>
             </ion-item>
@@ -29,7 +29,7 @@
           @for (editor of this.topic.editors; track this.topic.editors) {
             <ion-item>
               <ion-label [title]="editor"> {{ editor }} </ion-label>
-                <ion-button data-action="delete" fill="clear" slot="end" (click)="removeWriter(editor)">
+                <ion-button data-action="delete" aria-label="Remove a writer" fill="clear" slot="end" (click)="removeWriter(editor)">
                   <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
                 </ion-button>
             </ion-item>

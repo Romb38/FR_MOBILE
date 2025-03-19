@@ -4,7 +4,7 @@
     @if (!this.isHomePage) {
       <ion-buttons slot="start">
         <ion-button [id]="'backRoute-' + butonId" (click)="goTo()">
-          <ion-icon src="../../assets/icon/arrow-back-outline.svg" color="negative"></ion-icon>
+          <ion-icon src="../../assets/icon/arrow-back-outline.svg" aria-label="Go back" color="negative"></ion-icon>
         </ion-button>
       </ion-buttons>  
     }
@@ -15,11 +15,11 @@
 
     <ion-buttons slot="end">
       <ion-button (click)="switchLang()">
-        <img [src]="icon" alt="flag" style=" width: 30px; height: auto; padding: 0;">
+        <img [src]="icon" alt="Language flag" style=" width: 30px; height: auto; padding: 0;">
       </ion-button>
     @if (this.isAuth$ | async) {
         <ion-button (click)="logout()">
-          <ion-icon src="../../assets/icon/log-out-outline.svg" color="negative"></ion-icon>
+          <ion-icon src="../../assets/icon/log-out-outline.svg" aria-label="Log out" color="negative"></ion-icon>
         </ion-button> 
     }
   </ion-buttons>
