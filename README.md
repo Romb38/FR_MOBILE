@@ -36,21 +36,15 @@ Cette application est un projet de Master 2 - Génie informatique dans l'option 
 - [X] Partage des Topics (R/W)
 - [x] Page d'erreur
 
-## Langues disponibles
+## Traduction
 L'application à été traduites dans les langues suivantes:
 - **Français**  
-  <div style="width: 100%; max-width: 600px; background: #ddd; border-radius: 5px;">
-    <div style="width: 100%; background: #4caf50; padding: 5px; color: white; text-align: center; font-weight: bold; border-radius: 5px;">
-      100%
-    </div>
-  </div>
+  🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩 100%
 
 - **Anglais**  
-  <div style="width: 100%; max-width: 600px; background: #ddd; border-radius: 5px;">
-    <div style="width: 100%; background: #4caf50; padding: 5px; color: white; text-align: center; font-weight: bold; border-radius: 5px;">
-      100%
-    </div>
-  </div>
+  🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩100%
+
+
 ## Contributeurs
 
 - [@Romb38](https://github.com/Romb38)
