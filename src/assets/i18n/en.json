@@ -50,5 +50,6 @@
     "GO_HOME": "Go home",
     "POST_EDITION": "Edit post",
     "USER_ALREADY_READER" : "This user is already a reader",
-    "USER_ALREADY_WRITER": "This user is already a writer"
+    "USER_ALREADY_WRITER": "This user is already a writer",
+    "SIGN_IN_WITH_GOOGLE": "Sign in with Google"
 }

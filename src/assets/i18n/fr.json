@@ -50,5 +50,6 @@
     "GO_HOME": "Retour à l'acceuil",
     "POST_EDITION": "Éditer le post",
     "USER_ALREADY_READER" : "Cet utilisateur est déjà un lecteur",
-    "USER_ALREADY_WRITER": "Cet utilisateur est déjà un écrivain"
+    "USER_ALREADY_WRITER": "Cet utilisateur est déjà un écrivain",
+    "SIGN_IN_WITH_GOOGLE": "Se connecter avec Google"
 }
