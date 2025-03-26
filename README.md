@@ -39,10 +39,10 @@ Cette application est un projet de Master 2 - Génie informatique dans l'option 
 ## Traduction
 L'application à été traduites dans les langues suivantes:
 - **Français**  
-  🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩 100%
+  🟩 🟩 🟩 🟩 🟩 🟩 🟩 🟩 🟩 🟩 🟩 🟩 🟩 🟩 🟩 100%
 
 - **Anglais**  
-  🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩100%
+  🟩 🟩 🟩 🟩 🟩 🟩 🟩 🟩 🟩 🟩 🟩 🟩 🟩 🟩 🟩 100%
 
 
 ## Contributeurs
