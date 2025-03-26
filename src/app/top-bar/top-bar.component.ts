@@ -32,12 +32,20 @@ export class TopBarComponent  implements OnInit {
   protected isHomePage : boolean;
   private language: any;
   protected icon: string;
+  protected iconDarkMode: string;
+  private ASSETS_PATH : string = "../../assets/icon/"
 
   constructor() {
     this.translateConfigService.getDefaultLanguage();
     this.language = this.translateConfigService.getCurrentLang();
-    this.icon = "../../assets/icon/"+this.language+".svg"
+    this.icon = this.ASSETS_PATH+this.language+".svg"
     this.isHomePage = this.homePage.includes(this.router.url);
+    const isDarkMode = document.documentElement.classList.contains('ion-palette-dark');
+    if (isDarkMode) {
+      this.iconDarkMode = this.ASSETS_PATH + "sunny-outline.svg"
+    } else {
+      this.iconDarkMode = this.ASSETS_PATH + "sunny-outline.svg"
+    }
   }
 
   ngOnInit() {
@@ -69,6 +77,18 @@ export class TopBarComponent  implements OnInit {
         this.translateConfigService.setLanguage("en")
         break
     }
-    this.icon="../../assets/icon/"+this.language+".svg"
+    this.icon=this.ASSETS_PATH+this.language+".svg"
   }
+
+  toggleDarkMode(){
+    if (this.iconDarkMode.includes("sunny")) {
+      this.iconDarkMode = this.ASSETS_PATH + "moon-outline.svg"
+      document.documentElement.classList.toggle('ion-palette-dark', true);
+    } else {
+      this.iconDarkMode = this.ASSETS_PATH + "sunny-outline.svg"
+      document.documentElement.classList.toggle('ion-palette-dark', false);
+
+    }
+  }
+
 }

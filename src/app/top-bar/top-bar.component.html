@@ -17,6 +17,9 @@
       <ion-button (click)="switchLang()">
         <img [src]="icon" alt="Language flag" style=" width: 30px; height: auto; padding: 0;">
       </ion-button>
+      <ion-button (click)="toggleDarkMode()">
+        <img [src]="iconDarkMode" alt="Language flag" style=" width: 30px; height: auto; padding: 0;">
+      </ion-button>
     @if (this.isAuth$ | async) {
         <ion-button (click)="logout()">
           <ion-icon src="../../assets/icon/log-out-outline.svg" aria-label="Log out" color="negative"></ion-icon>
