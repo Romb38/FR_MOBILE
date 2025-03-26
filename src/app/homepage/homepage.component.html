@@ -1,22 +1,18 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Reddot
-    </ion-title>
-
-      <ion-buttons slot="end">
-        <ion-button (click)="logout()">
-          <ion-icon src="../../assets/icon/log-out-outline.svg" color="negative"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-
-
-  </ion-toolbar>
-</ion-header>
-
+<app-top-bar title="Reddot"></app-top-bar>
 
 <ion-content [fullscreen]="true">
   <div id="container">
+    @if ((topics |async)?.length === 0 ) {
+      <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <img
+          src="assets/icon/no-results.svg"
+          alt="Not found"
+          width="100"
+          height="100"
+          style="opacity: 0.2; filter: grayscale(100%);"
+        >
+      </div>
+    }
     <ion-list lines="full">
       @for (topic of this.topics | async; track topic.id) {
         @if (topic.isReader) {
@@ -28,17 +24,17 @@
               {{ topic.name }}
           </ion-label>
             @if (topic.isOwner) {
-              <ion-button data-action="delete" fill="clear" slot="end" (click)="deleteItem(topic)">
+              <ion-button data-action="delete" aria-label="Remove a post" fill="clear" slot="end" (click)="deleteItem(topic)">
                 <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
               </ion-button>
             }
           </ion-item>
         }
-        
+
       }
     </ion-list>
   </div>
 </ion-content>
 
-<ion-button (click)="showModal()">Créer un topic</ion-button>
+<ion-button (click)="showModal()">{{"CREATE_TOPIC" | translate }}</ion-button>
 <app-modal-creation [isVisible]="isModalVisible" (close)="closeModal()"></app-modal-creation>

@@ -1,10 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonText, IonButton, IonInput } from '@ionic/angular/standalone';
+import { IonContent, IonItem, IonLabel, IonText, IonButton, IonInput } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirebaseError } from '@angular/fire/app';
+import { TranslateModule } from '@ngx-translate/core';
+import { TopBarComponent } from 'src/app/top-bar/top-bar.component';
+
 
 @Component({
   selector: 'app-forgot-password',
@@ -17,11 +20,10 @@ import { FirebaseError } from '@angular/fire/app';
     IonLabel, 
     IonItem, 
     IonContent, 
-    IonHeader, 
-    IonTitle,
-    IonToolbar,
     CommonModule,
     ReactiveFormsModule,
+    TranslateModule,
+    TopBarComponent
   ]
 })
 export class ForgotPasswordPage implements OnInit {

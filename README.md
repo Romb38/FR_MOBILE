@@ -33,9 +33,26 @@ Cette application est un projet de Master 2 - Génie informatique dans l'option 
 - [x] Création de Topics
 - [x] Création de Posts
 - [x] Édition de Posts
+- [X] Partage des Topics (R/W)
 - [x] Page d'erreur
+
+## Traduction
+L'application à été traduites dans les langues suivantes:
+- **Français**  
+  🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩 100%
+
+- **Anglais**  
+  🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩100%
+
 
 ## Contributeurs
 
-- [@Romb38](https://github.com/Romb38)
-- [@florent-dev](https://github.com/florent-dev)
+
+
+<p align="center">
+    <img src="https://github.com/Romb38.png" width="50" height="50" alt="Romb38" />
+    &nbsp&nbsp&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="https://github.com/florent-dev.png" width="50" height="50" alt="florent-dev" />
+    <br />  <a href="https://github.com/Romb38"> @Romb38 </a>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://github.com/florent-dev"> @florent-dev </a>
+  </a>
+</p>

@@ -3,21 +3,23 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button (click)="this.closeModal()">Annuler</ion-button>
+          <ion-button (click)="this.closeModal()">{{"CANCEL" | translate}}</ion-button>
         </ion-buttons>
-        <ion-title>{{ isPostCreation() ? 'Créer un post' : 'Créer un topic' }}</ion-title>
+        <ion-title>
+          {{ isPostCreation() ? ('CREATE_POST' | translate) : ('CREATE_TOPIC' | translate) }}
+        </ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="this.save()" [strong]="true" [disabled]="!isFormValid()">Ajouter</ion-button>
+          <ion-button (click)="this.save()" [strong]="true" [disabled]="!isFormValid()">{{"ADD" | translate}}</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
       <ion-item>
         <ion-input
-          label="Renseignez un nom"
+          [label]="'NAME_LABEL'|translate"
           labelPlacement="stacked"
           type="text"
-          placeholder="Nom"
+          [placeholder]="'NAME_PLACEHOLDER'|translate"
           minlength="4"
           maxlength="100"
           #name="ngModel"
@@ -25,17 +27,17 @@
         ></ion-input>
       </ion-item>
       <div *ngIf="name.invalid && (name.dirty || name.touched)">
-        <small *ngIf="name.errors?.['required']">Le nom est requis.</small>
-        <small *ngIf="name.errors?.['minlength']">Le nom doit avoir au moins 4 caractères.</small>
-        <small *ngIf="name.errors?.['maxlength']">Le nom ne peut pas dépasser 100 caractères.</small>
+        <small *ngIf="name.errors?.['required']">{{"NAME_REQUIRED" | translate}}</small>
+        <small *ngIf="name.errors?.['minlength']">{{"NAME_CANT_UNDER_4" | translate}}</small>
+        <small *ngIf="name.errors?.['maxlength']">{{"NAME_CANT_UPPER_100" | translate}}</small>
       </div>
       <div *ngIf="isPostCreation()">
         <ion-item>
           <ion-input
-            label="Renseignez une description"
+            [label]="'FILL_DESC_LABEL'|translate"
             labelPlacement="stacked"
             type="text"
-            placeholder="Description"
+            [placeholder]="'DESC_PLACEHOLDER'|translate"
             minlength="4"
             maxlength="100"
             #description="ngModel"
@@ -43,9 +45,9 @@
           ></ion-input>
         </ion-item>
         <div *ngIf="description.invalid && (description.dirty || description.touched)">
-          <small *ngIf="description.errors?.['required']">La description est requise.</small>
-          <small *ngIf="description.errors?.['minlength']">La description doit avoir au moins 4 caractères.</small>
-          <small *ngIf="description.errors?.['maxlength']">La description ne peut pas dépasser 100 caractères.</small>
+          <small *ngIf="description.errors?.['required']">{{"DESC_REQUIRED" | translate}}</small>
+          <small *ngIf="description.errors?.['minlength']">{{"DESC_CANT_UNDER_4" | translate}}</small>
+          <small *ngIf="description.errors?.['maxlength']">{{"DESC_CANT_UPPER_100" | translate}}</small>
         </div>
       </div>
     </ion-content>

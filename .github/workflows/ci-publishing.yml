@@ -29,7 +29,7 @@ jobs:
         run: |
             echo "$ENVIRONNEMENTTS
             " | base64 --decode > src/environments/environment.ts
-          
+
             echo "$ENVIRONNEMENTTS
             " | base64 --decode > src/environments/environment.prod.ts
             

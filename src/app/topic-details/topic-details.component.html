@@ -3,26 +3,46 @@
 <ion-content [fullscreen]="true">
   <ion-list lines="full">
     @for (post of this.posts | async; track post.id) {
-      <ion-item class="post-item" >
+      <ion-item class="post-item">
         <ion-label [title]="post.id" (click)='goToPost(post)'><span [attr.data-cy]="post.id">{{ post.name }}</span></ion-label>
-        
+
         @if (topic.isWriter) {
           <ion-button fill="clear" slot="end" (click)="deleteItem(post)">
-            <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
+            <ion-icon name="trash" class="ion-margin-end" aria-label="Remove post" color="danger"></ion-icon>
           </ion-button>
         }
       </ion-item>
     }
   </ion-list>
+  @if((this.posts |async)?.length === 0){
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+      <img
+        src="assets/icon/no-results.svg"
+        alt="Not found"
+        width="100"
+        height="100"
+        style="opacity: 0.2; filter: grayscale(100%);"
+      >
+    </div>
+  }
   @if (topic.isWriter) {
-  <ion-button (click)="showModal()">Créer un post</ion-button>
+    <ion-button (click)="showModal()">
+      <ion-icon name="create" class="ion-margin-end"></ion-icon>
+      <ion-label>{{"CREATE_POST" | translate}}</ion-label>
+    </ion-button>
   }
   @if (topic.isOwner) {
-    <ion-button (click)="showEditReaderWriterModal()">Editez les partages</ion-button>
-    <ion-button (click)="showReadWriteModal()">Partager le topic</ion-button>
+    <ion-button (click)="showEditReaderWriterModal()">
+      <ion-icon name="create" class="ion-margin-end"></ion-icon>
+      <ion-label>{{"MANAGE_SHARE_TITLE" | translate}}</ion-label>
+    </ion-button>
+    <ion-button (click)="showReadWriteModal()">
+      <ion-icon name="share" class="ion-margin-end"></ion-icon>
+      <ion-label>{{"SHARE_TOPIC"|translate}}</ion-label>
+    </ion-button>
   }
 </ion-content>
 
 <app-modal-creation [isVisible]="isModalVisible" [topicId]="topicId" (close)="closeModal()"></app-modal-creation>
 <app-add-reader-writer-modal [isVisible]="isReaderWriterModalVisible" [topic]="topic" (close)="closeReadWriteModal()"></app-add-reader-writer-modal>
-<app-edit-reader-writer-modal [isVisible]="isEditReaderWriterModalVisible" [topic]="topic" (close)="closeEditReaderWriterModal()"></app-edit-reader-writer-modal>
+<app-edit-reader-writer-modal [isVisible]="isEditReaderWriterModalVisible" [topicId]="topicId" (close)="closeEditReaderWriterModal()"></app-edit-reader-writer-modal>

@@ -8,6 +8,6 @@
 </ion-content>
 
 @if (this.topic.isWriter) {
-  <ion-button (click)="showModal()">Éditer le post</ion-button>
+  <ion-button (click)="showModal()">{{"POST_EDITION" | translate}}</ion-button>
 }
 <app-modal-edition [isVisible]="isModalVisible" [topicId]="topicId" [postId]="postId" (close)="closeModal()"></app-modal-edition>

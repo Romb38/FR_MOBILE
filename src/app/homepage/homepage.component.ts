@@ -1,12 +1,14 @@
 import { Component, inject } from '@angular/core';
+import { TopBarComponent } from "../top-bar/top-bar.component";
 import { TopicService } from '../services/topic.service';
-import { IonItem, IonLabel, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
+import { IonItem, IonLabel, IonList, IonContent, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { ModalCreationComponent } from "../modal-creation/modal-creation.component";
 import { Router } from '@angular/router';
 import { Topic, Topics } from '../models/topic';
 import { Observable } from 'rxjs/internal/Observable';
 import { AsyncPipe } from '@angular/common';
 import { AuthService } from '../services/auth.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-homepage',
@@ -17,15 +19,13 @@ import { AuthService } from '../services/auth.service';
     IonLabel,
     IonList,
     IonButton,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
     IonContent,
     IonIcon,
     ModalCreationComponent,
     AsyncPipe,
-    IonButtons,
-    IonButton
+    IonButton,
+    TranslateModule,
+    TopBarComponent
 ],
 })
 export class HomepageComponent {
