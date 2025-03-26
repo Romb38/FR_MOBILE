@@ -51,7 +51,7 @@ L'application à été traduites dans les langues suivantes:
 
 <p align="center">
     <img src="https://github.com/Romb38.png" width="50" height="50" alt="Romb38" />
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp&nbsp&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <img src="https://github.com/florent-dev.png" width="50" height="50" alt="florent-dev" />
     <br />  <a href="https://github.com/Romb38"> @Romb38 </a>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://github.com/florent-dev"> @florent-dev </a>
   </a>
