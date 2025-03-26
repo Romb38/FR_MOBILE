@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.m2gi.mobileapp',
-  appName: 'M2GI Mobile App',
+  appName: 'Reddot',
   webDir: 'www',
   plugins: {
     FirebaseAuthentication: {
