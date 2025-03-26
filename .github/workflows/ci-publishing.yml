@@ -28,10 +28,10 @@ jobs:
           ENVIRONNEMENTTS: ${{ secrets.ENVIRONNEMENTTS }}
         run: |
             echo "$ENVIRONNEMENTTS
-            " | base64 --decode > src/environments/environment.ts
+            " | base64 --decode > src/environments/environnement.ts
           
             echo "$ENVIRONNEMENTTS
-            " | base64 --decode > src/environments/environment.prod.ts
+            " | base64 --decode > src/environments/environnement.prod.ts
             
              
 
