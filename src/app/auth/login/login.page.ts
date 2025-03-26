@@ -16,7 +16,6 @@ import {FirebaseAuthentication} from '@capacitor-firebase/authentication';
   imports: [IonInput, IonText, IonButton, IonItem, IonLabel, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, ReactiveFormsModule]
 })
 export class LoginPage implements OnInit {
-
   ngOnInit() {}
 
   @Input() protected logOutMessage = ""
@@ -94,9 +93,9 @@ export class LoginPage implements OnInit {
 
   async signInWithGoogle() {
     try {
-      const result = await FirebaseAuthentication.signInWithGoogle();
-      console.log('Google sign in result:', result);
       // Handle the result (e.g., send token to your backend, navigate, etc.)
+      const result = await FirebaseAuthentication.signInWithGoogle();
+      this.navCtrl.navigate(['/']);
     } catch (error) {
       console.error('Google sign in error:', error);
     }
