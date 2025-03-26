@@ -1,0 +1,43 @@
+{
+  "project_info": {
+    "project_number": "680547793541",
+    "project_id": "m2pgi-topic-manager-fbfb7",
+    "storage_bucket": "m2pgi-topic-manager-fbfb7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:680547793541:android:a1171a5b9ffaa1d1f747ec",
+        "android_client_info": {
+          "package_name": "com.m2gi.mobileapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "680547793541-ciu7609fcbe2bd6ctd1q5p3tr16j1tuc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.m2gi.mobileapp",
+            "certificate_hash": "2f73837046b665daa5c6a92a9addab859e78d6bf"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZ2hckC3epSS4bVflaASdK_X5lHDSdOf8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "680547793541-gia7kl05orkipc98jiclc30evdjsu25t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

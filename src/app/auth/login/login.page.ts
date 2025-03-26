@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirebaseError } from '@angular/fire/app';
 import { take } from 'rxjs';
+import {FirebaseAuthentication} from '@capacitor-firebase/authentication';
 import { TranslateModule } from '@ngx-translate/core';
 import { TopBarComponent } from 'src/app/top-bar/top-bar.component';
 
@@ -17,7 +18,6 @@ import { TopBarComponent } from 'src/app/top-bar/top-bar.component';
   imports: [IonInput, IonText, IonButton, IonItem, IonLabel, IonContent, CommonModule, ReactiveFormsModule, TranslateModule, TopBarComponent]
 })
 export class LoginPage implements OnInit {
-
   ngOnInit() {}
 
   @Input() protected logOutMessage = ""
@@ -41,7 +41,7 @@ export class LoginPage implements OnInit {
 
     this.authController.logInUser(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value)
     .then( () => {
-      
+
       this.authController.getConnectedUser().pipe(take(1)).subscribe((user) => {
         if (!user){
           this.authController.logOutConnectedUser("An error has occured !").then(() => {
@@ -59,7 +59,7 @@ export class LoginPage implements OnInit {
         }
 
       })
-      
+
     })
     .catch( (reason : any) => {
       if (reason instanceof FirebaseError){
@@ -77,7 +77,7 @@ export class LoginPage implements OnInit {
         }
       } else {
         this.errorMessage = "An error as occured, please retry or contact an administrator"
-      } 
+      }
     })
   }
 
@@ -91,5 +91,15 @@ export class LoginPage implements OnInit {
 
   goToForgotPassword(){
     this.navCtrl.navigateByUrl('/forgot-password');
+  }
+
+  async signInWithGoogle() {
+    try {
+      // Handle the result (e.g., send token to your backend, navigate, etc.)
+      const result = await FirebaseAuthentication.signInWithGoogle();
+      this.navCtrl.navigate(['/']);
+    } catch (error) {
+      console.error('Google sign in error:', error);
+    }
   }
 }
