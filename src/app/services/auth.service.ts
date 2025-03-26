@@ -19,7 +19,6 @@ export class AuthService {
   isAuth() :  Observable<boolean> {
     return this.getConnectedUser().pipe(
       map(user => {
-        if (!user) this.router.navigateByUrl('/login');
         return !!user;
       })
     )
