@@ -1,9 +1,9 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'ionic_default',
-  webDir: 'www'
+  appId: 'fr.standouda.mobile',
+  appName: 'Reddot',
+  webDir: 'www',
 };
 
 export default config;
