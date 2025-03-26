@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">ionic_default</string>
     <string name="title_activity_main">ionic_default</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="package_name">com.m2gi.mobileapp</string>
+    <string name="custom_url_scheme">com.m2gi.mobileapp</string>
+    <string name="default_web_client_id">680547793541-ciu7609fcbe2bd6ctd1q5p3tr16j1tuc.apps.googleusercontent.com</string>
 </resources>

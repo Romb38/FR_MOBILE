@@ -6,7 +6,7 @@
 
 <ion-content class="ion-padding">
   <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-    
+
     @if (this.logOutMessage != "") {
       <ion-text color="danger">
         <p> {{this.logOutMessage}} </p>
@@ -39,5 +39,5 @@
   </form>
   <ion-button expand="full" (click)="goToForgotPassword()">Forgot Password ?</ion-button>
   <ion-button expand="full" (click)="goToRegister()">Register</ion-button>
-
+  <ion-button expand="full" (click)="signInWithGoogle()">Sign in with Google</ion-button>
 </ion-content>

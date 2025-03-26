@@ -1,0 +1,11 @@
+{
+  "appId": "com.m2gi.mobileapp",
+  "appName": "M2GI mobile app",
+  "webDir": "www",
+  "plugins": {
+    "FirebaseAuthentication": {
+      "skipNativeAuth": false,
+      "providers": ["google.com"]
+    }
+  }
+}
