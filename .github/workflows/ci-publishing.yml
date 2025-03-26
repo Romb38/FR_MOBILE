@@ -2,6 +2,7 @@ name: Ionic CI/CD with Cypress
 on:
   pull_request:
      types: [closed]
+  push:
   
 
 jobs:
