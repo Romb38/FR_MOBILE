@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'fr.standouda.mobile',
+  appId: 'com.m2gi.mobileapp',
   appName: 'Reddot',
   webDir: 'www',
 };
