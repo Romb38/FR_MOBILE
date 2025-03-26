@@ -47,5 +47,13 @@ L'application à été traduites dans les langues suivantes:
 
 ## Contributeurs
 
-- [@Romb38](https://github.com/Romb38)
-- [@florent-dev](https://github.com/florent-dev)
+<div style="display: flex; justify-content: center; align-items: center;">
+  <a href="https://github.com/Romb38" style="text-align: center; margin-right: 20px;">
+    <img src="https://github.com/Romb38.png" width="50" height="50" alt="Romb38" />
+    <div>@Romb38</div>
+  </a>
+  <a href="https://github.com/florent-dev" style="text-align: center;">
+    <img src="https://github.com/florent-dev.png" width="50" height="50" alt="florent-dev" />
+    <div>@florent-dev</div>
+  </a>
+</div>
