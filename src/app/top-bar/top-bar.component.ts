@@ -64,6 +64,7 @@ export class TopBarComponent  implements OnInit {
 
   logout(){
     this.auth.logOutConnectedUser()
+    this.router.navigate(['/login'])
   }
 
   switchLang(){

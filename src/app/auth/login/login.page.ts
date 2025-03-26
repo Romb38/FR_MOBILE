@@ -45,16 +45,16 @@ export class LoginPage implements OnInit {
       this.authController.getConnectedUser().pipe(take(1)).subscribe((user) => {
         if (!user){
           this.authController.logOutConnectedUser("An error has occured !").then(() => {
-            this.navCtrl.navigate(['/'])
+            this.navCtrl.navigate(['/'],{ replaceUrl: true})
           })
         } else {
           if (!user.emailVerified){
             this.authController.sendVerifyEmailLink()
             this.authController.logOutConnectedUser("Please verify your email, we have sent you another link !").then(() => {
-              this.navCtrl.navigate(['/'])
+              this.navCtrl.navigate(['/'],{ replaceUrl: true})
             })
           } else {
-            this.navCtrl.navigate(['/'])
+            this.navCtrl.navigate(['/'],{ replaceUrl: true})
           }
         }
 
@@ -97,7 +97,7 @@ export class LoginPage implements OnInit {
     try {
       // Handle the result (e.g., send token to your backend, navigate, etc.)
       const result = await FirebaseAuthentication.signInWithGoogle();
-      this.navCtrl.navigate(['/']);
+      this.navCtrl.navigate(['/'],{ replaceUrl: true});
     } catch (error) {
       console.error('Google sign in error:', error);
     }
