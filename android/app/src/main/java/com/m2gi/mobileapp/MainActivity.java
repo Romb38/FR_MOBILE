@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.m2gi.mobileapp;
 
 import com.getcapacitor.BridgeActivity;
 
