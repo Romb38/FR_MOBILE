@@ -33,8 +33,24 @@ Cette application est un projet de Master 2 - Génie informatique dans l'option 
 - [x] Création de Topics
 - [x] Création de Posts
 - [x] Édition de Posts
+- [X] Partage des Topics (R/W)
 - [x] Page d'erreur
 
+## Langues disponibles
+L'application à été traduites dans les langues suivantes:
+- **Français**  
+  <div style="width: 100%; max-width: 600px; background: #ddd; border-radius: 5px;">
+    <div style="width: 100%; background: #4caf50; padding: 5px; color: white; text-align: center; font-weight: bold; border-radius: 5px;">
+      100%
+    </div>
+  </div>
+
+- **Anglais**  
+  <div style="width: 100%; max-width: 600px; background: #ddd; border-radius: 5px;">
+    <div style="width: 100%; background: #4caf50; padding: 5px; color: white; text-align: center; font-weight: bold; border-radius: 5px;">
+      100%
+    </div>
+  </div>
 ## Contributeurs
 
 - [@Romb38](https://github.com/Romb38)
