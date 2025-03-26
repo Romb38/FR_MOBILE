@@ -40,7 +40,7 @@ export class TopBarComponent  implements OnInit {
     this.language = this.translateConfigService.getCurrentLang();
     this.icon = this.ASSETS_PATH+this.language+".svg"
     this.isHomePage = this.homePage.includes(this.router.url);
-    const isDarkMode = document.documentElement.classList.contains('ion-palette-dark');
+    const isDarkMode =  window.matchMedia('(prefers-color-scheme: dark)').matches;
     if (isDarkMode) {
       this.iconDarkMode = this.ASSETS_PATH + "sunny-outline.svg"
     } else {
