@@ -38,7 +38,7 @@ export class HomepageComponent {
 
   handleRefresh(event: any) {
     console.debug("Page rafraîchie !");
-    window.location.reload();
+    //window.location.reload();
   
     setTimeout(() => {
       event.target.complete();

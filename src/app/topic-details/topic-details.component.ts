@@ -76,7 +76,7 @@ export class TopicDetailsComponent implements OnInit {
 
   handleRefresh(event: any) {
     console.debug("Page rafraîchie !");
-    window.location.reload();
+    //window.location.reload();
   
     setTimeout(() => {
       event.target.complete();
