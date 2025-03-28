@@ -28,7 +28,7 @@ export class TopBarComponent  implements OnInit {
   protected auth : AuthService = inject(AuthService)
   private translateConfigService = inject(TranslateConfigServiceService)
   private homePage : string[] = ['/','/login']
-  protected isAuth$ = this.auth.isAuth();
+  protected isAuth$ = this.auth.isAuthenticated();
   protected isHomePage : boolean;
   private language: any;
   protected icon: string;
@@ -55,7 +55,7 @@ export class TopBarComponent  implements OnInit {
   }
 
   goTo(){
-    if (this.auth.isAuth()){
+    if (this.auth.isAuthenticated()){
       this.router.navigate([this.backRoute])
     } else {
       this.router.navigate(['/login'])

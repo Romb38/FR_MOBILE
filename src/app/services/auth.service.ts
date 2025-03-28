@@ -16,7 +16,7 @@ export class AuthService {
     return user(this.fireauth)
   }
 
-  isAuth() :  Observable<boolean> {
+  isAuthenticated() :  Observable<boolean> {
     return this.getConnectedUser().pipe(
       map(user => {
         return !!user;
@@ -59,7 +59,7 @@ export class AuthService {
   }
 
   getUserEmail(): Observable<string> {
-    return this.isAuth().pipe(
+    return this.isAuthenticated().pipe(
       switchMap((isAuthenticated) => {
         if (isAuthenticated) {
           return this.getConnectedUser().pipe(
