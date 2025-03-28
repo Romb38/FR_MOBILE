@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonItem, IonLabel, IonList, IonContent, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { IonItem, IonLabel, IonList, IonContent, IonButton, IonIcon, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
 import { TopicService } from '../services/topic.service';
 import { Topic } from '../models/topic';
 import { Post, Posts } from '../models/post';
@@ -19,7 +19,7 @@ import { shareSocial, create } from 'ionicons/icons';
   selector: 'app-topic-details',
   templateUrl: './topic-details.component.html',
   styleUrls: ['./topic-details.component.scss'],
-  imports: [
+  imports: [IonRefresherContent, IonRefresher, 
     IonItem,
     IonLabel,
     IonList,
@@ -73,6 +73,16 @@ export class TopicDetailsComponent implements OnInit {
 
     this.posts = this.topicService.getAllPost(this.topicId);
   }
+
+  handleRefresh(event: any) {
+    console.debug("Page rafraîchie !");
+    window.location.reload();
+  
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
+  }
+  
 
   goToPost(post: Post): void {
     this.router.navigate([`topic/${this.topicId}/${post.id}`]);
