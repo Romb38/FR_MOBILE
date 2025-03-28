@@ -11,6 +11,9 @@ import {AsyncPipe } from '@angular/common';
 import { AddReaderWriterModalComponent } from "../add-reader-writer-modal/add-reader-writer-modal.component";
 import { EditReaderWriterModalComponent } from "../edit-reader-writer-modal/edit-reader-writer-modal.component";
 import { TranslateModule } from '@ngx-translate/core';
+import { addIcons } from 'ionicons';
+import { shareSocial, create } from 'ionicons/icons';
+
 
 @Component({
   selector: 'app-topic-details',
@@ -44,6 +47,10 @@ export class TopicDetailsComponent implements OnInit {
   isReaderWriterModalVisible : boolean = false;
   isEditReaderWriterModalVisible : boolean = false;
 
+  constructor(){
+    addIcons({shareSocial,create})
+  }
+
   ngOnInit() {
     this.topic$ = this.route.params.pipe(
       // Retrieve the topic directly from the topic service.
@@ -73,6 +80,7 @@ export class TopicDetailsComponent implements OnInit {
 
   deleteItem(post: Post): void {
     this.topicService.removePost(post.id, this.topicId);
+    this.router.navigate(['/'])
   }
 
   showModal() {
