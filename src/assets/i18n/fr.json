@@ -18,6 +18,7 @@
     "PASSWORD_REQUIRED": "Le mot de passe est requis",
     "ASK_FORGOT_PASSWORD": "Mot de passe oublié ?",
     "REGISTER": "Créer un compte",
+    "REGISTER_TITLE": "Créer un compte",
     "ACCOUNT_CREATED": "Votre compte à été créé, vérifiez vos email pour l'activer ! Sans cela, vous ne pourrez pas vous connecter",
     "PASSWORD_REQUIREMENTS": "Le mot de passe doit comporter au moins 8 caractères, dont des majuscules, des minuscules, un chiffre et un caractère spécial.",
     "PASSWORD_CONFIRMATION_LABEL": "Confirmation du mot de passe",
