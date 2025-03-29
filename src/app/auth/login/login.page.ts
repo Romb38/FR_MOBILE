@@ -1,7 +1,7 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { IonContent, IonLabel, IonItem, IonButton, IonText, IonInput } from '@ionic/angular/standalone';
+import { IonContent, IonLabel, IonItem, IonButton, IonText, IonInput, IonIcon } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirebaseError } from '@angular/fire/app';
@@ -9,13 +9,15 @@ import { take } from 'rxjs';
 import {FirebaseAuthentication} from '@capacitor-firebase/authentication';
 import { TranslateModule } from '@ngx-translate/core';
 import { TopBarComponent } from 'src/app/top-bar/top-bar.component';
+import { addIcons } from 'ionicons';
+import { eyeOffOutline, eyeOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonInput, IonText, IonButton, IonItem, IonLabel, IonContent, CommonModule, ReactiveFormsModule, TranslateModule, TopBarComponent]
+  imports: [IonIcon, IonInput, IonText, IonButton, IonItem, IonLabel, IonContent, CommonModule, ReactiveFormsModule, TranslateModule, TopBarComponent]
 })
 export class LoginPage implements OnInit {
   ngOnInit() {}
@@ -30,7 +32,16 @@ export class LoginPage implements OnInit {
   });
   protected errorMessage = ""
 
-  constructor() {}
+  constructor() {
+    addIcons({ eyeOffOutline,eyeOutline });
+  }
+
+  protected showPassword : boolean = false;
+  
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
 
   onLogin() {
     this.errorMessage = ""
@@ -45,16 +56,16 @@ export class LoginPage implements OnInit {
       this.authController.getConnectedUser().pipe(take(1)).subscribe((user) => {
         if (!user){
           this.authController.logOutConnectedUser("An error has occured !").then(() => {
-            this.navCtrl.navigate(['/'])
+            this.navCtrl.navigate(['/'],{ replaceUrl: true})
           })
         } else {
           if (!user.emailVerified){
             this.authController.sendVerifyEmailLink()
             this.authController.logOutConnectedUser("Please verify your email, we have sent you another link !").then(() => {
-              this.navCtrl.navigate(['/'])
+              this.navCtrl.navigate(['/'],{ replaceUrl: true})
             })
           } else {
-            this.navCtrl.navigate(['/'])
+            this.navCtrl.navigate(['/'],{ replaceUrl: true})
           }
         }
 
@@ -97,7 +108,7 @@ export class LoginPage implements OnInit {
     try {
       // Handle the result (e.g., send token to your backend, navigate, etc.)
       const result = await FirebaseAuthentication.signInWithGoogle();
-      this.navCtrl.navigate(['/']);
+      this.navCtrl.navigate(['/'],{ replaceUrl: true});
     } catch (error) {
       console.error('Google sign in error:', error);
     }

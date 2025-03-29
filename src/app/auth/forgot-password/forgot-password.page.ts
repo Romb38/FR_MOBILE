@@ -28,7 +28,7 @@ import { TopBarComponent } from 'src/app/top-bar/top-bar.component';
 })
 export class ForgotPasswordPage implements OnInit {
 
-constructor() { }
+  constructor() { }
 
   ngOnInit() { }
   protected hasEntered : Boolean = false;

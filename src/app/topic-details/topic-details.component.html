@@ -1,6 +1,13 @@
 <app-top-bar [title]="(topic$ | async)?.name + ' - ID: ' + (topic$ | async)?.id"></app-top-bar>
 
 <ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content
+      pullingText="Tirer pour rafraîchir"
+      refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <ion-list lines="full">
     @for (post of this.posts | async; track post.id) {
       <ion-item class="post-item">
@@ -15,7 +22,7 @@
     }
   </ion-list>
   @if((this.posts |async)?.length === 0){
-    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div style="display: flex; justify-content: center; align-items: center; height: 45rem;">
       <img
         src="assets/icon/no-results.svg"
         alt="Not found"
@@ -37,7 +44,7 @@
       <ion-label>{{"MANAGE_SHARE_TITLE" | translate}}</ion-label>
     </ion-button>
     <ion-button (click)="showReadWriteModal()">
-      <ion-icon name="share" class="ion-margin-end"></ion-icon>
+      <ion-icon name="share-social" class="ion-margin-end"></ion-icon>
       <ion-label>{{"SHARE_TOPIC"|translate}}</ion-label>
     </ion-button>
   }

@@ -1,23 +1,27 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, Validators, ReactiveFormsModule, FormGroup, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
-import { IonContent, IonLabel, IonItem, IonText, IonButton, IonInput } from '@ionic/angular/standalone';
+import { IonContent, IonLabel, IonItem, IonText, IonButton, IonInput, IonIcon } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirebaseError } from '@angular/fire/app';
 import { TopBarComponent } from 'src/app/top-bar/top-bar.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { addIcons } from 'ionicons';
+import { eyeOffOutline, eyeOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   standalone: true,
-  imports: [IonInput, IonButton, IonText, IonItem, IonLabel, IonContent, CommonModule, ReactiveFormsModule, RouterLink, TopBarComponent, TranslateModule]
+  imports: [IonIcon, IonInput, IonButton, IonText, IonItem, IonLabel, IonContent, CommonModule, ReactiveFormsModule, RouterLink, TopBarComponent, TranslateModule]
 })
 export class RegisterPage implements OnInit {
 
-  constructor() { }
+  constructor() {
+    addIcons({ eyeOffOutline,eyeOutline });
+  }
 
   ngOnInit() {
     
@@ -36,8 +40,18 @@ export class RegisterPage implements OnInit {
     { validators: this.passwordMatchValidator }
   );
   protected hasRegister : boolean = false;
-  protected errorMessage : String = ""
+  protected errorMessage : String = "";
+  protected showPassword : boolean = false;
+  protected showConfirmPassword : boolean = false;
   
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  toggleConfirmPasswordVisibility() {
+    this.showConfirmPassword = !this.showConfirmPassword;
+  }
+
   onRegister() {
     if (this.loginForm.invalid) {
       console.log('Formulaire invalide');

@@ -28,7 +28,7 @@ export class TopBarComponent  implements OnInit {
   protected auth : AuthService = inject(AuthService)
   private translateConfigService = inject(TranslateConfigServiceService)
   private homePage : string[] = ['/','/login']
-  protected isAuth$ = this.auth.isAuth();
+  protected isAuth$ = this.auth.isAuthenticated();
   protected isHomePage : boolean;
   private language: any;
   protected icon: string;
@@ -40,7 +40,7 @@ export class TopBarComponent  implements OnInit {
     this.language = this.translateConfigService.getCurrentLang();
     this.icon = this.ASSETS_PATH+this.language+".svg"
     this.isHomePage = this.homePage.includes(this.router.url);
-    const isDarkMode = document.documentElement.classList.contains('ion-palette-dark');
+    const isDarkMode =  window.matchMedia('(prefers-color-scheme: dark)').matches;
     if (isDarkMode) {
       this.iconDarkMode = this.ASSETS_PATH + "sunny-outline.svg"
     } else {
@@ -55,7 +55,7 @@ export class TopBarComponent  implements OnInit {
   }
 
   goTo(){
-    if (this.auth.isAuth()){
+    if (this.auth.isAuthenticated()){
       this.router.navigate([this.backRoute])
     } else {
       this.router.navigate(['/login'])
@@ -64,6 +64,7 @@ export class TopBarComponent  implements OnInit {
 
   logout(){
     this.auth.logOutConnectedUser()
+    this.router.navigate(['/login'])
   }
 
   switchLang(){
