@@ -5,7 +5,7 @@ import { TopicService } from '../services/topic.service';
 import { IonModal, IonButton, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonList, IonItem, IonLabel, IonIcon, IonCard, IonCardContent, IonRadioGroup, IonRadio, IonInput } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
-import { trashOutline } from 'ionicons/icons';
+import { add, trashOutline } from 'ionicons/icons';
 import { NgIf } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 import { ToastController } from "@ionic/angular/standalone"
@@ -39,7 +39,7 @@ export class EditReaderWriterModalComponent implements OnInit {
   }
 
   constructor() {
-    addIcons({ trashOutline });
+    addIcons({ trashOutline, add});
   }
 
   private loadTopic(): void {
@@ -71,6 +71,7 @@ export class EditReaderWriterModalComponent implements OnInit {
   }
 
   closeModal(): void {
+    this.isAddingUser = false
     this.close.emit();
   }
 
