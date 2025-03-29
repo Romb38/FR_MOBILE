@@ -17,7 +17,6 @@ import {ModalCreationComponent} from "../modal-creation/modal-creation.component
 import {TopBarComponent} from "../top-bar/top-bar.component";
 import {Observable, of, Subject, switchMap, tap} from 'rxjs';
 import {AsyncPipe, LowerCasePipe, NgForOf, NgIf, SlicePipe} from '@angular/common';
-import {AddReaderWriterModalComponent} from "../add-reader-writer-modal/add-reader-writer-modal.component";
 import {EditReaderWriterModalComponent} from "../edit-reader-writer-modal/edit-reader-writer-modal.component";
 import {TranslateModule} from '@ngx-translate/core';
 import {addIcons} from 'ionicons';
