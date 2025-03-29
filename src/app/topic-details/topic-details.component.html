@@ -32,13 +32,8 @@
       <ion-icon name="create" class="ion-margin-end"></ion-icon>
       <ion-label>{{"MANAGE_SHARE_TITLE" | translate}}</ion-label>
     </ion-button>
-    <ion-button (click)="showReadWriteModal()">
-      <ion-icon name="share-social" class="ion-margin-end"></ion-icon>
-      <ion-label>{{"SHARE_TOPIC"|translate}}</ion-label>
-    </ion-button>
   }
 </ion-content>
 
 <app-modal-creation [isVisible]="isModalVisible" [topicId]="topicId" (close)="closeModal()"></app-modal-creation>
-<app-add-reader-writer-modal [isVisible]="isReaderWriterModalVisible" [topic]="topic" (close)="closeReadWriteModal()"></app-add-reader-writer-modal>
 <app-edit-reader-writer-modal [isVisible]="isEditReaderWriterModalVisible" [topicId]="topicId" (close)="closeEditReaderWriterModal()"></app-edit-reader-writer-modal>

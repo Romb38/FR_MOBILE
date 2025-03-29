@@ -162,52 +162,17 @@ export class TopicService {
     setDoc(postDoc, updatedPost, { merge: true });
   }
 
-  addTopicReader(topic: Topic, email:string): void{
-    const {isOwner, isWriter, isReader, ...updatedTopic} = topic;
-    updatedTopic.readers.push(email)
-    const topicDoc = doc(this.firestore, `topics/${updatedTopic.id}`);
-    setDoc(topicDoc, updatedTopic, { merge: true });
-  }
-
-  addTopicWriter(topic: Topic, email:string): void {
-    const {isOwner, isWriter, isReader, ...updatedTopic} = topic;
-    updatedTopic.editors.push(email)
-    const topicDoc = doc(this.firestore, `topics/${updatedTopic.id}`);
-    setDoc(topicDoc, updatedTopic, { merge: true });
-  }
-
-  removeTopicReader(topic: Topic, old_email:string): void{
-    const {isOwner, isWriter, isReader, ...updatedTopic} = topic;
-    updatedTopic.readers = updatedTopic.readers.filter(email => email != old_email)
-    const topicDoc = doc(this.firestore, `topics/${updatedTopic.id}`);
-    setDoc(topicDoc, updatedTopic, { merge: true });
-  }
-
-  removeTopicWriter(topic: Topic, old_email:string): void {
-    const {isOwner, isWriter, isReader, ...updatedTopic} = topic;
-    updatedTopic.editors = updatedTopic.editors.filter(email => email != old_email)
-    const topicDoc = doc(this.firestore, `topics/${updatedTopic.id}`);
-    setDoc(topicDoc, updatedTopic, { merge: true });
-  }
-
   switchUserRole(topic: Topic, email: string): void {
-    // Vérifie si l'utilisateur est dans la liste des éditeurs
     const isEditor = topic.editors.includes(email);
     
-    // Si l'utilisateur est un éditeur, il devient un lecteur, et vice versa
     if (isEditor) {
-      // Si l'utilisateur est un éditeur, on le retire de la liste des éditeurs
       topic.editors = topic.editors.filter(editor => editor !== email);
-      // Et on l'ajoute dans la liste des lecteurs
       topic.readers.push(email);
     } else {
-      // Si l'utilisateur n'est pas un éditeur, il doit être un lecteur
       topic.readers = topic.readers.filter(reader => reader !== email);
-      // On l'ajoute dans la liste des éditeurs
       topic.editors.push(email);
     }
   
-    // On met à jour le document Firestore avec les nouvelles listes
     const topicDoc = doc(this.firestore, `topics/${topic.id}`);
     setDoc(topicDoc, { readers: topic.readers, editors: topic.editors }, { merge: true })
       .then(() => {
@@ -219,13 +184,9 @@ export class TopicService {
   }
 
   removeUserFromRoles(topic: Topic, email: string): void {
-    // Retirer l'utilisateur de la liste des lecteurs, s'il y est
-    topic.readers = topic.readers.filter(reader => reader !== email);
-    
-    // Retirer l'utilisateur de la liste des éditeurs, s'il y est
+    topic.readers = topic.readers.filter(reader => reader !== email);    
     topic.editors = topic.editors.filter(editor => editor !== email);
   
-    // Mettre à jour le document Firestore avec les listes mises à jour
     const topicDoc = doc(this.firestore, `topics/${topic.id}`);
     setDoc(topicDoc, { readers: topic.readers, editors: topic.editors }, { merge: true })
       .then(() => {
@@ -238,20 +199,17 @@ export class TopicService {
   
 
   addUserToTopic(topic: Topic, email: string, role: 'reader' | 'writer'): void {
-    // Si le rôle est 'reader', on l'ajoute à la liste des lecteurs
     if (role === 'reader') {
       if (!topic.readers.includes(email)) {
         topic.readers.push(email);
       }
     } 
-    // Si le rôle est 'writer', on l'ajoute à la liste des éditeurs
     else if (role === 'writer') {
       if (!topic.editors.includes(email)) {
         topic.editors.push(email);
       }
     }
   
-    // Mettre à jour le document Firestore avec les nouvelles listes
     const topicDoc = doc(this.firestore, `topics/${topic.id}`);
     setDoc(topicDoc, { readers: topic.readers, editors: topic.editors }, { merge: true })
       .then(() => {
