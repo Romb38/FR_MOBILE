@@ -30,7 +30,7 @@
         </div>
     </ion-item>
   </ion-list>
-  @if((this.posts |async)?.length === 0){
+  @if((this.posts | async)?.length === 0) {
     <div style="display: flex; justify-content: center; align-items: center; height: 45rem;">
       <img
         src="assets/icon/no-results.svg"
@@ -59,7 +59,7 @@
   }
 </ion-content>
 
-<app-modal-creation [isVisible]="isModalVisible" [topicId]="topicId" (close)="closeModal()"></app-modal-creation>
+<app-modal-creation [isVisible]="isPostCreationModalVisible" [topicId]="topicId" (close)="closePostCreationModal()"></app-modal-creation>
+<app-modal-edition *ngIf="isPostEditModalVisible" [isVisible]="isPostEditModalVisible && postId !== ''" [topicId]="topicId" [postId]="postId" (close)="closePostEditModal()"></app-modal-edition>
 <app-add-reader-writer-modal [isVisible]="isReaderWriterModalVisible" [topic]="topic" (close)="closeReadWriteModal()"></app-add-reader-writer-modal>
 <app-edit-reader-writer-modal [isVisible]="isEditReaderWriterModalVisible" [topicId]="topicId" (close)="closeEditReaderWriterModal()"></app-edit-reader-writer-modal>
-<app-modal-edition [isVisible]="isPostEditModalVisible" [topicId]="topicId" [postId]="postId" (close)="closeModal()"></app-modal-edition>
