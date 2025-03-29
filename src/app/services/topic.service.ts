@@ -3,7 +3,7 @@ import { addDoc, collection, collectionData, deleteDoc, doc, docData, Firestore,
 import { Topic, Topics } from '../models/topic';
 import { Post, Posts } from '../models/post';
 import { Observable } from 'rxjs/internal/Observable';
-import { BehaviorSubject, combineLatest, map, switchMap, take } from 'rxjs';
+import {BehaviorSubject, combineLatest, map, of, switchMap, take, throwError} from 'rxjs';
 import { generateUID } from '../utils/uuid';
 import { AuthService } from './auth.service';
 
@@ -13,11 +13,11 @@ import { AuthService } from './auth.service';
 export class TopicService {
   private topicsSubject$: BehaviorSubject<Topics> = new BehaviorSubject<Topics>([]);
   public topics$: Observable<Topics> = this.topicsSubject$.asObservable(); // Exposes a safe, read-only observable to other components/services.
-  
+
   private firestore: Firestore = inject(Firestore);
   private authService : AuthService = inject(AuthService);
-  
-  
+
+
   constructor() {}
 
   getAll(): Observable<Topic[]> {
@@ -31,16 +31,20 @@ export class TopicService {
           ...authors,
           ...readers,
           ...writers
-        ].reduce((unique: Topic[], topic) => {
+        ];
+
+        // Ensure allTopics array contains unique topics
+        // Adds each topic to the unique array only if it is not already present
+        const uniqueTopics = allTopics.reduce((unique: Topic[], topic) => {
           if (!unique.some(t => t.id === topic.id)) {
             unique.push(topic);
           }
           return unique;
         }, []);
 
-        this.topicsSubject$.next(allTopics);
-
-        return allTopics;
+        // Update topicsSubject$ and send the info to any subscribers listening for this up-to-date topics list
+        this.topicsSubject$.next(uniqueTopics);
+        return uniqueTopics;
       })
     );
   }
@@ -50,7 +54,7 @@ export class TopicService {
       switchMap((user) => {
         const topicsRef = collection(this.firestore, 'topics'); // 'topics' est le nom de ta collection
         const q = query(topicsRef, where('author', '==', user?.email));
-    
+
         return collectionData(q, { idField: 'id' }) as Observable<Topic[]>;
       }),
       map((topics) => {
@@ -70,7 +74,7 @@ export class TopicService {
       switchMap((user) => {
         const topicsRef = collection(this.firestore, 'topics'); // 'topics' est le nom de ta collection
         const q = query(topicsRef, where('readers', 'array-contains', user?.email));
-    
+
         return collectionData(q, { idField: 'id' }) as Observable<Topic[]>;
       }),
       map((topics) => {
@@ -87,7 +91,7 @@ export class TopicService {
       switchMap((user) => {
         const topicsRef = collection(this.firestore, 'topics');
         const q = query(topicsRef, where('editors', 'array-contains', user?.email));
-    
+
         return (collectionData(q, { idField: 'id' }) as Observable<Topic[]>)
       }),
       map((topics) => {
@@ -136,7 +140,11 @@ export class TopicService {
     setDoc(topicDoc, updatedTopic, { merge: true });
   }
 
-  getAllPost(topicId : String): Observable<Posts> {
+  getAllPosts(topicId : String): Observable<Posts> {
+    if (!topicId) {
+      console.error('Invalid topicId:', topicId);
+      return new Observable();
+    }
     const postsCollection = collection(this.firestore, `topics/${topicId}/posts`);
     return collectionData(postsCollection, {idField: 'id'}) as Observable<Posts>;
   }

@@ -3,7 +3,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button (click)="closeModal()">{{ "CANCEL" | translate }}</ion-button>
+          <ion-button (click)="closeModal()">{{ "CLOSE" | translate }}</ion-button>
         </ion-buttons>
         <ion-title>{{ "MANAGE_SHARE_TITLE" | translate }}</ion-title>
       </ion-toolbar>
@@ -33,13 +33,13 @@
             #emailInput="ngModel"
           ></ion-input>
         </ion-item>
-        
+
         <!-- Affichage des erreurs sous le champ -->
         <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)" class="error-message">
           <small *ngIf="emailInput.errors?.['required']">{{"EMAIL_REQUIRED" | translate}}</small>
           <small *ngIf="emailInput.errors?.['email']">{{"INVALID_EMAIL_FORMAT" | translate}}</small>
         </div>
-        
+
 
         <ion-radio-group [value]="newUserRole" required>
           <ion-item>
@@ -59,13 +59,13 @@
           {{ "CANCEL" | translate }}
         </ion-button>
       }
-      
+
       <ion-list class="scrollable-list">
         @for (user of users; track user.email) {
           <ion-card>
             <ion-card-content>
               <ion-label class="user-email">{{ user.email }}</ion-label>
-  
+
               <ion-radio-group [value]="user.role" (ionChange)="updateRole(user)">
                 <ion-item (click)="updateRole(user, 'reader')">
                   <ion-label>{{ "READER" | translate }}</ion-label>
@@ -76,7 +76,7 @@
                   <ion-radio slot="end" value="writer"></ion-radio>
                 </ion-item>
               </ion-radio-group>
-  
+
               <ion-button expand="block" color="danger" fill="outline" (click)="removeUser(user)">
                 <ion-icon name="trash-outline" slot="start"></ion-icon>
                 {{ "DELETE" | translate }}

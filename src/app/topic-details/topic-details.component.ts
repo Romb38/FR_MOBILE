@@ -1,24 +1,38 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IonItem, IonLabel, IonList, IonContent, IonButton, IonIcon, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
-import { TopicService } from '../services/topic.service';
-import { Topic } from '../models/topic';
-import { Post, Posts } from '../models/post';
-import { ModalCreationComponent } from "../modal-creation/modal-creation.component";
-import { TopBarComponent } from "../top-bar/top-bar.component";
-import { Observable, switchMap } from 'rxjs';
-import {AsyncPipe } from '@angular/common';
-import { EditReaderWriterModalComponent } from "../edit-reader-writer-modal/edit-reader-writer-modal.component";
-import { TranslateModule } from '@ngx-translate/core';
-import { addIcons } from 'ionicons';
-import { shareSocial, create } from 'ionicons/icons';
-
+import {Component, inject, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {
+  IonItem,
+  IonLabel,
+  IonList,
+  IonContent,
+  IonButton,
+  IonIcon,
+  IonRefresher,
+  IonRefresherContent, IonAvatar,
+} from '@ionic/angular/standalone';
+import {TopicService} from '../services/topic.service';
+import {Topic} from '../models/topic';
+import {Post, Posts} from '../models/post';
+import {ModalCreationComponent} from "../modal-creation/modal-creation.component";
+import {TopBarComponent} from "../top-bar/top-bar.component";
+import {Observable, of, Subject, switchMap, tap} from 'rxjs';
+import {AsyncPipe, LowerCasePipe, NgForOf, NgIf, SlicePipe} from '@angular/common';
+import {EditReaderWriterModalComponent} from "../edit-reader-writer-modal/edit-reader-writer-modal.component";
+import {TranslateModule} from '@ngx-translate/core';
+import {addIcons} from 'ionicons';
+import {shareSocial, create} from 'ionicons/icons';
+import {ModalEditionComponent} from '../modal-edition/modal-edition.component';
+import {AvatarService} from '../services/avatar.service';
+import {DateService} from '../services/date.service';
+import {catchError, takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-topic-details',
   templateUrl: './topic-details.component.html',
   styleUrls: ['./topic-details.component.scss'],
-  imports: [IonRefresherContent, IonRefresher, 
+  imports: [
+    IonRefresherContent,
+    IonRefresher,
     IonItem,
     IonLabel,
     IonList,
@@ -29,57 +43,89 @@ import { shareSocial, create } from 'ionicons/icons';
     TopBarComponent,
     AsyncPipe,
     EditReaderWriterModalComponent,
-    TranslateModule
-],
+    TranslateModule,
+    ModalEditionComponent,
+    IonAvatar,
+    LowerCasePipe,
+    SlicePipe,
+    NgIf,
+    NgForOf,
+  ],
 })
 export class TopicDetailsComponent implements OnInit {
   private route: ActivatedRoute = inject(ActivatedRoute);
   protected topicService: TopicService = inject(TopicService);
+  protected avatarService: AvatarService = inject(AvatarService);
+  protected dateService: DateService = inject(DateService);
   private router: Router = inject(Router);
+  private destroy$: Subject<void> = new Subject<void>();
 
   topicId: string = '';
   topic$: Observable<Topic | undefined> = new Observable<Topic | undefined>();
-  topic : Topic = {} as Topic
-  posts : Observable<Posts> = new Observable;
-  isModalVisible: boolean = false;
-  isEditReaderWriterModalVisible : boolean = false;
+  topic: Topic = {} as Topic;
+  postId: string = '';
+  posts: Observable<Posts> = new Observable;
+  isPostCreationModalVisible: boolean = false;
+  isPostEditModalVisible: boolean = false;
+  isEditReaderWriterModalVisible: boolean = false;
 
-  constructor(){
-    addIcons({shareSocial,create})
+  constructor() {
+    addIcons({shareSocial, create})
   }
 
   ngOnInit() {
     this.topic$ = this.route.params.pipe(
-      // Retrieve the topic directly from the topic service.
       switchMap((params) => {
         this.topicId = params['id'] ?? '';
         return this.topicService.get(this.topicId);
+      }),
+      tap((topic) => {
+        console.debug('Received topic:', topic);
+
+        if (!topic) {
+          this.router.navigate(['404']);
+        } else {
+          this.topic = topic;
+          this.posts = this.topicService.getAllPosts(this.topicId);
+        }
       })
     );
 
-    // Redirect to 404 if the topic is not found.
-    this.topic$.subscribe((topic) => {
-      console.debug('Received updated topic:', topic);
+    // Subscribe to the topic$ observable to trigger the side effects.
+    this.topic$.subscribe();
+  }
 
-      if (!topic) {
-        this.router.navigate(['404']);
-      } else {
-        this.topic = topic;
-      }
-    });
+  editPost(id: string) {
+    this.postId = id;
+    this.isPostEditModalVisible = true;
+  }
 
-    this.posts = this.topicService.getAllPost(this.topicId);
+  updatePost() {
+    this.topicService.getPost(this.topicId, this.postId)
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError(() => {
+          this.router.navigate(['404']);
+          return of(undefined);
+        }),
+      )
+      .subscribe((post: Post | undefined) => {
+        if (!post) {
+          this.router.navigate(['404']);
+          return;
+        }
+        this.postId = '';
+      });
   }
 
   handleRefresh(event: any) {
     console.debug("Page rafraîchie !");
     //window.location.reload();
-  
+
     setTimeout(() => {
       event.target.complete();
     }, 1000);
   }
-  
 
   goToPost(post: Post): void {
     this.router.navigate([`topic/${this.topicId}/${post.id}`]);
@@ -91,23 +137,31 @@ export class TopicDetailsComponent implements OnInit {
   }
 
   showModal() {
-    this.isModalVisible = true;
+    this.isPostCreationModalVisible = true;
   }
 
-  closeModal() {
-    this.isModalVisible = false;
+  closePostCreationModal() {
+    this.isPostCreationModalVisible = false;
   }
 
-
-  showEditReaderWriterModal(){
+  showEditReaderWriterModal() {
     this.isEditReaderWriterModalVisible = true;
   }
 
-  closeEditReaderWriterModal(){
+  closeEditReaderWriterModal() {
     this.isEditReaderWriterModalVisible = false;
+  }
+
+  closePostEditModal() {
+    this.postId = '';
+    setTimeout(() => {
+      this.isPostEditModalVisible = false;
+    }, 10); // Patch: small delay to first update visible state and then remove the component
   }
 
   trackByPostId(index: number, item: Post): string {
     return item.id;
   }
+
+  protected readonly String = String;
 }
