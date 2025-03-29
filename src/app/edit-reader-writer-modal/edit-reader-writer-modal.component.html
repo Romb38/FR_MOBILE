@@ -1,52 +1,40 @@
-<ion-modal [isOpen]="isVisible" trigger="open-modal" (willDismiss)="this.closeModal()">
+<ion-modal [isOpen]="isVisible" trigger="open-modal" (willDismiss)="closeModal()">
   <ng-template>
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button (click)="this.closeModal()">{{"CANCEL" | translate}}</ion-button>
+          <ion-button (click)="closeModal()">{{ "CANCEL" | translate }}</ion-button>
         </ion-buttons>
-        <ion-title>{{"MANAGE_SHARE_TITLE" | translate}}</ion-title>
+        <ion-title>{{ "MANAGE_SHARE_TITLE" | translate }}</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content>
-      @if (this.reader.length > 0) {
-        <ion-label class="columnTitle">{{"READERS" | translate}}</ion-label>
-        <ion-list class="scrollable-list" lines="full">
-          @for (reader of this.reader; track this.reader) {
-            <ion-item>
-              <ion-label [title]="reader"> {{ reader }} </ion-label>
-                <ion-button data-action="delete" aria-label="Remove a reader" fill="clear" slot="end" (click)="removeReader(reader)">
-                  <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
-                </ion-button>
-            </ion-item>
-          }
-        </ion-list>
-      }
 
-      @if (this.editors.length > 0) {
-        <ion-label class="columnTitle">{{"WRITERS" | translate}}</ion-label>
-        <ion-list class="scrollable-list" lines="full">
-          @for (editor of this.editors; track this.editors) {
-            <ion-item>
-              <ion-label [title]="editor"> {{ editor }} </ion-label>
-                <ion-button data-action="delete" aria-label="Remove a writer" fill="clear" slot="end" (click)="removeWriter(editor)">
-                  <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
-                </ion-button>
-            </ion-item>
-          }
-        </ion-list>
-      }
-      @if (!(this.reader.length > 0)  && !(this.editors.length > 0)) {
-        <div style="display: flex; justify-content: center; align-items: center; margin-top: 5rem;">
-          <img
-            src="assets/icon/no-results.svg"
-            alt="Not found"
-            width="150"
-            height="150"
-            style="opacity: 0.2; filter: grayscale(100%);"
-          >
-        </div>
-      }
+    <ion-content>
+      <ion-list class="scrollable-list">
+        @for (user of users; track user.email) {
+          <ion-card>
+            <ion-card-content>
+              <ion-label class="user-email">{{ user.email }}</ion-label>
+
+              <ion-radio-group [value]="user.role" (ionChange)="updateRole(user)">
+                <ion-item (click)="updateRole(user, 'reader')">
+                  <ion-label>{{ "READER" | translate }}</ion-label>
+                  <ion-radio slot="end" value="reader"></ion-radio>
+                </ion-item>
+                <ion-item (click)="updateRole(user, 'writer')">
+                  <ion-label>{{ "WRITER" | translate }}</ion-label>
+                  <ion-radio slot="end" value="writer"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+
+              <ion-button expand="block" color="danger" fill="outline" (click)="removeUser(user)">
+                <ion-icon name="trash-outline" slot="start"></ion-icon>
+                {{ "DELETE" | translate }}
+              </ion-button>
+            </ion-card-content>
+          </ion-card>
+        }
+      </ion-list>
     </ion-content>
   </ng-template>
 </ion-modal>

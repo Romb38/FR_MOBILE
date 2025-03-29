@@ -1,22 +1,15 @@
-.notFoundLabel {
-    text-align: center;      
-    font-size: 1.5rem;       
-    display: flex;
-    justify-content: center; 
-    align-items: center;     
-    height: 100%;
+.user-email {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
   }
   
-
-.columnTitle {      
-    font-size: 1.5rem;
-    margin-left: 0.5rem;
-    margin-top: 1rem; 
-    margin-bottom: 1rem;
-    display: flex; 
+ion-radio-group {
+display: flex;
+flex-direction: column;
+gap: 8px;
 }
-  
-.scrollable-list {
-    max-height: 200px;
-    overflow-y: auto;
+
+ion-card {
+padding: 10px;
 }

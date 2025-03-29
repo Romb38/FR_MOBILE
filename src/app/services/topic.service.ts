@@ -190,4 +190,51 @@ export class TopicService {
     setDoc(topicDoc, updatedTopic, { merge: true });
   }
 
+  switchUserRole(topic: Topic, email: string): void {
+    // Vérifie si l'utilisateur est dans la liste des éditeurs
+    const isEditor = topic.editors.includes(email);
+    
+    // Si l'utilisateur est un éditeur, il devient un lecteur, et vice versa
+    if (isEditor) {
+      // Si l'utilisateur est un éditeur, on le retire de la liste des éditeurs
+      topic.editors = topic.editors.filter(editor => editor !== email);
+      // Et on l'ajoute dans la liste des lecteurs
+      topic.readers.push(email);
+    } else {
+      // Si l'utilisateur n'est pas un éditeur, il doit être un lecteur
+      topic.readers = topic.readers.filter(reader => reader !== email);
+      // On l'ajoute dans la liste des éditeurs
+      topic.editors.push(email);
+    }
+  
+    // On met à jour le document Firestore avec les nouvelles listes
+    const topicDoc = doc(this.firestore, `topics/${topic.id}`);
+    setDoc(topicDoc, { readers: topic.readers, editors: topic.editors }, { merge: true })
+      .then(() => {
+        console.log(`Role switched successfully for ${email}`);
+      })
+      .catch((error) => {
+        console.error("Error switching role: ", error);
+      });
+  }
+
+  removeUserFromRoles(topic: Topic, email: string): void {
+    // Retirer l'utilisateur de la liste des lecteurs, s'il y est
+    topic.readers = topic.readers.filter(reader => reader !== email);
+    
+    // Retirer l'utilisateur de la liste des éditeurs, s'il y est
+    topic.editors = topic.editors.filter(editor => editor !== email);
+  
+    // Mettre à jour le document Firestore avec les listes mises à jour
+    const topicDoc = doc(this.firestore, `topics/${topic.id}`);
+    setDoc(topicDoc, { readers: topic.readers, editors: topic.editors }, { merge: true })
+      .then(() => {
+        console.log(`User ${email} removed from both roles successfully.`);
+      })
+      .catch((error) => {
+        console.error("Error removing user from roles: ", error);
+      });
+  }
+  
+
 }
