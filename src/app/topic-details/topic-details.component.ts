@@ -16,7 +16,7 @@ import {Post, Posts} from '../models/post';
 import {ModalCreationComponent} from "../modal-creation/modal-creation.component";
 import {TopBarComponent} from "../top-bar/top-bar.component";
 import {Observable, of, Subject, switchMap, tap} from 'rxjs';
-import {AsyncPipe, LowerCasePipe, NgIf, SlicePipe} from '@angular/common';
+import {AsyncPipe, LowerCasePipe, NgForOf, NgIf, SlicePipe} from '@angular/common';
 import {EditReaderWriterModalComponent} from "../edit-reader-writer-modal/edit-reader-writer-modal.component";
 import {TranslateModule} from '@ngx-translate/core';
 import {addIcons} from 'ionicons';
@@ -49,6 +49,7 @@ import {catchError, takeUntil} from 'rxjs/operators';
     LowerCasePipe,
     SlicePipe,
     NgIf,
+    NgForOf,
   ],
 })
 export class TopicDetailsComponent implements OnInit {
