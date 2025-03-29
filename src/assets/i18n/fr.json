@@ -1,6 +1,8 @@
 {
-    "CREATE_TOPIC": "Créer un topic",
+    "TOPIC": "Sujet",
+    "CREATE_TOPIC": "Créer un sujet",
     "CANCEL": "Annuler",
+    "SHARE_TOPIC": "Partager votre sujet",
     "FILL_EMAIL": "Renseignez votre email",
     "EMAIL_LABEL": "Email",
     "EMAIL_REQUIRED": "L'email est requis",
@@ -31,7 +33,7 @@
     "MANAGE_SHARE_TITLE": "Gérer les partages",
     "READERS": "Lecteurs",
     "READER": "Lecteur",
-    "WRITERS": "Écrivain",
+    "WRITERS": "Écrivains",
     "WRITER": "Écrivain",
     "NO_SHARE_MESSAGE": "Vous n'avez pas partager votre topic !",
     "ADD": "Ajouter",
@@ -53,7 +55,5 @@
     "POST_EDITION": "Éditer le post",
     "USER_ALREADY_READER" : "Cet utilisateur est déjà un lecteur",
     "USER_ALREADY_WRITER": "Cet utilisateur est déjà un écrivain",
-    "SIGN_IN_WITH_GOOGLE": "Se connecter avec Google",
-    "ACCOUNT_INFOS_TITLE": "Votre compte",
-    "LOG_OUT" : "Déconnexion"
+    "SIGN_IN_WITH_GOOGLE": "Se connecter avec Google"
 }

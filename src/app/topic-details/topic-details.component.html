@@ -1,4 +1,4 @@
-<app-top-bar [title]="(topic$ | async)?.name + ' - ID: ' + (topic$ | async)?.id"></app-top-bar>
+<app-top-bar [title]="('TOPIC' | translate) + ': ' + (topic$ | async)?.name || 'Loading...'"></app-top-bar>
 
 <ion-content [fullscreen]="true">
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
@@ -9,17 +9,26 @@
   </ion-refresher>
 
   <ion-list lines="full">
-    @for (post of this.posts | async; track post.id) {
-      <ion-item class="post-item">
-        <ion-label [title]="post.id" (click)='goToPost(post)'><span [attr.data-cy]="post.id">{{ post.name }}</span></ion-label>
+    <ion-item class="post-item" *ngFor="let post of this.posts | async; trackBy: trackByPostId">
+        <ion-avatar aria-hidden="true" slot="start" >
+          <img src="{{ this.avatarService.getDicebearAvatarUrl(post.author) }}" alt="avatar">
+        </ion-avatar>
+        <ion-label slot="start">
+          User-{{ post.author | slice: 0: 4 | lowercase }} 🔹
+          <span style="color: #7c7b7b">{{ post.timecreated ? (dateService.getDateAsHumanReadable(post.timecreated)) : '-' }}</span>
+          <br/>
+          {{ post.description }}
+        </ion-label>
 
-        @if (topic.isWriter) {
-          <ion-button fill="clear" slot="end" (click)="deleteItem(post)">
-            <ion-icon name="trash" class="ion-margin-end" aria-label="Remove post" color="danger"></ion-icon>
+        <div *ngIf="topic.isWriter" slot="end">
+          <ion-button fill="clear" (click)="editPost(post.id)">
+            <ion-icon name="create" aria-label="Edit post" color="primary"></ion-icon>
           </ion-button>
-        }
-      </ion-item>
-    }
+          <ion-button fill="clear" (click)="deleteItem(post)">
+            <ion-icon name="trash" aria-label="Remove post" color="danger"></ion-icon>
+          </ion-button>
+        </div>
+    </ion-item>
   </ion-list>
   @if (topic.isWriter) {
     <ion-button (click)="showModal()">
@@ -37,3 +46,4 @@
 
 <app-modal-creation [isVisible]="isModalVisible" [topicId]="topicId" (close)="closeModal()"></app-modal-creation>
 <app-edit-reader-writer-modal [isVisible]="isEditReaderWriterModalVisible" [topicId]="topicId" (close)="closeEditReaderWriterModal()"></app-edit-reader-writer-modal>
+<app-modal-edition [isVisible]="isPostEditModalVisible" [topicId]="topicId" [postId]="postId" (close)="closeModal()"></app-modal-edition>

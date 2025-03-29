@@ -45,7 +45,9 @@ export class ModalCreationComponent {
           id: '',
           name: this.newEntity.name,
           description: this.newEntity.description,
-          author: author!.uid
+          author: author!.uid,
+          timecreated: new Date().toISOString(),
+          timemodified: null,
         };
         this.topicService.addPost(newPost, this.topicId);
       }
