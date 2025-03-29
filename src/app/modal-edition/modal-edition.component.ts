@@ -66,14 +66,14 @@ export class ModalEditionComponent implements OnInit, OnDestroy {
     if (!this.isFormValid()) {
       return;
     }
-    this.newEntity.timemodified = new Date().toISOString();
+    this.newEntity!.timemodified = new Date().toISOString();
     this.topicService.editPost(this.newEntity, this.topicId);
     this.closeModal();
   }
 
   isFormValid(): boolean {
     return (
-      this.newEntity.description.length >= 4 && this.newEntity.description.length <= 100
+      this.newEntity?.description?.length >= 4 && this.newEntity?.description?.length <= 100
     );
   }
 }
