@@ -1,14 +1,14 @@
 ion-toolbar {
-    display: flex;             /* Utiliser Flexbox pour l'alignement */
-    align-items: center;       /* Centrer verticalement les éléments */
-    justify-content: space-between; /* Espacer les éléments de gauche à droite */
-    height: 5rem;              /* Hauteur de la toolbar (vous l'avez déjà définie) */
+  display: flex; /* Utiliser Flexbox pour l'alignement */
+  align-items: center; /* Centrer verticalement les éléments */
+  justify-content: space-between; /* Espacer les éléments de gauche à droite */
+  height: 5rem; /* Hauteur de la toolbar (vous l'avez déjà définie) */
 }
 
 ion-button {
-font-size: 2rem;  /* Agrandir le texte et les icônes des boutons */
+  font-size: 2rem; /* Agrandir le texte et les icônes des boutons */
 }
 
 ion-icon {
-font-size: 2.5rem;  /* Agrandir les icônes */
+  font-size: 2.5rem; /* Agrandir les icônes */
 }

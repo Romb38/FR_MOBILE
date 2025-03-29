@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, OnDestroy, inject} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnDestroy, inject } from '@angular/core';
 import {
   IonModal,
   IonHeader,
@@ -8,35 +8,48 @@ import {
   IonButtons,
   IonContent,
   IonItem,
-  IonInput
+  IonInput,
 } from '@ionic/angular/standalone';
 import { Post } from '../models/post';
 import { FormsModule } from '@angular/forms';
 import { TopicService } from '../services/topic.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import {NgIf} from '@angular/common';
+import { NgIf } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-
 
 @Component({
   selector: 'app-modal-edition',
   templateUrl: './modal-edition.component.html',
   styleUrls: ['./modal-edition.component.scss'],
-  imports: [IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonContent, IonItem, IonInput, FormsModule, NgIf,TranslateModule],
+  imports: [
+    IonModal,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButton,
+    IonButtons,
+    IonContent,
+    IonItem,
+    IonInput,
+    FormsModule,
+    NgIf,
+    TranslateModule,
+  ],
 })
 export class ModalEditionComponent implements OnInit, OnDestroy {
   @Input() isVisible: boolean = false;
   @Input() topicId: string = '';
   @Input() postId: string = '';
-  @Output() close = new EventEmitter<void>();
+  @Output() closeEmitter = new EventEmitter<void>();
 
   private topicService: TopicService = inject(TopicService);
   private destroy$ = new Subject<void>(); // Subject to signal unsubscription.
   protected newEntity: Post = {} as Post;
 
   ngOnInit() {
-    this.topicService.getPost(this.topicId, this.postId)
+    this.topicService
+      .getPost(this.topicId, this.postId)
       .pipe(takeUntil(this.destroy$)) // Automatically unsubscribe when the destroy$ emits.
       .subscribe({
         next: (post) => {
@@ -59,7 +72,7 @@ export class ModalEditionComponent implements OnInit, OnDestroy {
   }
 
   closeModal(): void {
-    this.close.emit();
+    this.closeEmitter.emit();
   }
 
   save(): void {
@@ -72,8 +85,6 @@ export class ModalEditionComponent implements OnInit, OnDestroy {
   }
 
   isFormValid(): boolean {
-    return (
-      this.newEntity?.description?.length >= 4 && this.newEntity?.description?.length <= 100
-    );
+    return this.newEntity?.description?.length >= 4 && this.newEntity?.description?.length <= 100;
   }
 }

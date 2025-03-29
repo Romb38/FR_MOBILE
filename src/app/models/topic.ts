@@ -1,14 +1,14 @@
-import { Post } from "./post";
+import { Post } from './post';
 
 export interface Topic {
-  id : string,
-  name : string,
-  posts : Post[],
-  author : string,
-  readers : string[],
-  editors : string[],
-  isOwner?: boolean,
-  isReader?: boolean,
+  id: string;
+  name: string;
+  posts: Post[];
+  author: string;
+  readers: string[];
+  editors: string[];
+  isOwner?: boolean;
+  isReader?: boolean;
   isWriter?: boolean;
 }
 

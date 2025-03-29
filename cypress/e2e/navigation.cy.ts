@@ -11,31 +11,29 @@ describe('Goes back and forth in the website', () => {
     cy.contains('Renseignez une description').type('MyTestingPostDesc');
     cy.contains('Ajouter').click();
     cy.contains('MyTestingPost').click();
-  })
+  });
 
   it('Should go to 404', () => {
-
     // Completely impossible URL
-    cy.visit("/ezubfzefuezbfu");
-    cy.contains("404").should("exist");
+    cy.visit('/ezubfzefuezbfu');
+    cy.contains('404').should('exist');
 
     // Valid /topic but not valid TopicId
-    cy.visit("/topic/ezubfzefuezbfu");
-    cy.contains("404").should("exist")
+    cy.visit('/topic/ezubfzefuezbfu');
+    cy.contains('404').should('exist');
 
     // Valid /topic/1 but not valid PostId
-    cy.visit("/topic/1/1");
-    cy.contains("404").should("exist");
-
-  })
+    cy.visit('/topic/1/1');
+    cy.contains('404').should('exist');
+  });
 
   it('Go from a post to the main menu', () => {
-    cy.contains('MyTestingPostDesc').should('exist')
+    cy.contains('MyTestingPostDesc').should('exist');
     cy.get('#backRoute-MyTestingPost').click();
     cy.contains('MyTestingTopic').should('exist');
     cy.get('#backRoute-MyTestingTopic').click();
     cy.contains('Reddot').should('exist');
-  })
+  });
 
   it('Go from a post to the main menu by opening all modals', () => {
     cy.contains('Éditer le post').click();
@@ -57,7 +55,6 @@ describe('Goes back and forth in the website', () => {
     cy.contains('Renseignez un nom').type('MyTestingTopic2');
     cy.contains('Annuler').click();
     cy.contains('Reddot').should('exist');
-    cy.contains('MyTestingTopic2').should('not.exist')
-  })
-
-})
+    cy.contains('MyTestingTopic2').should('not.exist');
+  });
+});

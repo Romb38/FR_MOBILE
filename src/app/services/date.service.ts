@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DateService {
   getDateAsHumanReadable(date: string): string {
-    const inputDate = new Date(date);  // Convert the input date string to a Date object
-    const now = new Date();  // Get the current date
+    const inputDate = new Date(date); // Convert the input date string to a Date object
+    const now = new Date(); // Get the current date
 
     const isToday = inputDate.toDateString() === now.toDateString();
     if (isToday) {

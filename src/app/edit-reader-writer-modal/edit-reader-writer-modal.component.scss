@@ -1,27 +1,26 @@
 .user-email {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 10px;
-  }
-  
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+}
+
 ion-radio-group {
-display: flex;
-flex-direction: column;
-gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 ion-card {
-padding: 10px;
+  padding: 10px;
 }
 
 .error-message {
-    color: red; 
-    font-size: 20px; /* Taille du texte plus petite */
-    margin-top: 4px; /* Ajoute un peu d'espace au-dessus du texte d'erreur */
-    padding-left: 16px; /* Si nécessaire pour aligner avec l'input */
-  }
-  
-  small {
-    display: block; /* Affiche chaque message d'erreur sur une nouvelle ligne */
-  }
-  
+  color: red;
+  font-size: 20px; /* Taille du texte plus petite */
+  margin-top: 4px; /* Ajoute un peu d'espace au-dessus du texte d'erreur */
+  padding-left: 16px; /* Si nécessaire pour aligner avec l'input */
+}
+
+small {
+  display: block; /* Affiche chaque message d'erreur sur une nouvelle ligne */
+}

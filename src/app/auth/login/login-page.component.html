@@ -1,0 +1,54 @@
+<app-top-bar [title]="'LOGIN_TITLE' | translate"></app-top-bar>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    @if (this.logOutMessage != '') {
+      <ion-text color="danger">
+        <p>{{ this.logOutMessage }}</p>
+      </ion-text>
+    }
+
+    <ion-item>
+      <ion-label position="floating">{{ 'EMAIL_LABEL' | translate }}</ion-label>
+      <ion-input type="email" formControlName="email"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="isInvalid('email')">
+      <p *ngIf="loginForm.controls['email'].errors?.['required']">
+        {{ 'EMAIL_REQUIRED' | translate }}
+      </p>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="floating">{{ 'PASSWORD_LABEL' | translate }}</ion-label>
+      <ion-input [type]="showPassword ? 'text' : 'password'" formControlName="password"></ion-input>
+      <ion-icon
+        slot="end"
+        [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+        (click)="togglePasswordVisibility()"
+      >
+      </ion-icon>
+    </ion-item>
+    <ion-text color="danger" *ngIf="isInvalid('password')">
+      <p *ngIf="loginForm.controls['password'].errors?.['required']">
+        {{ 'PASSWORD_REQUIRED' | translate }}
+      </p>
+    </ion-text>
+
+    @if (this.errorMessage != '') {
+      <ion-text color="danger">
+        <p>{{ this.errorMessage }}</p>
+      </ion-text>
+    }
+
+    <ion-button expand="full" type="submit" [disabled]="loginForm.invalid">{{
+      'LOGIN_LABEL' | translate
+    }}</ion-button>
+  </form>
+  <ion-button expand="full" (click)="goToForgotPassword()">{{
+    'ASK_FORGOT_PASSWORD' | translate
+  }}</ion-button>
+  <ion-button expand="full" (click)="goToRegister()">{{ 'REGISTER' | translate }}</ion-button>
+  <ion-button expand="full" (click)="signInWithGoogle()">{{
+    'SIGN_IN_WITH_GOOGLE' | translate
+  }}</ion-button>
+</ion-content>

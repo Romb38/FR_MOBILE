@@ -9,8 +9,8 @@ describe('NotFoundComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotFoundComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [NotFoundComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(NotFoundComponent);

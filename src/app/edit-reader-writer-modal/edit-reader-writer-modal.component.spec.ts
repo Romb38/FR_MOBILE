@@ -9,8 +9,8 @@ describe('EditReaderWriterModalComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditReaderWriterModalComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [EditReaderWriterModalComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EditReaderWriterModalComponent);

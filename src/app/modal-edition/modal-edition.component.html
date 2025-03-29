@@ -3,21 +3,23 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button (click)="this.closeModal()">{{"CANCEL" | translate}}</ion-button>
+          <ion-button (click)="this.closeModal()">{{ 'CANCEL' | translate }}</ion-button>
         </ion-buttons>
-        <ion-title>{{"POST_EDITION_TITLE" | translate}}</ion-title>
+        <ion-title>{{ 'POST_EDITION_TITLE' | translate }}</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="this.save()" [strong]="true" [disabled]="!isFormValid()">{{"SAVE" | translate}}</ion-button>
+          <ion-button (click)="this.save()" [strong]="true" [disabled]="!isFormValid()">{{
+            'SAVE' | translate
+          }}</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
       <ion-item>
         <ion-input
-          [label]="'NAME_LABEL'|translate"
+          [label]="'NAME_LABEL' | translate"
           labelPlacement="stacked"
           type="text"
-          [placeholder]="'NAME_PLACEHOLDER'|translate"
+          [placeholder]="'NAME_PLACEHOLDER' | translate"
           minlength="4"
           maxlength="100"
           #name="ngModel"
@@ -25,16 +27,16 @@
         ></ion-input>
       </ion-item>
       <div *ngIf="name.invalid && (name.dirty || name.touched)">
-        <small *ngIf="name.errors?.['required']">{{"NAME_REQUIRED" | translate}}</small>
-        <small *ngIf="name.errors?.['minlength']">{{"NAME_CANT_UNDER_4" | translate}}</small>
-        <small *ngIf="name.errors?.['maxlength']">{{"NAME_CANT_UPPER_100" | translate}}</small>
+        <small *ngIf="name.errors?.['required']">{{ 'NAME_REQUIRED' | translate }}</small>
+        <small *ngIf="name.errors?.['minlength']">{{ 'NAME_CANT_UNDER_4' | translate }}</small>
+        <small *ngIf="name.errors?.['maxlength']">{{ 'NAME_CANT_UPPER_100' | translate }}</small>
       </div>
       <ion-item>
         <ion-input
-          [label]="'FILL_DESC_LABEL'|translate"
+          [label]="'FILL_DESC_LABEL' | translate"
           labelPlacement="stacked"
           type="text"
-          [placeholder]="'DESC_PLACEHOLDER'|translate"
+          [placeholder]="'DESC_PLACEHOLDER' | translate"
           minlength="4"
           maxlength="100"
           #description="ngModel"
@@ -42,9 +44,13 @@
         ></ion-input>
       </ion-item>
       <div *ngIf="description.invalid && (description.dirty || description.touched)">
-        <small *ngIf="description.errors?.['required']">{{"DESC_REQUIRED" | translate}}</small>
-          <small *ngIf="description.errors?.['minlength']">{{"DESC_CANT_UNDER_4" | translate}}</small>
-          <small *ngIf="description.errors?.['maxlength']">{{"DESC_CANT_UPPER_100" | translate}}</small>
+        <small *ngIf="description.errors?.['required']">{{ 'DESC_REQUIRED' | translate }}</small>
+        <small *ngIf="description.errors?.['minlength']">{{
+          'DESC_CANT_UNDER_4' | translate
+        }}</small>
+        <small *ngIf="description.errors?.['maxlength']">{{
+          'DESC_CANT_UPPER_100' | translate
+        }}</small>
       </div>
     </ion-content>
   </ng-template>

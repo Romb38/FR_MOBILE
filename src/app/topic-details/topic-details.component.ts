@@ -1,5 +1,5 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   IonItem,
   IonLabel,
@@ -8,23 +8,24 @@ import {
   IonButton,
   IonIcon,
   IonRefresher,
-  IonRefresherContent, IonAvatar,
+  IonRefresherContent,
+  IonAvatar,
 } from '@ionic/angular/standalone';
-import {TopicService} from '../services/topic.service';
-import {Topic} from '../models/topic';
-import {Post, Posts} from '../models/post';
-import {ModalCreationComponent} from "../modal-creation/modal-creation.component";
-import {TopBarComponent} from "../top-bar/top-bar.component";
-import {Observable, of, Subject, switchMap, tap} from 'rxjs';
-import {AsyncPipe, LowerCasePipe, NgForOf, NgIf, SlicePipe} from '@angular/common';
-import {EditReaderWriterModalComponent} from "../edit-reader-writer-modal/edit-reader-writer-modal.component";
-import {TranslateModule} from '@ngx-translate/core';
-import {addIcons} from 'ionicons';
-import {shareSocial, create} from 'ionicons/icons';
-import {ModalEditionComponent} from '../modal-edition/modal-edition.component';
-import {AvatarService} from '../services/avatar.service';
-import {DateService} from '../services/date.service';
-import {catchError, takeUntil} from 'rxjs/operators';
+import { TopicService } from '../services/topic.service';
+import { Topic } from '../models/topic';
+import { Post, Posts } from '../models/post';
+import { ModalCreationComponent } from '../modal-creation/modal-creation.component';
+import { TopBarComponent } from '../top-bar/top-bar.component';
+import { Observable, of, Subject, switchMap, tap } from 'rxjs';
+import { AsyncPipe, LowerCasePipe, NgForOf, NgIf, SlicePipe } from '@angular/common';
+import { EditReaderWriterModalComponent } from '../edit-reader-writer-modal/edit-reader-writer-modal.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { addIcons } from 'ionicons';
+import { shareSocial, create } from 'ionicons/icons';
+import { ModalEditionComponent } from '../modal-edition/modal-edition.component';
+import { AvatarService } from '../services/avatar.service';
+import { DateService } from '../services/date.service';
+import { catchError, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-topic-details',
@@ -64,13 +65,13 @@ export class TopicDetailsComponent implements OnInit {
   topic$: Observable<Topic | undefined> = new Observable<Topic | undefined>();
   topic: Topic = {} as Topic;
   postId: string = '';
-  posts: Observable<Posts> = new Observable;
+  posts: Observable<Posts> = new Observable();
   isPostCreationModalVisible: boolean = false;
   isPostEditModalVisible: boolean = false;
   isEditReaderWriterModalVisible: boolean = false;
 
   constructor() {
-    addIcons({shareSocial, create})
+    addIcons({ shareSocial, create });
   }
 
   ngOnInit() {
@@ -101,13 +102,14 @@ export class TopicDetailsComponent implements OnInit {
   }
 
   updatePost() {
-    this.topicService.getPost(this.topicId, this.postId)
+    this.topicService
+      .getPost(this.topicId, this.postId)
       .pipe(
         takeUntil(this.destroy$),
         catchError(() => {
           this.router.navigate(['404']);
           return of(undefined);
-        }),
+        })
       )
       .subscribe((post: Post | undefined) => {
         if (!post) {
@@ -118,10 +120,7 @@ export class TopicDetailsComponent implements OnInit {
       });
   }
 
-  handleRefresh(event: any) {
-    console.debug("Page rafraîchie !");
-    //window.location.reload();
-
+  handleRefresh(event: { target: { complete: () => void } }) {
     setTimeout(() => {
       event.target.complete();
     }, 1000);
@@ -133,7 +132,7 @@ export class TopicDetailsComponent implements OnInit {
 
   deleteItem(post: Post): void {
     this.topicService.removePost(post.id, this.topicId);
-    this.router.navigate(['/'])
+    this.router.navigate(['/']);
   }
 
   showModal() {
