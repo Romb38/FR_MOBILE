@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {
   IonItem,
@@ -16,22 +16,23 @@ import {Post, Posts} from '../models/post';
 import {ModalCreationComponent} from "../modal-creation/modal-creation.component";
 import {TopBarComponent} from "../top-bar/top-bar.component";
 import {Observable, of, Subject, switchMap, tap} from 'rxjs';
-import {AsyncPipe, LowerCasePipe, NgForOf, NgIf, SlicePipe} from '@angular/common';
+import {AsyncPipe, LowerCasePipe, NgIf, SlicePipe} from '@angular/common';
 import {EditReaderWriterModalComponent} from "../edit-reader-writer-modal/edit-reader-writer-modal.component";
 import {TranslateModule} from '@ngx-translate/core';
 import {addIcons} from 'ionicons';
 import {shareSocial, create} from 'ionicons/icons';
-
+import {ModalEditionComponent} from '../modal-edition/modal-edition.component';
 import {AvatarService} from '../services/avatar.service';
 import {DateService} from '../services/date.service';
 import {catchError, takeUntil} from 'rxjs/operators';
-import {ModalEditionComponent} from '../modal-edition/modal-edition.component';
 
 @Component({
   selector: 'app-topic-details',
   templateUrl: './topic-details.component.html',
   styleUrls: ['./topic-details.component.scss'],
-  imports: [IonRefresherContent, IonRefresher,
+  imports: [
+    IonRefresherContent,
+    IonRefresher,
     IonItem,
     IonLabel,
     IonList,
@@ -43,10 +44,11 @@ import {ModalEditionComponent} from '../modal-edition/modal-edition.component';
     AsyncPipe,
     EditReaderWriterModalComponent,
     TranslateModule,
-    NgIf,
-    NgForOf,
+    ModalEditionComponent,
+    IonAvatar,
+    LowerCasePipe,
     SlicePipe,
-    ModalEditionComponent, IonAvatar, LowerCasePipe,
+    NgIf,
   ],
 })
 export class TopicDetailsComponent implements OnInit {
@@ -55,8 +57,6 @@ export class TopicDetailsComponent implements OnInit {
   protected avatarService: AvatarService = inject(AvatarService);
   protected dateService: DateService = inject(DateService);
   private router: Router = inject(Router);
-  private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
-
   private destroy$: Subject<void> = new Subject<void>();
 
   topicId: string = '';
@@ -171,4 +171,6 @@ export class TopicDetailsComponent implements OnInit {
   trackByPostId(index: number, item: Post): string {
     return item.id;
   }
+
+  protected readonly String = String;
 }
