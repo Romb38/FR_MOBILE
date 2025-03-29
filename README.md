@@ -78,7 +78,7 @@ npx cap sync
 4. Créer un fichier `src/environments/environments.ts` et y ajouter les variables d'environnement nécessaires. Vous pouvez vous inspirer du fichier `environment.sample.ts` fourni dans le même répertoire `environments`.
 
 
-## 🛠️ Commandes Utiles
+## 🛠️ Commandes utiles
 
 ### a) Développement
 
@@ -125,6 +125,32 @@ Ensuite dans Android Studio :
 - Pour une version de production, sélectionnez Build Signed Bundle / APK, configurez votre clé de signature, puis générez l'APK.
 
 Autrement, récupérez le fichier .apk généré par la CI pipeline.
+
+### c) Configuration du formatage et vérification de code dans votre IDE
+
+#### VSCode
+1. Installez les extensions suivantes :
+   - Prettier: VSCode Prettier Extension
+   - ESLint: VSCode ESLint Extension
+2. Ajoutez les paramètres suivants à votre fichier settings.json :
+```json
+{
+  "editor.formatOnSave": true,
+  "eslint.autoFixOnSave": true,
+  "eslint.alwaysShowStatus": true,
+  "eslint.validate": [
+    "javascript",
+    "typescript"
+  ],
+  "prettier.requireConfig": true
+}
+```
+
+#### WebStorm
+1. Allez dans **File > Settings > Editor > Code Style > JavaScript**
+2. Dans **Languages & Frameworks > JavaScript/TypeScript > Code Quality Tools**, activez **ESLint** avec le fichier de configuration pointé sur `.eslintrc.json`
+3. Ensuite dans **Languages & Frameworks > JavaScript/TypeScript > Prettier**, activez **On code reformat** et **On save** pour formatter le code automatiquement le code avec le fichier de configuration Prettier `.prettierrc`
+
 
 ## 👥 Contributeurs
 
