@@ -37,6 +37,13 @@ export const routes: Routes = [
     loadComponent: () => import('./post-details/post-details.component').then((m) => m.PostDetailsComponent),
   },
   {
+    canActivate: [
+      () => { return isAuth() }
+    ],
+    path: 'me',
+    loadComponent: () => import('./account-infos/account-infos.component').then((m) => m.AccountInfosComponent),
+  },
+  {
     path: 'login',
     loadComponent: () => import('./auth/login/login.page').then( m => m.LoginPage)
   },

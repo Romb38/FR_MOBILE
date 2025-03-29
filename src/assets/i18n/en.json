@@ -52,5 +52,7 @@
     "POST_EDITION": "Edit post",
     "USER_ALREADY_READER" : "This user is already a reader",
     "USER_ALREADY_WRITER": "This user is already a writer",
-    "SIGN_IN_WITH_GOOGLE": "Sign in with Google"
+    "SIGN_IN_WITH_GOOGLE": "Sign in with Google",
+    "ACCOUNT_INFOS_TITLE": "Account infos",
+    "LOG_OUT" : "Log out"
 }
