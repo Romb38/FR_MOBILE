@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { AddReaderWriterModalComponent } from './add-reader-writer-modal.component';
+import { AccountInfosComponent } from './account-infos.component';
 
-describe('AddReaderWriterModalComponent', () => {
-  let component: AddReaderWriterModalComponent;
-  let fixture: ComponentFixture<AddReaderWriterModalComponent>;
+describe('AccountInfosComponent', () => {
+  let component: AccountInfosComponent;
+  let fixture: ComponentFixture<AccountInfosComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddReaderWriterModalComponent ],
+      declarations: [ AccountInfosComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AddReaderWriterModalComponent);
+    fixture = TestBed.createComponent(AccountInfosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

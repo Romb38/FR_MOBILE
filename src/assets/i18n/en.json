@@ -31,7 +31,9 @@
     "ERROR_GENERAL": "An error has occurred, please retry or contact an administrator.",
     "MANAGE_SHARE_TITLE": "Manage shares",
     "READERS": "Readers",
+    "READER": "Reader",
     "WRITERS": "Writers",
+    "WRITER": "Writer",
     "NO_SHARE_MESSAGE": "You haven't shared your topic !",
     "ADD": "Add",
     "CREATE_POST": "Create a post",
@@ -52,5 +54,7 @@
     "POST_EDITION": "Edit post",
     "USER_ALREADY_READER" : "This user is already a reader",
     "USER_ALREADY_WRITER": "This user is already a writer",
-    "SIGN_IN_WITH_GOOGLE": "Sign in with Google"
+    "SIGN_IN_WITH_GOOGLE": "Sign in with Google",
+    "ACCOUNT_INFOS_TITLE": "Account infos",
+    "LOG_OUT" : "Log out"
 }

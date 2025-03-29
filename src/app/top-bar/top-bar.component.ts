@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
 import { AuthService } from '../services/auth.service';
 import { TranslateConfigServiceService } from 'src/app/services/translate-config-service.service';
+import { addIcons } from 'ionicons';
+import { personCircleOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-top-bar',
@@ -28,18 +30,23 @@ export class TopBarComponent  implements OnInit {
   protected auth : AuthService = inject(AuthService)
   private translateConfigService = inject(TranslateConfigServiceService)
   private homePage : string[] = ['/','/login']
+  private accountInfosPage : string[] = ["/me"]
   protected isAuth$ = this.auth.isAuthenticated();
   protected isHomePage : boolean;
+  protected isAccountInfosPage : boolean;
   private language: any;
   protected icon: string;
   protected iconDarkMode: string;
   private ASSETS_PATH : string = "../../assets/icon/"
 
   constructor() {
+    addIcons({personCircleOutline})
+
     this.translateConfigService.getDefaultLanguage();
     this.language = this.translateConfigService.getCurrentLang();
     this.icon = this.ASSETS_PATH+this.language+".svg"
     this.isHomePage = this.homePage.includes(this.router.url);
+    this.isAccountInfosPage = this.accountInfosPage.includes(this.router.url)
     const isDarkMode =  window.matchMedia('(prefers-color-scheme: dark)').matches;
     if (isDarkMode) {
       this.iconDarkMode = this.ASSETS_PATH + "sunny-outline.svg"
@@ -62,9 +69,8 @@ export class TopBarComponent  implements OnInit {
     }
   }
 
-  logout(){
-    this.auth.logOutConnectedUser()
-    this.router.navigate(['/login'])
+  goToAccountInfos(){
+    this.router.navigate(['/me'])
   }
 
   switchLang(){

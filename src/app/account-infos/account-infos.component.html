@@ -1,0 +1,15 @@
+<app-top-bar [title]="'ACCOUNT_INFOS_TITLE' | translate"></app-top-bar>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{"EMAIL_LABEL" | translate }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-text>{{ userEmail }}</ion-text>
+    </ion-card-content>
+  </ion-card>
+  <ion-button expand="full" color="danger" (click)="logout()">
+    <ion-icon name="log-out-outline"></ion-icon>
+    <span style="margin-left: 8px;">{{"LOG_OUT" | translate}}</span>
+  </ion-button>
+</ion-content>

@@ -8,7 +8,6 @@ import { ModalCreationComponent } from "../modal-creation/modal-creation.compone
 import { TopBarComponent } from "../top-bar/top-bar.component";
 import { Observable, switchMap } from 'rxjs';
 import {AsyncPipe } from '@angular/common';
-import { AddReaderWriterModalComponent } from "../add-reader-writer-modal/add-reader-writer-modal.component";
 import { EditReaderWriterModalComponent } from "../edit-reader-writer-modal/edit-reader-writer-modal.component";
 import { TranslateModule } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
@@ -29,7 +28,6 @@ import { shareSocial, create } from 'ionicons/icons';
     ModalCreationComponent,
     TopBarComponent,
     AsyncPipe,
-    AddReaderWriterModalComponent,
     EditReaderWriterModalComponent,
     TranslateModule
 ],
@@ -44,7 +42,6 @@ export class TopicDetailsComponent implements OnInit {
   topic : Topic = {} as Topic
   posts : Observable<Posts> = new Observable;
   isModalVisible: boolean = false;
-  isReaderWriterModalVisible : boolean = false;
   isEditReaderWriterModalVisible : boolean = false;
 
   constructor(){
@@ -101,13 +98,6 @@ export class TopicDetailsComponent implements OnInit {
     this.isModalVisible = false;
   }
 
-  showReadWriteModal(){
-    this.isReaderWriterModalVisible = true;
-  }
-
-  closeReadWriteModal(){
-    this.isReaderWriterModalVisible = false;
-  }
 
   showEditReaderWriterModal(){
     this.isEditReaderWriterModalVisible = true;

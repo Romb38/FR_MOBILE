@@ -162,32 +162,62 @@ export class TopicService {
     setDoc(postDoc, updatedPost, { merge: true });
   }
 
-  addTopicReader(topic: Topic, email:string): void{
-    const {isOwner, isWriter, isReader, ...updatedTopic} = topic;
-    updatedTopic.readers.push(email)
-    const topicDoc = doc(this.firestore, `topics/${updatedTopic.id}`);
-    setDoc(topicDoc, updatedTopic, { merge: true });
+  switchUserRole(topic: Topic, email: string): void {
+    const isEditor = topic.editors.includes(email);
+    
+    if (isEditor) {
+      topic.editors = topic.editors.filter(editor => editor !== email);
+      topic.readers.push(email);
+    } else {
+      topic.readers = topic.readers.filter(reader => reader !== email);
+      topic.editors.push(email);
+    }
+  
+    const topicDoc = doc(this.firestore, `topics/${topic.id}`);
+    setDoc(topicDoc, { readers: topic.readers, editors: topic.editors }, { merge: true })
+      .then(() => {
+        console.log(`Role switched successfully for ${email}`);
+      })
+      .catch((error) => {
+        console.error("Error switching role: ", error);
+      });
   }
 
-  addTopicWriter(topic: Topic, email:string): void {
-    const {isOwner, isWriter, isReader, ...updatedTopic} = topic;
-    updatedTopic.editors.push(email)
-    const topicDoc = doc(this.firestore, `topics/${updatedTopic.id}`);
-    setDoc(topicDoc, updatedTopic, { merge: true });
+  removeUserFromRoles(topic: Topic, email: string): void {
+    topic.readers = topic.readers.filter(reader => reader !== email);    
+    topic.editors = topic.editors.filter(editor => editor !== email);
+  
+    const topicDoc = doc(this.firestore, `topics/${topic.id}`);
+    setDoc(topicDoc, { readers: topic.readers, editors: topic.editors }, { merge: true })
+      .then(() => {
+        console.log(`User ${email} removed from both roles successfully.`);
+      })
+      .catch((error) => {
+        console.error("Error removing user from roles: ", error);
+      });
   }
+  
 
-  removeTopicReader(topic: Topic, old_email:string): void{
-    const {isOwner, isWriter, isReader, ...updatedTopic} = topic;
-    updatedTopic.readers = updatedTopic.readers.filter(email => email != old_email)
-    const topicDoc = doc(this.firestore, `topics/${updatedTopic.id}`);
-    setDoc(topicDoc, updatedTopic, { merge: true });
+  addUserToTopic(topic: Topic, email: string, role: 'reader' | 'writer'): void {
+    if (role === 'reader') {
+      if (!topic.readers.includes(email)) {
+        topic.readers.push(email);
+      }
+    } 
+    else if (role === 'writer') {
+      if (!topic.editors.includes(email)) {
+        topic.editors.push(email);
+      }
+    }
+  
+    const topicDoc = doc(this.firestore, `topics/${topic.id}`);
+    setDoc(topicDoc, { readers: topic.readers, editors: topic.editors }, { merge: true })
+      .then(() => {
+        console.log(`User ${email} added as ${role} to topic ${topic.id}`);
+      })
+      .catch((error) => {
+        console.error("Error adding user to topic: ", error);
+      });
   }
-
-  removeTopicWriter(topic: Topic, old_email:string): void {
-    const {isOwner, isWriter, isReader, ...updatedTopic} = topic;
-    updatedTopic.editors = updatedTopic.editors.filter(email => email != old_email)
-    const topicDoc = doc(this.firestore, `topics/${updatedTopic.id}`);
-    setDoc(topicDoc, updatedTopic, { merge: true });
-  }
-
+  
 }

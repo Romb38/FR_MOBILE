@@ -1,22 +1,27 @@
-.notFoundLabel {
-    text-align: center;      
-    font-size: 1.5rem;       
-    display: flex;
-    justify-content: center; 
-    align-items: center;     
-    height: 100%;
+.user-email {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
   }
   
+ion-radio-group {
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
 
-.columnTitle {      
-    font-size: 1.5rem;
-    margin-left: 0.5rem;
-    margin-top: 1rem; 
-    margin-bottom: 1rem;
-    display: flex; 
+ion-card {
+padding: 10px;
 }
+
+.error-message {
+    color: red; 
+    font-size: 20px; /* Taille du texte plus petite */
+    margin-top: 4px; /* Ajoute un peu d'espace au-dessus du texte d'erreur */
+    padding-left: 16px; /* Si nécessaire pour aligner avec l'input */
+  }
   
-.scrollable-list {
-    max-height: 200px;
-    overflow-y: auto;
-}
+  small {
+    display: block; /* Affiche chaque message d'erreur sur une nouvelle ligne */
+  }
+  
