@@ -59,6 +59,7 @@ export class HomepageComponent {
 
   deleteItem(topic : Topic): void {
     this.topicService.removeTopic(topic)
+    this.router.navigate(["/"])
   }
 
   logout(){
