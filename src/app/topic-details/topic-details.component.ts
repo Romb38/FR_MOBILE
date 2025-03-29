@@ -67,7 +67,6 @@ export class TopicDetailsComponent implements OnInit {
   posts: Observable<Posts> = new Observable;
   isPostCreationModalVisible: boolean = false;
   isPostEditModalVisible: boolean = false;
-  isReaderWriterModalVisible: boolean = false;
   isEditReaderWriterModalVisible: boolean = false;
 
   constructor() {
@@ -119,7 +118,6 @@ export class TopicDetailsComponent implements OnInit {
       });
   }
 
-
   handleRefresh(event: any) {
     console.debug("Page rafraîchie !");
     //window.location.reload();
@@ -144,14 +142,6 @@ export class TopicDetailsComponent implements OnInit {
 
   closePostCreationModal() {
     this.isPostCreationModalVisible = false;
-  }
-
-  showReadWriteModal() {
-    this.isReaderWriterModalVisible = true;
-  }
-
-  closeReadWriteModal() {
-    this.isReaderWriterModalVisible = false;
   }
 
   showEditReaderWriterModal() {
