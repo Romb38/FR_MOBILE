@@ -237,4 +237,29 @@ export class TopicService {
   }
   
 
+  addUserToTopic(topic: Topic, email: string, role: 'reader' | 'writer'): void {
+    // Si le rôle est 'reader', on l'ajoute à la liste des lecteurs
+    if (role === 'reader') {
+      if (!topic.readers.includes(email)) {
+        topic.readers.push(email);
+      }
+    } 
+    // Si le rôle est 'writer', on l'ajoute à la liste des éditeurs
+    else if (role === 'writer') {
+      if (!topic.editors.includes(email)) {
+        topic.editors.push(email);
+      }
+    }
+  
+    // Mettre à jour le document Firestore avec les nouvelles listes
+    const topicDoc = doc(this.firestore, `topics/${topic.id}`);
+    setDoc(topicDoc, { readers: topic.readers, editors: topic.editors }, { merge: true })
+      .then(() => {
+        console.log(`User ${email} added as ${role} to topic ${topic.id}`);
+      })
+      .catch((error) => {
+        console.error("Error adding user to topic: ", error);
+      });
+  }
+  
 }

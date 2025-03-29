@@ -13,3 +13,15 @@ gap: 8px;
 ion-card {
 padding: 10px;
 }
+
+.error-message {
+    color: red; 
+    font-size: 20px; /* Taille du texte plus petite */
+    margin-top: 4px; /* Ajoute un peu d'espace au-dessus du texte d'erreur */
+    padding-left: 16px; /* Si nécessaire pour aligner avec l'input */
+  }
+  
+  small {
+    display: block; /* Affiche chaque message d'erreur sur une nouvelle ligne */
+  }
+  
