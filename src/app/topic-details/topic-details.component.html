@@ -1,9 +1,9 @@
-<app-top-bar [title]="('TOPIC' | translate) + ': ' + (topic$ | async)?.name || 'Loading...'"></app-top-bar>
+<app-top-bar [title]="('TOPIC' | translate) + ': ' + (topic$ | async)?.name || ('LOADING' | translate)"></app-top-bar>
 
 <ion-content [fullscreen]="true">
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content
-      pullingText="Tirer pour rafraîchir"
+      [pullingText]="'PULL_TO_REFRESH' | translate"
       refreshingSpinner="circles">
     </ion-refresher-content>
   </ion-refresher>
@@ -14,7 +14,7 @@
           <img src="{{ this.avatarService.getDicebearAvatarUrl(post.author) }}" alt="avatar">
         </ion-avatar>
         <ion-label slot="start">
-          User-{{ post.author | slice: 0: 4 | lowercase }} 🔹
+          {{"USER" | translate}}-{{ post.author | slice: 0: 4 | lowercase }} 🔹
           <span style="color: #7c7b7b">{{ post.timecreated ? (dateService.getDateAsHumanReadable(post.timecreated)) : '-' }}</span>
           <br/>
           {{ post.description }}

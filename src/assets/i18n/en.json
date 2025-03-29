@@ -58,5 +58,8 @@
   "USER_ALREADY_WRITER": "This user is already a writer",
   "SIGN_IN_WITH_GOOGLE": "Sign in with Google",
   "ACCOUNT_INFOS_TITLE": "Account infos",
-  "LOG_OUT" : "Log out"
+  "LOG_OUT" : "Log out",
+  "USER": "User",
+  "PULL_TO_REFRESH": "Pull to refresh",
+  "LOADING": "Loading..."
 }
