@@ -1,11 +1,10 @@
 describe('Testing posts features', () => {
-
   beforeEach(() => {
     cy.visit('/');
     cy.contains('Créer un topic').click();
     cy.contains('Renseignez un nom').type('MyTestingTopic');
     cy.contains('Ajouter').click();
-    cy.contains('MyTestingTopic').click();    
+    cy.contains('MyTestingTopic').click();
   });
 
   it('Check the existence of a newly created post', () => {
@@ -34,4 +33,4 @@ describe('Testing posts features', () => {
 
     cy.get('.post-item').should('have.length', 3);
   });
-})
+});

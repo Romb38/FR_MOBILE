@@ -1,8 +1,17 @@
 import { Component, inject } from '@angular/core';
-import { TopBarComponent } from "../top-bar/top-bar.component";
+import { TopBarComponent } from '../top-bar/top-bar.component';
 import { TopicService } from '../services/topic.service';
-import { IonItem, IonLabel, IonList, IonContent, IonButton, IonIcon, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
-import { ModalCreationComponent } from "../modal-creation/modal-creation.component";
+import {
+  IonItem,
+  IonLabel,
+  IonList,
+  IonContent,
+  IonButton,
+  IonIcon,
+  IonRefresher,
+  IonRefresherContent,
+} from '@ionic/angular/standalone';
+import { ModalCreationComponent } from '../modal-creation/modal-creation.component';
 import { Router } from '@angular/router';
 import { Topic, Topics } from '../models/topic';
 import { Observable } from 'rxjs/internal/Observable';
@@ -14,7 +23,9 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],
-  imports: [IonRefresherContent, IonRefresher, 
+  imports: [
+    IonRefresherContent,
+    IonRefresher,
     IonItem,
     IonLabel,
     IonList,
@@ -25,27 +36,24 @@ import { TranslateModule } from '@ngx-translate/core';
     AsyncPipe,
     IonButton,
     TranslateModule,
-    TopBarComponent
-],
+    TopBarComponent,
+  ],
 })
 export class HomepageComponent {
   isModalVisible: boolean = false;
 
   private router: Router = inject(Router);
   protected topicService = inject(TopicService);
-  protected auth : AuthService = inject(AuthService)
+  protected auth: AuthService = inject(AuthService);
   topics: Observable<Topics> = this.topicService.getAll();
 
-  handleRefresh(event: any) {
-    console.debug("Page rafraîchie !");
-    //window.location.reload();
-  
+  handleRefresh(event: { target: { complete: () => void } }) {
     setTimeout(() => {
       event.target.complete();
     }, 1000);
   }
 
-  seeDetails(topicId: string): void{
+  seeDetails(topicId: string): void {
     this.router.navigate(['/topic', topicId]); // Navigue vers /topic/{topicId}
   }
 
@@ -57,14 +65,14 @@ export class HomepageComponent {
     this.isModalVisible = false;
   }
 
-  deleteItem(topic : Topic): void {
-    this.topicService.removeTopic(topic)
-    this.router.navigate(["/"])
+  deleteItem(topic: Topic): void {
+    this.topicService.removeTopic(topic);
+    this.router.navigate(['/']);
   }
 
-  logout(){
-    this.auth.logOutConnectedUser()
-    this.router.navigate(["login"]).then(() => {
+  logout() {
+    this.auth.logOutConnectedUser();
+    this.router.navigate(['login']).then(() => {
       window.location.reload();
     });
   }

@@ -1,5 +1,4 @@
-<app-top-bar [backRoute]="'topic/' + this.topicId"  [title]="this.post.name"></app-top-bar>
-
+<app-top-bar [backRoute]="'topic/' + this.topicId" [title]="this.post.name"></app-top-bar>
 
 <ion-content [fullscreen]="true">
   <div class="post-description">
@@ -8,6 +7,11 @@
 </ion-content>
 
 @if (this.topic.isWriter) {
-  <ion-button (click)="showModal()">{{"POST_EDITION" | translate}}</ion-button>
+  <ion-button (click)="showModal()">{{ 'POST_EDITION' | translate }}</ion-button>
 }
-<app-modal-edition [isVisible]="isModalVisible" [topicId]="topicId" [postId]="postId" (close)="closeModal()"></app-modal-edition>
+<app-modal-edition
+  [isVisible]="isModalVisible"
+  [topicId]="topicId"
+  [postId]="postId"
+  (closeEmitter)="closeModal()"
+></app-modal-edition>

@@ -1,31 +1,41 @@
 <ion-header [translucent]="true">
   <ion-toolbar class="ion-toolbar">
-
     @if (!this.isHomePage) {
       <ion-buttons slot="start">
         <ion-button [id]="'backRoute-' + butonId" (click)="goTo()">
-          <ion-icon src="../../assets/icon/arrow-back-outline.svg" aria-label="Go back" color="negative"></ion-icon>
+          <ion-icon
+            src="../../assets/icon/arrow-back-outline.svg"
+            aria-label="Go back"
+            color="negative"
+          ></ion-icon>
         </ion-button>
-      </ion-buttons>  
+      </ion-buttons>
     }
-    
+
     <ion-title>
-      {{this.title}}
+      {{ this.title }}
     </ion-title>
 
     <ion-buttons slot="end">
       <ion-button (click)="switchLang()">
-        <img [src]="icon" alt="Language flag" style=" width: 40px; height: auto; padding: 0;">
+        <img [src]="icon" alt="Language flag" style="width: 40px; height: auto; padding: 0" />
       </ion-button>
       <ion-button (click)="toggleDarkMode()">
-        <img [src]="iconDarkMode" alt="Language flag" style=" width: 40px; height: auto; padding: 0;">
+        <img
+          [src]="iconDarkMode"
+          alt="Language flag"
+          style="width: 40px; height: auto; padding: 0"
+        />
       </ion-button>
-    @if ((this.isAuth$ | async) && !this.isAccountInfosPage) {
+      @if ((this.isAuth$ | async) && !this.isAccountInfosPage) {
         <ion-button (click)="goToAccountInfos()">
-          <ion-icon name="person-circle-outline" aria-label="See account infos" color="negative"></ion-icon>
-        </ion-button> 
-    }
-  </ion-buttons>
-
+          <ion-icon
+            name="person-circle-outline"
+            aria-label="See account infos"
+            color="negative"
+          ></ion-icon>
+        </ion-button>
+      }
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>

@@ -2,44 +2,79 @@ import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular
 import { FormsModule } from '@angular/forms'; // Importation des classes nécessaires
 import { Topic } from '../models/topic';
 import { TopicService } from '../services/topic.service';
-import { IonModal, IonButton, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonList, IonItem, IonLabel, IonIcon, IonCard, IonCardContent, IonRadioGroup, IonRadio, IonInput } from '@ionic/angular/standalone';
+import {
+  IonModal,
+  IonButton,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonTitle,
+  IonContent,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonIcon,
+  IonCard,
+  IonCardContent,
+  IonRadioGroup,
+  IonRadio,
+  IonInput,
+} from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import { add, trashOutline } from 'ionicons/icons';
 import { NgIf } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
-import { ToastController } from "@ionic/angular/standalone"
-
-
+import { ToastController } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-edit-reader-writer-modal',
   templateUrl: './edit-reader-writer-modal.component.html',
   styleUrls: ['./edit-reader-writer-modal.component.scss'],
-  imports: [IonInput, IonRadio, IonRadioGroup, IonCardContent, IonCard, IonModal, IonHeader, IonToolbar, IonButton, IonButtons, IonTitle, IonContent, IonList, IonItem, IonLabel, IonIcon, TranslateModule, NgIf, FormsModule]
+  imports: [
+    IonInput,
+    IonRadio,
+    IonRadioGroup,
+    IonCardContent,
+    IonCard,
+    IonModal,
+    IonHeader,
+    IonToolbar,
+    IonButton,
+    IonButtons,
+    IonTitle,
+    IonContent,
+    IonList,
+    IonItem,
+    IonLabel,
+    IonIcon,
+    TranslateModule,
+    NgIf,
+    FormsModule,
+  ],
 })
 export class EditReaderWriterModalComponent implements OnInit {
   @Input() isVisible: boolean = false;
-  @Input() topicId: string = "";
-  @Output() close = new EventEmitter<void>();
+  @Input() topicId: string = '';
+  @Output() closeEmitter = new EventEmitter<void>();
 
-  protected users: { email: string, role: 'reader' | 'writer' }[] = [];
+  protected users: { email: string; role: 'reader' | 'writer' }[] = [];
   protected topic: Topic = {} as Topic;
   private topicService: TopicService = inject(TopicService);
   translate = inject(TranslateService);
-  private toastController = inject(ToastController)
+  private toastController = inject(ToastController);
 
   public isAddingUser: boolean = false;
   public newUserEmail: string = '';
   public newUserRole: 'reader' | 'writer' = 'reader';
-  
+
   ngOnInit() {
-    this.isAddingUser = false
+    this.isAddingUser = false;
     this.loadTopic();
   }
 
   constructor() {
-    addIcons({ trashOutline, add});
+    addIcons({ trashOutline, add });
   }
 
   private loadTopic(): void {
@@ -48,13 +83,13 @@ export class EditReaderWriterModalComponent implements OnInit {
         this.topic = topic;
 
         const combinedUsers = [
-          ...topic.readers.map(email => ({ email, role: 'reader' as const })),
-          ...topic.editors.map(email => ({ email, role: 'writer' as const }))
+          ...topic.readers.map((email) => ({ email, role: 'reader' as const })),
+          ...topic.editors.map((email) => ({ email, role: 'writer' as const })),
         ];
 
-        const uniqueUsersMap = new Map<string, { email: string, role: 'reader' | 'writer' }>();
+        const uniqueUsersMap = new Map<string, { email: string; role: 'reader' | 'writer' }>();
 
-        combinedUsers.forEach(user => {
+        combinedUsers.forEach((user) => {
           if (uniqueUsersMap.has(user.email)) {
             const existingUser = uniqueUsersMap.get(user.email);
             if (existingUser) {
@@ -71,11 +106,11 @@ export class EditReaderWriterModalComponent implements OnInit {
   }
 
   closeModal(): void {
-    this.isAddingUser = false
-    this.close.emit();
+    this.isAddingUser = false;
+    this.closeEmitter.emit();
   }
 
-  updateRole(user: { email: string, role: 'reader' | 'writer' }, role?: 'reader' | 'writer'): void {
+  updateRole(user: { email: string; role: 'reader' | 'writer' }, role?: 'reader' | 'writer'): void {
     const newRole = role || user.role;
     if (user.role != newRole) {
       this.topicService.switchUserRole(this.topic, user.email);
@@ -83,9 +118,9 @@ export class EditReaderWriterModalComponent implements OnInit {
     }
   }
 
-  removeUser(user: { email: string, role: 'reader' | 'writer' }) {
+  removeUser(user: { email: string; role: 'reader' | 'writer' }) {
     this.topicService.removeUserFromRoles(this.topic, user.email);
-    this.users = this.users.filter(u => u.email !== user.email);
+    this.users = this.users.filter((u) => u.email !== user.email);
   }
 
   showAddUserForm() {
@@ -93,27 +128,22 @@ export class EditReaderWriterModalComponent implements OnInit {
   }
 
   async addUser() {
-
-     if (this.topic.readers.includes(this.newUserEmail)){
-        const translatedMessage = await firstValueFrom(
-          this.translate.get('USER_ALREADY_READER')
-        );      
-        const toast = await this.toastController.create({
-          message: translatedMessage,
-          duration: 1500,
-          position: 'bottom',
-        });
-        await toast.present(); 
-    } else if (this.topic.editors.includes(this.newUserEmail)){
-        const translatedMessage = await firstValueFrom(
-          this.translate.get('USER_ALREADY_WRITER')
-        );       
-        const toast = await this.toastController.create({
-          message: translatedMessage,
-          duration: 1500,
-          position: 'bottom',
-        });
-        await toast.present();
+    if (this.topic.readers.includes(this.newUserEmail)) {
+      const translatedMessage = await firstValueFrom(this.translate.get('USER_ALREADY_READER'));
+      const toast = await this.toastController.create({
+        message: translatedMessage,
+        duration: 1500,
+        position: 'bottom',
+      });
+      await toast.present();
+    } else if (this.topic.editors.includes(this.newUserEmail)) {
+      const translatedMessage = await firstValueFrom(this.translate.get('USER_ALREADY_WRITER'));
+      const toast = await this.toastController.create({
+        message: translatedMessage,
+        duration: 1500,
+        position: 'bottom',
+      });
+      await toast.present();
     } else if (this.newUserEmail && this.newUserRole) {
       this.topicService.addUserToTopic(this.topic, this.newUserEmail, this.newUserRole);
       this.isAddingUser = false;
