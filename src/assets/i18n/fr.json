@@ -35,7 +35,7 @@
     "READER": "Lecteur",
     "WRITERS": "Écrivains",
     "WRITER": "Écrivain",
-    "NO_SHARE_MESSAGE": "Vous n'avez pas partager votre topic !",
+    "NO_SHARE_MESSAGE": "Vous n'avez pas partager votre sujet !",
     "ADD": "Ajouter",
     "CREATE_POST": "Créer un post",
     "NAME_LABEL": "Ajouter un nom",
@@ -55,5 +55,7 @@
     "POST_EDITION": "Éditer le post",
     "USER_ALREADY_READER" : "Cet utilisateur est déjà un lecteur",
     "USER_ALREADY_WRITER": "Cet utilisateur est déjà un écrivain",
-    "SIGN_IN_WITH_GOOGLE": "Se connecter avec Google"
+    "SIGN_IN_WITH_GOOGLE": "Se connecter avec Google",
+    "ACCOUNT_INFOS_TITLE": "Votre compte",
+    "LOG_OUT" : "Déconnexion"
 }
