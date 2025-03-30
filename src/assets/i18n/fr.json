@@ -66,5 +66,6 @@
   "LOADING": "Chargement...",
   "EDIT": "Éditer",
   "DELETE": "Supprimer",
-  "POST": "Message"
+  "POST": "Message",
+  "SEARCH...": "Rechercher..."
 }

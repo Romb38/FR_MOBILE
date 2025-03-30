@@ -10,6 +10,10 @@ import {
   IonIcon,
   IonRefresher,
   IonRefresherContent,
+  IonSearchbar,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
 } from '@ionic/angular/standalone';
 import { ModalCreationComponent } from '../modal-creation/modal-creation.component';
 import { Router } from '@angular/router';
@@ -19,7 +23,7 @@ import { AsyncPipe, NgIf } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
-import { create, ellipsisVerticalOutline, trashOutline } from 'ionicons/icons';
+import { closeOutline, create, ellipsisVerticalOutline, trashOutline } from 'ionicons/icons';
 import { ModalEditionComponent } from '../modal-edition/modal-edition.component';
 import { ActionSheetController } from '@ionic/angular';
 import { DateService } from '../services/date.service';
@@ -45,6 +49,10 @@ import { TranslateConfigService } from '../services/translate-config.service';
     TopBarComponent,
     ModalEditionComponent,
     NgIf,
+    IonSearchbar,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
   ],
 })
 export class HomepageComponent implements OnInit {
@@ -55,6 +63,7 @@ export class HomepageComponent implements OnInit {
   protected topicService = inject(TopicService);
   protected auth: AuthService = inject(AuthService);
   protected dateService: DateService = inject(DateService);
+  protected searchValue: string = '';
   private actionSheetCtrl = inject(ActionSheetController);
   private translate: TranslateService = inject(TranslateService);
   topics: Observable<Topics> = this.topicService.getAll();
@@ -63,7 +72,7 @@ export class HomepageComponent implements OnInit {
   private translateConfigService: TranslateConfigService = inject(TranslateConfigService);
 
   constructor() {
-    addIcons({ trashOutline, create, ellipsisVerticalOutline });
+    addIcons({ trashOutline, create, ellipsisVerticalOutline, closeOutline });
   }
 
   public ngOnInit() {
@@ -132,5 +141,9 @@ export class HomepageComponent implements OnInit {
       ],
     });
     await actionSheet.present();
+  }
+
+  handleSearchBarInput(event: CustomEvent) {
+    this.searchValue = event.detail.value?.toLowerCase() || '';
   }
 }

@@ -2,7 +2,10 @@
 
 <ion-content [fullscreen]="true">
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
-    <ion-refresher-content pullingText="Tirer pour rafraîchir" refreshingSpinner="circles">
+    <ion-refresher-content
+      [pullingText]="'PULL_TO_REFRESH' | translate"
+      refreshingSpinner="circles"
+    >
     </ion-refresher-content>
   </ion-refresher>
 
@@ -18,9 +21,18 @@
         />
       </div>
     }
+    @if ((topics | async)?.length) {
+      <ion-searchbar
+        show-clear-button="always"
+        clear-icon="close-outline"
+        animated="true"
+        [placeholder]="'SEARCH...' | translate"
+        (ionInput)="handleSearchBarInput($event)"
+      ></ion-searchbar>
+    }
     <ion-list lines="full">
       @for (topic of this.topics | async; track topic.id) {
-        @if (topic.isReader) {
+        @if (topic.isReader && (searchValue === '' || topic.name.includes(searchValue))) {
           <ion-item>
             <ion-label [title]="topic.id" (click)="seeDetails(topic.id)">
               <span class="post-time">

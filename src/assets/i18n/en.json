@@ -66,5 +66,6 @@
   "LOADING": "Loading...",
   "EDIT": "Edit",
   "DELETE": "Delete",
-  "POST": "Post"
+  "POST": "Post",
+  "SEARCH...": "Search..."
 }
