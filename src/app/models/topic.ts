@@ -5,6 +5,7 @@ export interface Topic {
   name: string;
   posts: Post[];
   author: string;
+  timecreated: string;
   readers: string[];
   editors: string[];
   isOwner?: boolean;

@@ -10,7 +10,7 @@ import {
   IonIcon,
 } from '@ionic/angular/standalone';
 import { AuthService } from '../services/auth.service';
-import { TranslateConfigServiceService } from 'src/app/services/translate-config-service.service';
+import { TranslateConfigService } from 'src/app/services/translate-config.service';
 import { addIcons } from 'ionicons';
 import { personCircleOutline } from 'ionicons/icons';
 
@@ -26,7 +26,7 @@ export class TopBarComponent implements OnInit {
   butonId: string = '';
   private router: Router = inject(Router);
   protected auth: AuthService = inject(AuthService);
-  private translateConfigService = inject(TranslateConfigServiceService);
+  private translateConfigService = inject(TranslateConfigService);
   private homePage: string[] = ['/', '/login'];
   private accountInfosPage: string[] = ['/me'];
   protected isAuth$ = this.auth.isAuthenticated();

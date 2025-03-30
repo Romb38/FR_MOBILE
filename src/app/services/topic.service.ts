@@ -7,6 +7,7 @@ import {
   doc,
   docData,
   Firestore,
+  orderBy,
   query,
   setDoc,
   where,
@@ -48,9 +49,16 @@ export class TopicService {
           return unique;
         }, []);
 
+        // Sort topics with timecreated field in desc order
+        const sortedTopics = uniqueTopics.sort((t1, t2) => {
+          const timeA: number = t1.timecreated ? new Date(t1.timecreated).getTime() : 0;
+          const timeB: number = t2.timecreated ? new Date(t2.timecreated).getTime() : 0;
+          return timeB - timeA;
+        });
+
         // Update topicsSubject$ and send the info to any subscribers listening for this up-to-date topics list
-        this.topicsSubject$.next(uniqueTopics);
-        return uniqueTopics;
+        this.topicsSubject$.next(sortedTopics);
+        return sortedTopics;
       })
     );
   }
@@ -154,7 +162,8 @@ export class TopicService {
       return new Observable();
     }
     const postsCollection = collection(this.firestore, `topics/${topicId}/posts`);
-    return collectionData(postsCollection, { idField: 'id' }) as Observable<Posts>;
+    const postsQuery = query(postsCollection, orderBy('timecreated', 'asc'));
+    return collectionData(postsQuery, { idField: 'id' }) as Observable<Posts>;
   }
 
   getPost(topicId: string, postId: string): Observable<Post | undefined> {
@@ -173,7 +182,7 @@ export class TopicService {
     deleteDoc(postDoc);
   }
 
-  editPost(updatedPost: Post, topicId: string): void {
+  updatePost(updatedPost: Post, topicId: string): void {
     const postDoc = doc(this.firestore, `topics/${topicId}/posts/${updatedPost.id}`);
     setDoc(postDoc, updatedPost, { merge: true });
   }

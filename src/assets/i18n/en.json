@@ -51,7 +51,9 @@
   "DESC_CANT_UPPER_100": "Description length must be less than 100 characters",
   "SAVE": "Save",
   "POST_EDITION_TITLE": "Edit post",
-  "NOT_FOUND": "404 - Not found",
+  "TOPIC_EDITION_TITLE": "Edit topic",
+  "ERROR_NOT_FOUND": "404 Error",
+  "PAGE_DOES_NOT_EXIST": "Page not found",
   "GO_HOME": "Go home",
   "POST_EDITION": "Edit post",
   "USER_ALREADY_READER": "This user is already a reader",
@@ -61,5 +63,8 @@
   "LOG_OUT": "Log out",
   "USER": "User",
   "PULL_TO_REFRESH": "Pull to refresh",
-  "LOADING": "Loading..."
+  "LOADING": "Loading...",
+  "EDIT": "Edit",
+  "DELETE": "Delete",
+  "POST": "Post"
 }

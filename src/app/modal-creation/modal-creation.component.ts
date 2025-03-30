@@ -79,6 +79,7 @@ export class ModalCreationComponent {
         name: this.newEntity.name,
         posts: [],
         author: author!.uid,
+        timecreated: new Date().toISOString(),
         editors: [],
         readers: [],
       };

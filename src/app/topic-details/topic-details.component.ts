@@ -19,13 +19,15 @@ import { TopBarComponent } from '../top-bar/top-bar.component';
 import { Observable, of, Subject, switchMap, tap } from 'rxjs';
 import { AsyncPipe, LowerCasePipe, NgForOf, NgIf, SlicePipe } from '@angular/common';
 import { EditReaderWriterModalComponent } from '../edit-reader-writer-modal/edit-reader-writer-modal.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import { shareSocial, create } from 'ionicons/icons';
 import { ModalEditionComponent } from '../modal-edition/modal-edition.component';
 import { AvatarService } from '../services/avatar.service';
 import { DateService } from '../services/date.service';
 import { catchError, takeUntil } from 'rxjs/operators';
+import { ActionSheetController } from '@ionic/angular';
+import { TranslateConfigService } from '../services/translate-config.service';
 
 @Component({
   selector: 'app-topic-details',
@@ -58,7 +60,11 @@ export class TopicDetailsComponent implements OnInit {
   protected topicService: TopicService = inject(TopicService);
   protected avatarService: AvatarService = inject(AvatarService);
   protected dateService: DateService = inject(DateService);
+  protected language: string = 'en';
+  private translate: TranslateService = inject(TranslateService);
   private router: Router = inject(Router);
+  private actionSheetCtrl = inject(ActionSheetController);
+  private translateConfigService: TranslateConfigService = inject(TranslateConfigService);
   private destroy$: Subject<void> = new Subject<void>();
 
   topicId: string = '';
@@ -75,6 +81,8 @@ export class TopicDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.language = this.translateConfigService.getCurrentLang();
+
     this.topic$ = this.route.params.pipe(
       switchMap((params) => {
         this.topicId = params['id'] ?? '';
@@ -126,11 +134,7 @@ export class TopicDetailsComponent implements OnInit {
     }, 1000);
   }
 
-  goToPost(post: Post): void {
-    this.router.navigate([`topic/${this.topicId}/${post.id}`]);
-  }
-
-  deleteItem(post: Post): void {
+  deletePost(post: Post): void {
     this.topicService.removePost(post.id, this.topicId);
     this.router.navigate(['/']);
   }
@@ -162,5 +166,28 @@ export class TopicDetailsComponent implements OnInit {
     return item.id;
   }
 
-  protected readonly String = String;
+  async presentPostActionSheet(post: Post) {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: this.translate.instant('POST') + ': ' + post.description,
+      buttons: [
+        {
+          text: this.translate.instant('EDIT'),
+          icon: 'create',
+          handler: () => this.editPost(post.id),
+        },
+        {
+          text: this.translate.instant('DELETE'),
+          icon: 'trash-outline',
+          role: 'destructive',
+          handler: () => this.deletePost(post),
+        },
+        {
+          text: this.translate.instant('CANCEL'),
+          icon: 'close',
+          role: 'cancel',
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
 }

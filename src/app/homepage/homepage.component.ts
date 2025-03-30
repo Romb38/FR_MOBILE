@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TopBarComponent } from '../top-bar/top-bar.component';
 import { TopicService } from '../services/topic.service';
 import {
@@ -15,9 +15,15 @@ import { ModalCreationComponent } from '../modal-creation/modal-creation.compone
 import { Router } from '@angular/router';
 import { Topic, Topics } from '../models/topic';
 import { Observable } from 'rxjs/internal/Observable';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { AuthService } from '../services/auth.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { addIcons } from 'ionicons';
+import { create, ellipsisVerticalOutline, trashOutline } from 'ionicons/icons';
+import { ModalEditionComponent } from '../modal-edition/modal-edition.component';
+import { ActionSheetController } from '@ionic/angular';
+import { DateService } from '../services/date.service';
+import { TranslateConfigService } from '../services/translate-config.service';
 
 @Component({
   selector: 'app-homepage',
@@ -37,15 +43,32 @@ import { TranslateModule } from '@ngx-translate/core';
     IonButton,
     TranslateModule,
     TopBarComponent,
+    ModalEditionComponent,
+    NgIf,
   ],
 })
-export class HomepageComponent {
-  isModalVisible: boolean = false;
+export class HomepageComponent implements OnInit {
+  isCreateTopicModalVisible: boolean = false;
+  isEditTopicModalVisible: boolean = false;
 
   private router: Router = inject(Router);
   protected topicService = inject(TopicService);
   protected auth: AuthService = inject(AuthService);
+  protected dateService: DateService = inject(DateService);
+  private actionSheetCtrl = inject(ActionSheetController);
+  private translate: TranslateService = inject(TranslateService);
   topics: Observable<Topics> = this.topicService.getAll();
+  public topicId: string = '';
+  protected language: string = 'en';
+  private translateConfigService: TranslateConfigService = inject(TranslateConfigService);
+
+  constructor() {
+    addIcons({ trashOutline, create, ellipsisVerticalOutline });
+  }
+
+  public ngOnInit() {
+    this.language = this.translateConfigService.getCurrentLang();
+  }
 
   handleRefresh(event: { target: { complete: () => void } }) {
     setTimeout(() => {
@@ -57,23 +80,57 @@ export class HomepageComponent {
     this.router.navigate(['/topic', topicId]); // Navigue vers /topic/{topicId}
   }
 
-  showModal(): void {
-    this.isModalVisible = true;
+  showCreateTopicModal(): void {
+    this.isCreateTopicModalVisible = true;
   }
 
-  closeModal(): void {
-    this.isModalVisible = false;
+  closeCreateTopicModal(): void {
+    this.isCreateTopicModalVisible = false;
   }
 
-  deleteItem(topic: Topic): void {
+  showEditTopicModal(): void {
+    this.isEditTopicModalVisible = true;
+  }
+
+  closeEditTopicModal(): void {
+    this.topicId = '';
+    setTimeout(() => {
+      this.isEditTopicModalVisible = false;
+    }, 10); // Patch: small delay to first update visible state and then remove the component
+  }
+
+  editTopic(topicId: string): void {
+    this.topicId = topicId;
+    this.showEditTopicModal();
+  }
+
+  deleteTopic(topic: Topic): void {
     this.topicService.removeTopic(topic);
     this.router.navigate(['/']);
   }
 
-  logout() {
-    this.auth.logOutConnectedUser();
-    this.router.navigate(['login']).then(() => {
-      window.location.reload();
+  async presentActionSheet(topic: Topic) {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: this.translate.instant('TOPIC') + ': ' + topic.name,
+      buttons: [
+        {
+          text: this.translate.instant('EDIT'),
+          icon: 'create',
+          handler: () => this.editTopic(topic.id),
+        },
+        {
+          text: this.translate.instant('DELETE'),
+          icon: 'trash-outline',
+          role: 'destructive',
+          handler: () => this.deleteTopic(topic),
+        },
+        {
+          text: this.translate.instant('CANCEL'),
+          icon: 'close',
+          role: 'cancel',
+        },
+      ],
     });
+    await actionSheet.present();
   }
 }

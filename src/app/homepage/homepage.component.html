@@ -23,17 +23,18 @@
         @if (topic.isReader) {
           <ion-item>
             <ion-label [title]="topic.id" (click)="seeDetails(topic.id)">
+              <span class="post-time">
+                {{
+                  topic.timecreated
+                    ? dateService.getDateAsHumanReadable(topic.timecreated, language)
+                    : '-'
+                }}
+              </span>
               {{ topic.name }}
             </ion-label>
             @if (topic.isOwner) {
-              <ion-button
-                data-action="delete"
-                aria-label="Remove a post"
-                fill="clear"
-                slot="end"
-                (click)="deleteItem(topic)"
-              >
-                <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
+              <ion-button fill="clear" slot="end" (click)="presentActionSheet(topic)">
+                <ion-icon name="ellipsis-vertical-outline"></ion-icon>
               </ion-button>
             }
           </ion-item>
@@ -43,5 +44,14 @@
   </div>
 </ion-content>
 
-<ion-button (click)="showModal()">{{ 'CREATE_TOPIC' | translate }}</ion-button>
-<app-modal-creation [isVisible]="isModalVisible" (closeEmitter)="closeModal()"></app-modal-creation>
+<ion-button (click)="showCreateTopicModal()">{{ 'CREATE_TOPIC' | translate }}</ion-button>
+<app-modal-creation
+  [isVisible]="isCreateTopicModalVisible"
+  (closeEmitter)="closeCreateTopicModal()"
+></app-modal-creation>
+<app-modal-edition
+  *ngIf="isEditTopicModalVisible"
+  [isVisible]="isEditTopicModalVisible && topicId !== ''"
+  [topicId]="topicId"
+  (closeEmitter)="closeEditTopicModal()"
+></app-modal-edition>
