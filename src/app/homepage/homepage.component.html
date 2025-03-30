@@ -26,23 +26,8 @@
               {{ topic.name }}
             </ion-label>
             @if (topic.isOwner) {
-              <ion-button
-                data-action="edit"
-                aria-label="Edit a topic"
-                fill="clear"
-                slot="end"
-                (click)="editPost(topic.id)"
-              >
-                <ion-icon name="create" color="primary"></ion-icon>
-              </ion-button>
-              <ion-button
-                data-action="delete"
-                aria-label="Remove a post"
-                fill="clear"
-                slot="end"
-                (click)="deleteItem(topic)"
-              >
-                <ion-icon src="../../assets/icon/trash-outline.svg" color="danger"></ion-icon>
+              <ion-button fill="clear" slot="end" (click)="presentActionSheet(topic)">
+                <ion-icon name="ellipsis-vertical-outline"></ion-icon>
               </ion-button>
             }
           </ion-item>

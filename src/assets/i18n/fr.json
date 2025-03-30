@@ -38,7 +38,7 @@
   "WRITER": "Écrivain",
   "NO_SHARE_MESSAGE": "Vous n'avez pas partagé votre sujet !",
   "ADD": "Ajouter",
-  "CREATE_POST": "Créer un post",
+  "CREATE_POST": "Créer un message",
   "NAME_LABEL": "Ajouter un nom",
   "NAME_PLACEHOLDER": "Nom",
   "NAME_REQUIRED": "Le nom est requis",
@@ -50,12 +50,12 @@
   "DESC_CANT_UNDER_4": "La description doit avoir au moins 4 caractères.",
   "DESC_CANT_UPPER_100": "La description doit avoir moins de 100 caractères.",
   "SAVE": "Sauvegarder",
-  "POST_EDITION_TITLE": "Édition du post",
+  "POST_EDITION_TITLE": "Édition du message",
   "TOPIC_EDITION_TITLE": "Édition du sujet",
   "ERROR_NOT_FOUND": "Erreur 404",
   "PAGE_DOES_NOT_EXIST": "La page n'existe pas",
   "GO_HOME": "Retour à l'accueil",
-  "POST_EDITION": "Éditer le post",
+  "POST_EDITION": "Éditer le message",
   "USER_ALREADY_READER": "Cet utilisateur est déjà un lecteur.",
   "USER_ALREADY_WRITER": "Cet utilisateur est déjà un écrivain.",
   "SIGN_IN_WITH_GOOGLE": "Se connecter avec Google",
@@ -63,5 +63,8 @@
   "LOG_OUT": "Déconnexion",
   "USER": "Utilisateur",
   "PULL_TO_REFRESH": "Tirer pour rafraîchir",
-  "LOADING": "Chargement..."
+  "LOADING": "Chargement...",
+  "EDIT": "Éditer",
+  "DELETE": "Supprimer",
+  "POST": "Message"
 }

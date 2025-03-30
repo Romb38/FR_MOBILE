@@ -63,5 +63,8 @@
   "LOG_OUT": "Log out",
   "USER": "User",
   "PULL_TO_REFRESH": "Pull to refresh",
-  "LOADING": "Loading..."
+  "LOADING": "Loading...",
+  "EDIT": "Edit",
+  "DELETE": "Delete",
+  "POST": "Post"
 }
