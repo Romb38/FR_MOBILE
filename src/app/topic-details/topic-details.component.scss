@@ -16,7 +16,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 45rem;
+  height: 60vh; /* 60% of the viewport height */
   opacity: 0.2;
   filter: grayscale(100%);
 }
