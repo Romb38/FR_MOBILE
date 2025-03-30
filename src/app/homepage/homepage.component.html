@@ -23,6 +23,13 @@
         @if (topic.isReader) {
           <ion-item>
             <ion-label [title]="topic.id" (click)="seeDetails(topic.id)">
+              <span class="post-time">
+                {{
+                  topic.timecreated
+                    ? dateService.getDateAsHumanReadable(topic.timecreated, language)
+                    : '-'
+                }}
+              </span>
               {{ topic.name }}
             </ion-label>
             @if (topic.isOwner) {

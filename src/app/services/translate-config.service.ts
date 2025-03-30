@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Injectable({
   providedIn: 'root',
 })
-export class TranslateConfigServiceService {
+export class TranslateConfigService {
   currentLang: string | undefined | null;
   translate: TranslateService = inject(TranslateService);
 
@@ -28,7 +28,7 @@ export class TranslateConfigServiceService {
     localStorage.setItem('lang', setLang);
   }
 
-  getCurrentLang() {
-    return localStorage.getItem('lang');
+  getCurrentLang(): string {
+    return localStorage.getItem('lang') ?? 'en';
   }
 }

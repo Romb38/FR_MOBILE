@@ -20,7 +20,9 @@
       <ion-label class="post-label">
         {{ 'USER' | translate }}-{{ post.author | slice: 0 : 4 | lowercase }} 🔹
         <span class="post-time">
-          {{ post.timecreated ? dateService.getDateAsHumanReadable(post.timecreated) : '-' }}
+          {{
+            post.timecreated ? dateService.getDateAsHumanReadable(post.timecreated, language) : '-'
+          }}
         </span>
         <br />
         {{ post.description }}

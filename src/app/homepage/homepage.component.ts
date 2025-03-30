@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TopBarComponent } from '../top-bar/top-bar.component';
 import { TopicService } from '../services/topic.service';
 import {
@@ -10,7 +10,6 @@ import {
   IonIcon,
   IonRefresher,
   IonRefresherContent,
-  IonActionSheet,
 } from '@ionic/angular/standalone';
 import { ModalCreationComponent } from '../modal-creation/modal-creation.component';
 import { Router } from '@angular/router';
@@ -23,6 +22,8 @@ import { addIcons } from 'ionicons';
 import { create, ellipsisVerticalOutline, trashOutline } from 'ionicons/icons';
 import { ModalEditionComponent } from '../modal-edition/modal-edition.component';
 import { ActionSheetController } from '@ionic/angular';
+import { DateService } from '../services/date.service';
+import { TranslateConfigService } from '../services/translate-config.service';
 
 @Component({
   selector: 'app-homepage',
@@ -44,23 +45,29 @@ import { ActionSheetController } from '@ionic/angular';
     TopBarComponent,
     ModalEditionComponent,
     NgIf,
-    IonActionSheet,
   ],
 })
-export class HomepageComponent {
+export class HomepageComponent implements OnInit {
   isCreateTopicModalVisible: boolean = false;
   isEditTopicModalVisible: boolean = false;
 
   private router: Router = inject(Router);
   protected topicService = inject(TopicService);
   protected auth: AuthService = inject(AuthService);
+  protected dateService: DateService = inject(DateService);
   private actionSheetCtrl = inject(ActionSheetController);
   private translate: TranslateService = inject(TranslateService);
   topics: Observable<Topics> = this.topicService.getAll();
   public topicId: string = '';
+  protected language: string = 'en';
+  private translateConfigService: TranslateConfigService = inject(TranslateConfigService);
 
   constructor() {
     addIcons({ trashOutline, create, ellipsisVerticalOutline });
+  }
+
+  public ngOnInit() {
+    this.language = this.translateConfigService.getCurrentLang();
   }
 
   handleRefresh(event: { target: { complete: () => void } }) {
