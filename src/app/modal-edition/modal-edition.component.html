@@ -5,7 +5,9 @@
         <ion-buttons slot="start">
           <ion-button (click)="this.closeModal()">{{ 'CANCEL' | translate }}</ion-button>
         </ion-buttons>
-        <ion-title>{{ 'POST_EDITION_TITLE' | translate }}</ion-title>
+        <ion-title>{{
+          isPostEdition() ? ('POST_EDITION_TITLE' | translate) : ('TOPIC_EDITION_TITLE' | translate)
+        }}</ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="this.save()" [strong]="true" [disabled]="!isFormValid()">{{
             'SAVE' | translate
@@ -31,26 +33,32 @@
         <small *ngIf="name.errors?.['minlength']">{{ 'NAME_CANT_UNDER_4' | translate }}</small>
         <small *ngIf="name.errors?.['maxlength']">{{ 'NAME_CANT_UPPER_100' | translate }}</small>
       </div>
-      <ion-item>
-        <ion-input
-          [label]="'FILL_DESC_LABEL' | translate"
-          labelPlacement="stacked"
-          type="text"
-          [placeholder]="'DESC_PLACEHOLDER' | translate"
-          minlength="4"
-          maxlength="100"
-          #description="ngModel"
-          [(ngModel)]="newEntity.description"
-        ></ion-input>
-      </ion-item>
-      <div *ngIf="description.invalid && (description.dirty || description.touched)">
-        <small *ngIf="description.errors?.['required']">{{ 'DESC_REQUIRED' | translate }}</small>
-        <small *ngIf="description.errors?.['minlength']">{{
-          'DESC_CANT_UNDER_4' | translate
-        }}</small>
-        <small *ngIf="description.errors?.['maxlength']">{{
-          'DESC_CANT_UPPER_100' | translate
-        }}</small>
+      <div *ngIf="isPostEdition()">
+        <ion-item>
+          <ion-input
+            [label]="'FILL_DESC_LABEL' | translate"
+            labelPlacement="stacked"
+            type="text"
+            [placeholder]="'DESC_PLACEHOLDER' | translate"
+            minlength="4"
+            maxlength="100"
+            #description="ngModel"
+            [(ngModel)]="newEntity.description"
+          ></ion-input>
+        </ion-item>
+        <div
+          *ngIf="
+            isPostEdition() && description.invalid && (description.dirty || description.touched)
+          "
+        >
+          <small *ngIf="description.errors?.['required']">{{ 'DESC_REQUIRED' | translate }}</small>
+          <small *ngIf="description.errors?.['minlength']">{{
+            'DESC_CANT_UNDER_4' | translate
+          }}</small>
+          <small *ngIf="description.errors?.['maxlength']">{{
+            'DESC_CANT_UPPER_100' | translate
+          }}</small>
+        </div>
       </div>
     </ion-content>
   </ng-template>

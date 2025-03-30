@@ -51,6 +51,7 @@
   "DESC_CANT_UPPER_100": "La description doit avoir moins de 100 caractères.",
   "SAVE": "Sauvegarder",
   "POST_EDITION_TITLE": "Édition du post",
+  "TOPIC_EDITION_TITLE": "Édition du sujet",
   "NOT_FOUND": "404 - Introuvable",
   "GO_HOME": "Retour à l'accueil",
   "POST_EDITION": "Éditer le post",

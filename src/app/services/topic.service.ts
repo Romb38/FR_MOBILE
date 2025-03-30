@@ -173,7 +173,7 @@ export class TopicService {
     deleteDoc(postDoc);
   }
 
-  editPost(updatedPost: Post, topicId: string): void {
+  updatePost(updatedPost: Post, topicId: string): void {
     const postDoc = doc(this.firestore, `topics/${topicId}/posts/${updatedPost.id}`);
     setDoc(postDoc, updatedPost, { merge: true });
   }

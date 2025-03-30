@@ -15,9 +15,12 @@ import { ModalCreationComponent } from '../modal-creation/modal-creation.compone
 import { Router } from '@angular/router';
 import { Topic, Topics } from '../models/topic';
 import { Observable } from 'rxjs/internal/Observable';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { addIcons } from 'ionicons';
+import { create, trashOutline } from 'ionicons/icons';
+import { ModalEditionComponent } from '../modal-edition/modal-edition.component';
 
 @Component({
   selector: 'app-homepage',
@@ -37,15 +40,23 @@ import { TranslateModule } from '@ngx-translate/core';
     IonButton,
     TranslateModule,
     TopBarComponent,
+    ModalEditionComponent,
+    NgIf,
   ],
 })
 export class HomepageComponent {
-  isModalVisible: boolean = false;
+  isCreateTopicModalVisible: boolean = false;
+  isEditTopicModalVisible: boolean = false;
 
   private router: Router = inject(Router);
   protected topicService = inject(TopicService);
   protected auth: AuthService = inject(AuthService);
   topics: Observable<Topics> = this.topicService.getAll();
+  public topicId: string = '';
+
+  constructor() {
+    addIcons({ trashOutline, create });
+  }
 
   handleRefresh(event: { target: { complete: () => void } }) {
     setTimeout(() => {
@@ -57,23 +68,32 @@ export class HomepageComponent {
     this.router.navigate(['/topic', topicId]); // Navigue vers /topic/{topicId}
   }
 
-  showModal(): void {
-    this.isModalVisible = true;
+  showCreateTopicModal(): void {
+    this.isCreateTopicModalVisible = true;
   }
 
-  closeModal(): void {
-    this.isModalVisible = false;
+  closeCreateTopicModal(): void {
+    this.isCreateTopicModalVisible = false;
+  }
+
+  showEditTopicModal(): void {
+    this.isEditTopicModalVisible = true;
+  }
+
+  closeEditTopicModal(): void {
+    this.topicId = '';
+    setTimeout(() => {
+      this.isEditTopicModalVisible = false;
+    }, 10); // Patch: small delay to first update visible state and then remove the component
+  }
+
+  editPost(topicId: string): void {
+    this.topicId = topicId;
+    this.showEditTopicModal();
   }
 
   deleteItem(topic: Topic): void {
     this.topicService.removeTopic(topic);
     this.router.navigate(['/']);
-  }
-
-  logout() {
-    this.auth.logOutConnectedUser();
-    this.router.navigate(['login']).then(() => {
-      window.location.reload();
-    });
   }
 }

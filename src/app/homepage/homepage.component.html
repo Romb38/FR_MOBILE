@@ -27,6 +27,15 @@
             </ion-label>
             @if (topic.isOwner) {
               <ion-button
+                data-action="edit"
+                aria-label="Edit a topic"
+                fill="clear"
+                slot="end"
+                (click)="editPost(topic.id)"
+              >
+                <ion-icon name="create" color="primary"></ion-icon>
+              </ion-button>
+              <ion-button
                 data-action="delete"
                 aria-label="Remove a post"
                 fill="clear"
@@ -43,5 +52,14 @@
   </div>
 </ion-content>
 
-<ion-button (click)="showModal()">{{ 'CREATE_TOPIC' | translate }}</ion-button>
-<app-modal-creation [isVisible]="isModalVisible" (closeEmitter)="closeModal()"></app-modal-creation>
+<ion-button (click)="showCreateTopicModal()">{{ 'CREATE_TOPIC' | translate }}</ion-button>
+<app-modal-creation
+  [isVisible]="isCreateTopicModalVisible"
+  (closeEmitter)="closeCreateTopicModal()"
+></app-modal-creation>
+<app-modal-edition
+  *ngIf="isEditTopicModalVisible"
+  [isVisible]="isEditTopicModalVisible && topicId !== ''"
+  [topicId]="topicId"
+  (closeEmitter)="closeEditTopicModal()"
+></app-modal-edition>

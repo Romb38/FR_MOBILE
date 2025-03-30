@@ -161,6 +161,4 @@ export class TopicDetailsComponent implements OnInit {
   trackByPostId(index: number, item: Post): string {
     return item.id;
   }
-
-  protected readonly String = String;
 }
