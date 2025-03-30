@@ -19,6 +19,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TopBarComponent } from 'src/app/top-bar/top-bar.component';
 import { addIcons } from 'ionicons';
 import { eyeOffOutline, eyeOutline } from 'ionicons/icons';
+import { ToastController } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-login',
@@ -49,6 +50,7 @@ export class LoginPageComponent {
     password: ['', [Validators.required]],
   });
   protected errorMessage = '';
+  private toastController = inject(ToastController);
 
   constructor() {
     addIcons({ eyeOffOutline, eyeOutline });
@@ -125,11 +127,38 @@ export class LoginPageComponent {
 
   async signInWithGoogle() {
     try {
-      // Handle the result (e.g., send token to your backend, navigate, etc.)
-      await FirebaseAuthentication.signInWithGoogle();
-      this.navCtrl.navigate(['/'], { replaceUrl: true });
+      // Connexion avec Google
+      const result = await FirebaseAuthentication.signInWithGoogle();
+      if (result?.user) {
+        // L'utilisateur est connecté avec succès via Google
+        // Ici vous pouvez simplement récupérer l'utilisateur connecté
+        // et utiliser getConnectedUser() pour le suivre
+        this.authController
+          .getConnectedUser() // Récupère l'utilisateur connecté
+          .pipe(take(1))
+          .subscribe(async (user) => {
+            if (user) {
+              // L'utilisateur est bien connecté
+              const toast = await this.toastController.create({
+                message: 'Is connected',
+                duration: 1500,
+                position: 'bottom',
+              });
+              await toast.present();
+            } else {
+              // L'utilisateur est bien connecté
+              const toast = await this.toastController.create({
+                message: 'Is not connected',
+                duration: 1500,
+                position: 'bottom',
+              });
+              await toast.present();
+            }
+          });
+      }
     } catch (error) {
       console.error('Google sign in error:', error);
+      this.errorMessage = 'Failed to sign in with Google. Please try again.';
     }
   }
 }

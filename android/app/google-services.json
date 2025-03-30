@@ -20,6 +20,18 @@
             "package_name": "com.m2gi.mobileapp",
             "certificate_hash": "2f73837046b665daa5c6a92a9addab859e78d6bf"
           }
+        },
+        {
+          "client_id": "680547793541-ir8q9fs6o664198041uta3k4mvomem69.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.m2gi.mobileapp",
+            "certificate_hash": "03094c78e9e91d9c8656e32d3e7d0ad28043d93e"
+          }
+        },
+        {
+          "client_id": "680547793541-bu5qthoclotivm2i6qpkqtm11g0rsjam.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
@@ -31,7 +43,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "680547793541-gia7kl05orkipc98jiclc30evdjsu25t.apps.googleusercontent.com",
+              "client_id": "680547793541-bu5qthoclotivm2i6qpkqtm11g0rsjam.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

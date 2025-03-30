@@ -29,6 +29,9 @@
         </provider>
     </application>
 
+<meta-data android:name="com.google.android.gms.auth.api.signin.ServerClientId"
+    android:value="680547793541-bu5qthoclotivm2i6qpkqtm11g0rsjam.apps.googleusercontent.com"/>
+
     <!-- Permissions -->
 
     <uses-permission android:name="android.permission.INTERNET" />
