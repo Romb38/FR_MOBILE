@@ -1,0 +1,26 @@
+.post-item {
+  display: flex;
+  align-items: center;
+}
+
+.post-label {
+  flex-grow: 1;
+  width: auto;
+}
+
+.post-time {
+  color: #7c7b7b;
+}
+
+.no-results {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45rem;
+  opacity: 0.2;
+  filter: grayscale(100%);
+}
+
+ion-button {
+  margin-top: 1rem;
+}

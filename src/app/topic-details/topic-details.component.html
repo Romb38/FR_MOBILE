@@ -14,50 +14,37 @@
   <ion-list lines="full">
     <ion-item class="post-item" *ngFor="let post of this.posts | async; trackBy: trackByPostId">
       <ion-avatar aria-hidden="true" slot="start">
-        <img src="{{ this.avatarService.getDicebearAvatarUrl(post.author) }}" alt="avatar" />
+        <img [src]="avatarService.getDicebearAvatarUrl(post.author)" alt="avatar" />
       </ion-avatar>
-      <ion-label slot="start">
+
+      <ion-label class="post-label">
         {{ 'USER' | translate }}-{{ post.author | slice: 0 : 4 | lowercase }} 🔹
-        <span style="color: #7c7b7b">{{
-          post.timecreated ? dateService.getDateAsHumanReadable(post.timecreated) : '-'
-        }}</span>
+        <span class="post-time">
+          {{ post.timecreated ? dateService.getDateAsHumanReadable(post.timecreated) : '-' }}
+        </span>
         <br />
         {{ post.description }}
       </ion-label>
 
-      <ion-button
-        *ngIf="topic.isWriter"
-        fill="clear"
-        slot="end"
-        (click)="presentPostActionSheet(post)"
-      >
+      <ion-button fill="clear" slot="end" (click)="presentPostActionSheet(post)">
         <ion-icon name="ellipsis-vertical-outline"></ion-icon>
       </ion-button>
     </ion-item>
   </ion-list>
-  @if ((this.posts | async)?.length === 0) {
-    <div style="display: flex; justify-content: center; align-items: center; height: 45rem">
-      <img
-        src="assets/icon/no-results.svg"
-        alt="Not found"
-        width="100"
-        height="100"
-        style="opacity: 0.2; filter: grayscale(100%)"
-      />
-    </div>
-  }
-  @if (topic.isWriter) {
-    <ion-button (click)="showModal()">
-      <ion-icon name="create" class="ion-margin-end"></ion-icon>
-      <ion-label>{{ 'CREATE_POST' | translate }}</ion-label>
-    </ion-button>
-  }
-  @if (topic.isOwner) {
-    <ion-button (click)="showEditReaderWriterModal()">
-      <ion-icon name="create" class="ion-margin-end"></ion-icon>
-      <ion-label>{{ 'MANAGE_SHARE_TITLE' | translate }}</ion-label>
-    </ion-button>
-  }
+
+  <div *ngIf="(this.posts | async)?.length === 0" class="no-results">
+    <img src="assets/icon/no-results.svg" alt="Not found" width="100" height="100" />
+  </div>
+
+  <ion-button *ngIf="topic.isWriter" (click)="showModal()">
+    <ion-icon name="create" class="ion-margin-end"></ion-icon>
+    <ion-label>{{ 'CREATE_POST' | translate }}</ion-label>
+  </ion-button>
+
+  <ion-button *ngIf="topic.isOwner" (click)="showEditReaderWriterModal()">
+    <ion-icon name="create" class="ion-margin-end"></ion-icon>
+    <ion-label>{{ 'MANAGE_SHARE_TITLE' | translate }}</ion-label>
+  </ion-button>
 </ion-content>
 
 <app-modal-creation
@@ -65,6 +52,7 @@
   [topicId]="topicId"
   (closeEmitter)="closePostCreationModal()"
 ></app-modal-creation>
+
 <app-modal-edition
   *ngIf="isPostEditModalVisible"
   [isVisible]="isPostEditModalVisible && postId !== ''"
@@ -72,6 +60,7 @@
   [postId]="postId"
   (closeEmitter)="closePostEditModal()"
 ></app-modal-edition>
+
 <app-edit-reader-writer-modal
   [isVisible]="isEditReaderWriterModalVisible"
   [topicId]="topicId"
