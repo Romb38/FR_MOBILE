@@ -2,7 +2,7 @@
   <ion-toolbar class="ion-toolbar">
     @if (!this.isHomePage) {
       <ion-buttons slot="start">
-        <ion-button [id]="'backRoute-' + butonId" (click)="goTo()">
+        <ion-button [id]="'backRoute-' + buttonId" (click)="goTo()">
           <ion-icon
             src="../../assets/icon/arrow-back-outline.svg"
             aria-label="Go back"
@@ -12,19 +12,23 @@
       </ion-buttons>
     }
 
-    <ion-title>
+    <ion-title slot="start" class="ion-text-center">
       {{ this.title }}
     </ion-title>
 
     <ion-buttons slot="end">
-      <ion-button (click)="switchLang()">
-        <img [src]="icon" alt="Language flag" style="width: 40px; height: auto; padding: 0" />
-      </ion-button>
-      <ion-button (click)="toggleDarkMode()">
+      <ion-button (click)="this.topBarService.switchLang()">
         <img
-          [src]="iconDarkMode"
+          [src]="this.topBarService.getLanguageIconPath()"
           alt="Language flag"
-          style="width: 40px; height: auto; padding: 0"
+          class="img-language-flag"
+        />
+      </ion-button>
+      <ion-button (click)="this.topBarService.toggleDarkMode()">
+        <img
+          [src]="this.topBarService.getLightOrDarkModeIconPath()"
+          alt="Language flag"
+          class="img-language-flag"
         />
       </ion-button>
       @if ((this.isAuth$ | async) && !this.isAccountInfosPage) {
