@@ -40,16 +40,6 @@ export const routes: Routes = [
         return isAuth();
       },
     ],
-    path: 'topic/:id/:postId',
-    loadComponent: () =>
-      import('./post-details/post-details.component').then((m) => m.PostDetailsComponent),
-  },
-  {
-    canActivate: [
-      () => {
-        return isAuth();
-      },
-    ],
     path: 'me',
     loadComponent: () =>
       import('./account-infos/account-infos.component').then((m) => m.AccountInfosComponent),
