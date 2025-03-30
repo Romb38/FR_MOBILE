@@ -67,5 +67,7 @@
   "EDIT": "Edit",
   "DELETE": "Delete",
   "POST": "Post",
-  "SEARCH...": "Search..."
+  "SEARCH...": "Search...",
+  "DARK_MODE": "Dark or light mode",
+  "SWITCH_LANGUAGE": "Switch language"
 }

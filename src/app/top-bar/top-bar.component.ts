@@ -8,17 +8,39 @@ import {
   IonButton,
   IonButtons,
   IonIcon,
+  IonMenu,
+  IonContent,
+  IonMenuButton,
+  IonItem,
+  IonLabel,
+  IonList,
 } from '@ionic/angular/standalone';
 import { AuthService } from '../services/auth.service';
 import { addIcons } from 'ionicons';
-import { personCircleOutline } from 'ionicons/icons';
+import { logOutOutline, menuOutline, personCircleOutline } from 'ionicons/icons';
 import { TopBarService } from '../services/topbar.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-top-bar',
   templateUrl: './top-bar.component.html',
   styleUrls: ['./top-bar.component.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonIcon, CommonModule],
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButton,
+    IonButtons,
+    IonIcon,
+    CommonModule,
+    IonMenu,
+    IonContent,
+    IonMenuButton,
+    TranslatePipe,
+    IonItem,
+    IonLabel,
+    IonList,
+  ],
 })
 export class TopBarComponent implements OnInit {
   @Input() title: string = '';
@@ -34,7 +56,7 @@ export class TopBarComponent implements OnInit {
   protected isAccountInfosPage: boolean;
 
   constructor() {
-    addIcons({ personCircleOutline });
+    addIcons({ personCircleOutline, menuOutline, logOutOutline });
     this.isHomePage = this.homePage.includes(this.router.url);
     this.isAccountInfosPage = this.accountInfosPage.includes(this.router.url);
   }
@@ -55,5 +77,10 @@ export class TopBarComponent implements OnInit {
 
   goToAccountInfos() {
     this.router.navigate(['/me']);
+  }
+
+  logout() {
+    this.auth.logOutConnectedUser();
+    this.router.navigate(['/login']);
   }
 }

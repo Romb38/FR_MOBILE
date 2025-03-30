@@ -5,7 +5,7 @@ import { TranslateConfigService } from './translate-config.service';
   providedIn: 'root',
 })
 export class TopBarService {
-  private language = 'en';
+  private language = 'fr';
   private isDarkMode = false;
   private translateConfigService: TranslateConfigService = inject(TranslateConfigService);
   private readonly ASSETS_PATH: string = '../../assets/icon/';
@@ -20,6 +20,7 @@ export class TopBarService {
   }
 
   getLanguageIconPath(): string {
+    console.debug(this.ASSETS_PATH + this.language + '.svg');
     return this.ASSETS_PATH + this.language + '.svg';
   }
 

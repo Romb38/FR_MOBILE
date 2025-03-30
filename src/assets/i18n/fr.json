@@ -67,5 +67,7 @@
   "EDIT": "Éditer",
   "DELETE": "Supprimer",
   "POST": "Message",
-  "SEARCH...": "Rechercher..."
+  "SEARCH...": "Rechercher...",
+  "DARK_MODE": "Mode sombre ou clair",
+  "SWITCH_LANGUAGE": "Changer de langue"
 }
