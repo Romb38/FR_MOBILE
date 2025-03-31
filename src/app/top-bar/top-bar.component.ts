@@ -8,54 +8,62 @@ import {
   IonButton,
   IonButtons,
   IonIcon,
+  IonMenu,
+  IonContent,
+  IonMenuButton,
+  IonItem,
+  IonLabel,
+  IonList,
 } from '@ionic/angular/standalone';
 import { AuthService } from '../services/auth.service';
-import { TranslateConfigService } from 'src/app/services/translate-config.service';
 import { addIcons } from 'ionicons';
-import { personCircleOutline } from 'ionicons/icons';
+import { logOutOutline, menuOutline, personCircleOutline } from 'ionicons/icons';
+import { TopBarService } from '../services/topbar.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-top-bar',
   templateUrl: './top-bar.component.html',
   styleUrls: ['./top-bar.component.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonIcon, CommonModule],
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButton,
+    IonButtons,
+    IonIcon,
+    CommonModule,
+    IonMenu,
+    IonContent,
+    IonMenuButton,
+    TranslatePipe,
+    IonItem,
+    IonLabel,
+    IonList,
+  ],
 })
 export class TopBarComponent implements OnInit {
   @Input() title: string = '';
   @Input() backRoute: string = '';
-  butonId: string = '';
+  buttonId: string = '';
   private router: Router = inject(Router);
   protected auth: AuthService = inject(AuthService);
-  private translateConfigService = inject(TranslateConfigService);
+  protected topBarService: TopBarService = inject(TopBarService);
   private homePage: string[] = ['/', '/login'];
   private accountInfosPage: string[] = ['/me'];
   protected isAuth$ = this.auth.isAuthenticated();
   protected isHomePage: boolean;
   protected isAccountInfosPage: boolean;
-  private language: string | null;
-  protected icon: string;
-  protected iconDarkMode: string;
-  private ASSETS_PATH: string = '../../assets/icon/';
 
   constructor() {
-    addIcons({ personCircleOutline });
-
-    this.translateConfigService.getDefaultLanguage();
-    this.language = this.translateConfigService.getCurrentLang();
-    this.icon = this.ASSETS_PATH + this.language + '.svg';
+    addIcons({ personCircleOutline, menuOutline, logOutOutline });
     this.isHomePage = this.homePage.includes(this.router.url);
     this.isAccountInfosPage = this.accountInfosPage.includes(this.router.url);
-    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (isDarkMode) {
-      this.iconDarkMode = this.ASSETS_PATH + 'sunny-outline.svg';
-    } else {
-      this.iconDarkMode = this.ASSETS_PATH + 'sunny-outline.svg';
-    }
   }
 
   ngOnInit() {
     if (this.title) {
-      this.butonId = this.title.trim().split(/\s+/)[0] || '';
+      this.buttonId = this.title.trim().split(/\s+/)[0] || '';
     }
   }
 
@@ -71,27 +79,8 @@ export class TopBarComponent implements OnInit {
     this.router.navigate(['/me']);
   }
 
-  switchLang() {
-    switch (this.language) {
-      case 'en':
-        this.language = 'fr';
-        this.translateConfigService.setLanguage('fr');
-        break;
-      case 'fr':
-        this.language = 'en';
-        this.translateConfigService.setLanguage('en');
-        break;
-    }
-    this.icon = this.ASSETS_PATH + this.language + '.svg';
-  }
-
-  toggleDarkMode() {
-    if (this.iconDarkMode.includes('sunny')) {
-      this.iconDarkMode = this.ASSETS_PATH + 'moon-outline.svg';
-      document.documentElement.classList.toggle('ion-palette-dark', true);
-    } else {
-      this.iconDarkMode = this.ASSETS_PATH + 'sunny-outline.svg';
-      document.documentElement.classList.toggle('ion-palette-dark', false);
-    }
+  logout() {
+    this.auth.logOutConnectedUser();
+    this.router.navigate(['/login']);
   }
 }

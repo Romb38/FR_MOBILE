@@ -11,9 +11,6 @@ import {
   IonRefresher,
   IonRefresherContent,
   IonSearchbar,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
 } from '@ionic/angular/standalone';
 import { ModalCreationComponent } from '../modal-creation/modal-creation.component';
 import { Router } from '@angular/router';
@@ -50,9 +47,6 @@ import { TranslateConfigService } from '../services/translate-config.service';
     ModalEditionComponent,
     NgIf,
     IonSearchbar,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
   ],
 })
 export class HomepageComponent implements OnInit {

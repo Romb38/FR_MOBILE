@@ -1,41 +1,64 @@
 <ion-header [translucent]="true">
   <ion-toolbar class="ion-toolbar">
-    @if (!this.isHomePage) {
-      <ion-buttons slot="start">
-        <ion-button [id]="'backRoute-' + butonId" (click)="goTo()">
-          <ion-icon
-            src="../../assets/icon/arrow-back-outline.svg"
-            aria-label="Go back"
-            color="negative"
-          ></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    }
-
-    <ion-title>
-      {{ this.title }}
+    <ion-buttons slot="start" *ngIf="!isHomePage">
+      <ion-button [id]="'backRoute-' + buttonId" (click)="goTo()">
+        <ion-icon
+          src="../../assets/icon/arrow-back-outline.svg"
+          aria-label="Go back"
+          color="negative"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">
+      {{ title }}
     </ion-title>
-
-    <ion-buttons slot="end">
-      <ion-button (click)="switchLang()">
-        <img [src]="icon" alt="Language flag" style="width: 40px; height: auto; padding: 0" />
-      </ion-button>
-      <ion-button (click)="toggleDarkMode()">
-        <img
-          [src]="iconDarkMode"
-          alt="Language flag"
-          style="width: 40px; height: auto; padding: 0"
-        />
-      </ion-button>
-      @if ((this.isAuth$ | async) && !this.isAccountInfosPage) {
-        <ion-button (click)="goToAccountInfos()">
-          <ion-icon
-            name="person-circle-outline"
-            aria-label="See account infos"
-            color="negative"
-          ></ion-icon>
-        </ion-button>
-      }
+    <ion-buttons slot="end" *ngIf="isHomePage">
+      <ion-menu-button type="button" menu="mainMenu"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
+<!-- Side Menu -->
+<ion-menu side="end" id="mainMenu" menuId="mainMenu" contentId="mainMenu">
+  <!-- Ensure menuId matches -->
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding">
+    <ion-list>
+      <!-- Account info -->
+      @if ((this.isAuth$ | async) && !this.isAccountInfosPage) {
+        <ion-item button (click)="goToAccountInfos()">
+          <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+          <ion-label>{{ 'ACCOUNT_INFOS_TITLE' | translate }}</ion-label>
+        </ion-item>
+      }
+
+      <!-- Language: use img because ion-icon is doing bad things with fr.svg -->
+      <ion-item button (click)="topBarService.switchLang()">
+        <img
+          slot="start"
+          [src]="topBarService.getLanguageIconPath()"
+          class="custom-icon"
+          alt="Flag"
+        />
+        <ion-label>{{ 'SWITCH_LANGUAGE' | translate }}</ion-label>
+      </ion-item>
+
+      <!-- Dark / light mode -->
+      <ion-item button (click)="topBarService.toggleDarkMode()">
+        <ion-icon slot="start" [src]="topBarService.getLightOrDarkModeIconPath()"></ion-icon>
+        <ion-label>{{ 'DARK_MODE' | translate }}</ion-label>
+      </ion-item>
+
+      <!-- Logout -->
+      <ion-item button color="danger" (click)="logout()">
+        <ion-icon slot="start" name="log-out-outline"></ion-icon>
+        <ion-label>{{ 'LOG_OUT' | translate }}</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>

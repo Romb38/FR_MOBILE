@@ -32,7 +32,9 @@
     }
     <ion-list lines="full">
       @for (topic of this.topics | async; track topic.id) {
-        @if (topic.isReader && (searchValue === '' || topic.name.includes(searchValue))) {
+        @if (
+          topic.isReader && (searchValue === '' || topic.name.toLowerCase().includes(searchValue))
+        ) {
           <ion-item>
             <ion-label [title]="topic.id" (click)="seeDetails(topic.id)">
               <span class="post-time">
