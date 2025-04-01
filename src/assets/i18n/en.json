@@ -73,5 +73,9 @@
   "DARK_MODE": "Dark or light mode",
   "SWITCH_LANGUAGE": "Switch language",
   "HELP_TITLE": "Bug report",
-  "HELP_MESSAGE": "It seems you shook your phone in annoyance, did you find a problem in the app?"
+  "HELP_MESSAGE": "It seems you shook your phone in annoyance, did you find a problem in the app?",
+  "REPORT_TITLE": "Bug report",
+  "REPORT_PLACEHOLDER": "Explain what's annoying in the app",
+  "SUBMIT": "Submit",
+  "ERROR_REPORT_SUCESS": "Your report has been sucessfully sended ! Thanks"
 }
