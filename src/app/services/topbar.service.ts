@@ -20,7 +20,6 @@ export class TopBarService {
   }
 
   getLanguageIconPath(): string {
-    console.debug(this.ASSETS_PATH + this.language + '.svg');
     return this.ASSETS_PATH + this.language + '.svg';
   }
 

@@ -62,6 +62,11 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'error-report',
+    loadComponent: () =>
+      import('./error-report/error-report.component').then((m) => m.ErrorReportComponent),
+  },
+  {
     path: '404',
     loadComponent: () => import('./not-found/not-found.component').then((m) => m.NotFoundComponent),
   },

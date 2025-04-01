@@ -3,6 +3,8 @@
   "CREATE_TOPIC": "Créer un sujet",
   "CANCEL": "Annuler",
   "CLOSE": "Fermer",
+  "YES": "Oui",
+  "NO" : "Non",
   "SHARE_TOPIC": "Partager votre sujet",
   "FILL_EMAIL": "Renseignez votre email",
   "EMAIL_LABEL": "Email",
@@ -69,5 +71,9 @@
   "POST": "Message",
   "SEARCH...": "Rechercher...",
   "DARK_MODE": "Mode sombre ou clair",
-  "SWITCH_LANGUAGE": "Changer de langue"
+  "SWITCH_LANGUAGE": "Changer de langue",
+  "HELP_TITLE": "Soumettre un bug",
+  "HELP_MESSAGE": "Il semble que vous ayez secoué votre téléphone avec énervement, avez-vous trouvé un problème dans l'application ?",
+  "INVALID_EMAIL_PASSWORD": "Email ou mot de passe invalide",
+  "EMAIL_VERIFICATION": "Veuillez vérifier votre e-mail, nous vous avons envoyé un autre lien !"
 }
