@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { FirebaseError } from '@angular/fire/app';
 import { take } from 'rxjs';
 import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TopBarComponent } from 'src/app/top-bar/top-bar.component';
 import { addIcons } from 'ionicons';
 import { eyeOffOutline, eyeOutline } from 'ionicons/icons';
@@ -44,6 +44,7 @@ export class LoginPageComponent {
   private navCtrl = inject(Router);
   private fb = inject(FormBuilder);
   private authController = inject(AuthService);
+  private translate = inject(TranslateService);
   protected loginForm: FormGroup = this.fb.group({
     email: ['', [Validators.required]],
     password: ['', [Validators.required]],
@@ -74,17 +75,19 @@ export class LoginPageComponent {
           .pipe(take(1))
           .subscribe((user) => {
             if (!user) {
-              this.authController.logOutConnectedUser('An error has occured !').then(() => {
-                this.navCtrl.navigate(['/'], { replaceUrl: true });
+              this.translate.get('DEFAULT_ERRERROR_GENERALOR').subscribe((translated: string) => {
+                this.authController.logOutConnectedUser(translated).then(() => {
+                  this.navCtrl.navigate(['/'], { replaceUrl: true });
+                });
               });
             } else {
               if (!user.emailVerified) {
-                this.authController.sendVerifyEmailLink();
-                this.authController
-                  .logOutConnectedUser('Please verify your email, we have sent you another link !')
-                  .then(() => {
+                this.translate.get('EMAIL_VERIFICATION').subscribe((translated: string) => {
+                  this.authController.sendVerifyEmailLink();
+                  this.authController.logOutConnectedUser(translated).then(() => {
                     this.navCtrl.navigate(['/'], { replaceUrl: true });
                   });
+                });
               } else {
                 this.navCtrl.navigate(['/'], { replaceUrl: true });
               }
@@ -96,17 +99,25 @@ export class LoginPageComponent {
           const error = reason as FirebaseError;
           switch (error.code) {
             case 'auth/invalid-credential':
-              this.errorMessage = 'Invalid e-mail or password';
+              this.translate.get('INVALID_EMAIL_PASSWORD').subscribe((translated: string) => {
+                this.errorMessage = translated;
+              });
               break;
             case 'auth/invalid-email':
-              this.errorMessage = 'Invalid e-mail or password';
+              this.translate.get('INVALID_EMAIL_PASSWORD').subscribe((translated: string) => {
+                this.errorMessage = translated;
+              });
               break;
             default:
-              this.errorMessage = 'An error as occured, please retry or contact an administrator';
+              this.translate.get('ERROR_GENERAL').subscribe((translated: string) => {
+                this.errorMessage = translated;
+              });
               break;
           }
         } else {
-          this.errorMessage = 'An error as occured, please retry or contact an administrator';
+          this.translate.get('ERROR_GENERAL').subscribe((translated: string) => {
+            this.errorMessage = translated;
+          });
         }
       });
   }
