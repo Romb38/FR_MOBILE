@@ -79,5 +79,6 @@
   "SUBMIT": "Submit",
   "ERROR_REPORT_SUCESS": "Your report has been sucessfully sended ! Thanks",
   "INVALID_EMAIL_PASSWORD": "Invalid email or password",
-  "EMAIL_VERIFICATION": "Please verify your email, we have sent you another link!"
+  "EMAIL_VERIFICATION": "Please verify your email, we have sent you another link!",
+  "EMPTY_MESSAGE" : "Your report is empty"
 }
