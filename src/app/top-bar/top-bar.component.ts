@@ -50,7 +50,7 @@ export class TopBarComponent implements OnInit {
   protected auth: AuthService = inject(AuthService);
   protected topBarService: TopBarService = inject(TopBarService);
   private homePage: string[] = ['/', '/login'];
-  private accountInfosPage: string[] = ['/me'];
+  private accountInfosPage: string[] = ['/me', '/error-report'];
   protected isAuth$ = this.auth.isAuthenticated();
   protected isHomePage: boolean;
   protected isAccountInfosPage: boolean;
