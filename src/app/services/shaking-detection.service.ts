@@ -12,7 +12,7 @@ export class ShakeDetectionService {
   private alertController = inject(AlertController);
   private router = inject(Router);
   private translate = inject(TranslateService);
-  private shakeThreshold = 40; // Seuil pour détecter une secousse
+  private shakeThreshold = 1; // default : 40
   private lastUpdate = 0;
   private isShaking = false;
   private disableRoute = ['/error-report'];

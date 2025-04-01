@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TopBarComponent } from '../top-bar/top-bar.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { IonContent, IonItem, IonLabel, IonTextarea, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonTextarea, IonButton } from '@ionic/angular/standalone';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular/standalone';
@@ -11,15 +11,7 @@ import { ErrorReportService } from '../services/error-report.service';
   selector: 'app-error-report',
   templateUrl: './error-report.component.html',
   styleUrls: ['./error-report.component.scss'],
-  imports: [
-    IonButton,
-    IonTextarea,
-    IonLabel,
-    IonItem,
-    IonContent,
-    TopBarComponent,
-    TranslateModule,
-  ],
+  imports: [IonButton, IonTextarea, IonContent, TopBarComponent, TranslateModule],
 })
 export class ErrorReportComponent implements OnInit {
   constructor() {}
@@ -51,8 +43,11 @@ export class ErrorReportComponent implements OnInit {
           });
           await toast.present();
         });
+        this.reportText = '';
+        this.router.navigate(['/']);
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
         this.translate.get('ERROR_GENERAL').subscribe(async (translation: string) => {
           const toast = await this.toastController.create({
             message: translation,
@@ -61,10 +56,6 @@ export class ErrorReportComponent implements OnInit {
           });
           await toast.present();
         });
-      })
-      .finally(() => {
-        this.reportText = '';
-        this.router.navigate(['/']);
       });
   }
 

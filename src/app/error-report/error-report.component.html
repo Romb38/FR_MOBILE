@@ -1,19 +1,13 @@
 <app-top-bar [title]="'REPORT_TITLE' | translate"></app-top-bar>
 
-<ion-content [fullscreen]="true">
-  <ion-content [fullscreen]="true" class="ion-padding">
-    <ion-item>
-      <ion-label position="stacked">{{ 'REPORT_PLACEHOLDER' | translate }}</ion-label>
-      <ion-textarea [value]="reportText" autoGrow="true"></ion-textarea>
-    </ion-item>
-  
-    <div class="button-group">
-      <ion-button expand="full" color="primary" (click)="submitReport()">
-        {{ 'SUBMIT' | translate }}
-      </ion-button>
-      <ion-button expand="full" color="medium" (click)="cancel()">
-        {{ 'CANCEL' | translate }}
-      </ion-button>
-    </div>
-  </ion-content>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-textarea [label]="'REPORT_PLACEHOLDER' | translate" labelPlacement="floating" [value]="reportText" autoGrow="true" fill="outline"></ion-textarea>
+  <div class="button-group">
+    <ion-button expand="full" color="primary" (click)="submitReport()">
+      {{ 'SUBMIT' | translate }}
+    </ion-button>
+    <ion-button expand="full" color="medium" (click)="cancel()">
+      {{ 'CANCEL' | translate }}
+    </ion-button>
+  </div>
 </ion-content>

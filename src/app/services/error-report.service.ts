@@ -6,8 +6,9 @@ import {
   serverTimestamp,
   DocumentReference,
   DocumentData,
-} from 'firebase/firestore';
+} from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { generateUID } from '../utils/uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -20,11 +21,11 @@ export class ErrorReportService {
 
   public async sendReport(mail: string, content: string): Promise<DocumentReference<DocumentData>> {
     const errorReport = {
+      reportId: generateUID(),
       mail,
       content,
       url: this.router.url, // URL actuelle
       timestamp: serverTimestamp(), // Horodatage Firestore
-      platform: navigator.mediaDevices, // OS
       userAgent: navigator.userAgent, // User-Agent du navigateur
       language: navigator.language, // Langue préférée
     };
