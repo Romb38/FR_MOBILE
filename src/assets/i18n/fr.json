@@ -74,6 +74,10 @@
   "SWITCH_LANGUAGE": "Changer de langue",
   "HELP_TITLE": "Soumettre un bug",
   "HELP_MESSAGE": "Il semble que vous ayez secoué votre téléphone avec énervement, avez-vous trouvé un problème dans l'application ?",
+  "REPORT_TITLE": "Rapport de bug",
+  "REPORT_PLACEHOLDER": "Expliquez le problème",
+  "SUBMIT": "Soumettre",
+  "ERROR_REPORT_SUCESS": "Votre rapport à été envoyé ! Merci beaucoup !",
   "INVALID_EMAIL_PASSWORD": "Email ou mot de passe invalide",
   "EMAIL_VERIFICATION": "Veuillez vérifier votre e-mail, nous vous avons envoyé un autre lien !"
 }
