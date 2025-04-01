@@ -30,7 +30,7 @@
     </application>
 
 <meta-data android:name="com.google.android.gms.auth.api.signin.ServerClientId"
-    android:value="680547793541-bu5qthoclotivm2i6qpkqtm11g0rsjam.apps.googleusercontent.com"/>
+    android:value="680547793541-ciu7609fcbe2bd6ctd1q5p3tr16j1tuc.apps.googleusercontent.co"/>
 
     <!-- Permissions -->
 
