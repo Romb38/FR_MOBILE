@@ -6,12 +6,13 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular/standalone';
 import { ErrorReportService } from '../services/error-report.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-error-report',
   templateUrl: './error-report.component.html',
   styleUrls: ['./error-report.component.scss'],
-  imports: [IonButton, IonTextarea, IonContent, TopBarComponent, TranslateModule],
+  imports: [IonButton, IonTextarea, IonContent, TopBarComponent, TranslateModule, FormsModule],
 })
 export class ErrorReportComponent implements OnInit {
   constructor() {}
@@ -32,6 +33,19 @@ export class ErrorReportComponent implements OnInit {
   }
 
   submitReport() {
+    console.log(this.reportText);
+    if (this.reportText.length === 0) {
+      this.translate.get('EMPTY_MESSAGE').subscribe(async (translation: string) => {
+        const toast = await this.toastController.create({
+          message: translation,
+          duration: 1500,
+          position: 'bottom',
+        });
+        await toast.present();
+      });
+      return;
+    }
+
     this.errorReportService
       .sendReport(this.email, this.reportText)
       .then(() => {
@@ -47,7 +61,7 @@ export class ErrorReportComponent implements OnInit {
         this.router.navigate(['/']);
       })
       .catch((error) => {
-        console.log(error);
+        console.debug(error);
         this.translate.get('ERROR_GENERAL').subscribe(async (translation: string) => {
           const toast = await this.toastController.create({
             message: translation,
