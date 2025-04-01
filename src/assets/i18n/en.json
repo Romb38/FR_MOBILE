@@ -3,6 +3,8 @@
   "CREATE_TOPIC": "Create a topic",
   "CANCEL": "Cancel",
   "CLOSE": "Close",
+  "YES": "Yes",
+  "NO" : "No",
   "SHARE_TOPIC": "Share your topic",
   "FILL_EMAIL": "Enter your email",
   "EMAIL_LABEL": "Email",
@@ -69,5 +71,7 @@
   "POST": "Post",
   "SEARCH...": "Search...",
   "DARK_MODE": "Dark or light mode",
-  "SWITCH_LANGUAGE": "Switch language"
+  "SWITCH_LANGUAGE": "Switch language",
+  "HELP_TITLE": "Bug report",
+  "HELP_MESSAGE": "It seems you shook your phone in annoyance, did you find a problem in the app?"
 }
