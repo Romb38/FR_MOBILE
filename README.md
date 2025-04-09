@@ -26,6 +26,10 @@
 
 Cette application a été développée dans le cadre d’un projet de Master 2 - Génie Informatique, au sein de l’UE Développement Mobile. Son objectif est de proposer une plateforme intuitive et collaborative permettant aux utilisateurs d’échanger et d’organiser des discussions autour de différents sujets.
 
+## ⚠️ Attention
+
+Il est possible que la Release ne s'installe pas sur votre appareil, dans ce cas vous pouvez télécharger la [version debug](https://raw.githubusercontent.com/Romb38/FR_MOBILE/refs/heads/master/app-debug.apk)
+
 
 ## 🚀 Fonctionnalités
 
