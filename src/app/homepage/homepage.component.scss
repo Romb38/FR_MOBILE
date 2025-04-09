@@ -4,3 +4,11 @@
   font-weight: bold;
   margin-right: 5px;
 }
+
+ion-action-sheet {
+  z-index: 9999 !important;
+}
+
+.action-sheet-wrapper {
+  display: block !important;
+}

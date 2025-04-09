@@ -1,0 +1,16 @@
+<ion-list>
+  <ion-item button (click)="editTopic()">
+    <ion-icon name="create" slot="start"></ion-icon>
+    <ion-label>{{ 'EDIT' | translate }}</ion-label>
+  </ion-item>
+
+  <ion-item button (click)="deleteTopic()">
+    <ion-icon name="trash-outline" slot="start"></ion-icon>
+    <ion-label>{{ 'DELETE' | translate }}</ion-label>
+  </ion-item>
+
+  <ion-item button (click)="dismissPopover()">
+    <ion-icon name="close" slot="start"></ion-icon>
+    <ion-label>{{ 'CANCEL' | translate }}</ion-label>
+  </ion-item>
+</ion-list>
