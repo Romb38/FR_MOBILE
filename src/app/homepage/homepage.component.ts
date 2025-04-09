@@ -18,13 +18,14 @@ import { Topic, Topics } from '../models/topic';
 import { Observable } from 'rxjs/internal/Observable';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { AuthService } from '../services/auth.service';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import { closeOutline, create, ellipsisVerticalOutline, trashOutline } from 'ionicons/icons';
 import { ModalEditionComponent } from '../modal-edition/modal-edition.component';
-import { ActionSheetController } from '@ionic/angular';
+import { PopoverController } from '@ionic/angular/standalone';
 import { DateService } from '../services/date.service';
 import { TranslateConfigService } from '../services/translate-config.service';
+import { TopicPopoverComponent } from '../topic-popover/topic-popover.component';
 
 @Component({
   selector: 'app-homepage',
@@ -58,8 +59,7 @@ export class HomepageComponent implements OnInit {
   protected auth: AuthService = inject(AuthService);
   protected dateService: DateService = inject(DateService);
   protected searchValue: string = '';
-  private actionSheetCtrl = inject(ActionSheetController);
-  private translate: TranslateService = inject(TranslateService);
+  private popoverController = inject(PopoverController);
   topics: Observable<Topics> = this.topicService.getAll();
   public topicId: string = '';
   protected language: string = 'en';
@@ -113,28 +113,33 @@ export class HomepageComponent implements OnInit {
   }
 
   async presentActionSheet(topic: Topic) {
-    const actionSheet = await this.actionSheetCtrl.create({
-      header: this.translate.instant('TOPIC') + ': ' + topic.name,
-      buttons: [
-        {
-          text: this.translate.instant('EDIT'),
-          icon: 'create',
-          handler: () => this.editTopic(topic.id),
-        },
-        {
-          text: this.translate.instant('DELETE'),
-          icon: 'trash-outline',
-          role: 'destructive',
-          handler: () => this.deleteTopic(topic),
-        },
-        {
-          text: this.translate.instant('CANCEL'),
-          icon: 'close',
-          role: 'cancel',
-        },
-      ],
+    const popover = await this.popoverController.create({
+      component: TopicPopoverComponent,
+      componentProps: {
+        topicId: topic.id,
+      },
+      translucent: true,
     });
-    await actionSheet.present();
+
+    popover.onDidDismiss().then((result) => {
+      if (result.data) {
+        this.handleTopicAction(result.data);
+      }
+    });
+
+    await popover.present();
+  }
+
+  handleTopicAction(actionData: { action: string; topicId: string }) {
+    if (actionData.action === 'edit') {
+      this.editTopic(actionData.topicId);
+    } else if (actionData.action === 'delete') {
+      this.topicService.get(actionData.topicId).subscribe((topic: Topic | undefined) => {
+        if (topic) {
+          this.deleteTopic(topic);
+        }
+      });
+    }
   }
 
   handleSearchBarInput(event: CustomEvent) {
