@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   IonItem,
@@ -16,7 +16,7 @@ import { Topic } from '../models/topic';
 import { Post, Posts } from '../models/post';
 import { ModalCreationComponent } from '../modal-creation/modal-creation.component';
 import { TopBarComponent } from '../top-bar/top-bar.component';
-import { Observable, of, Subject, switchMap, tap } from 'rxjs';
+import { map, Observable, of, Subject, switchMap } from 'rxjs';
 import { AsyncPipe, LowerCasePipe, NgForOf, NgIf, SlicePipe } from '@angular/common';
 import { EditReaderWriterModalComponent } from '../edit-reader-writer-modal/edit-reader-writer-modal.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -57,7 +57,7 @@ import { PopoverController } from '@ionic/angular/standalone';
     NgForOf,
   ],
 })
-export class TopicDetailsComponent implements OnInit {
+export class TopicDetailsComponent implements OnInit, OnDestroy {
   private route: ActivatedRoute = inject(ActivatedRoute);
   protected topicService: TopicService = inject(TopicService);
   protected avatarService: AvatarService = inject(AvatarService);
@@ -87,24 +87,25 @@ export class TopicDetailsComponent implements OnInit {
     this.language = this.translateConfigService.getCurrentLang();
 
     this.topic$ = this.route.params.pipe(
-      switchMap((params) => {
-        this.topicId = params['id'] ?? '';
-        return this.topicService.get(this.topicId);
-      }),
-      tap((topic) => {
-        console.debug('Received topic:', topic);
-
-        if (!topic) {
-          this.router.navigate(['404']);
-        } else {
-          this.topic = topic;
-          this.posts = this.topicService.getAllPosts(this.topicId);
-        }
-      })
+      map((params) => params['id'] ?? ''),
+      switchMap((id) => this.topicService.get(id))
     );
 
-    // Subscribe to the topic$ observable to trigger the side effects.
-    this.topic$.subscribe();
+    this.topic$.pipe(takeUntil(this.destroy$)).subscribe((topic) => {
+      if (!topic) {
+        this.router.navigate(['404']);
+        return;
+      }
+
+      this.topic = topic;
+      this.topicId = topic.id;
+      this.posts = this.topicService.getAllPosts(this.topicId);
+    });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   editPost(id: string) {

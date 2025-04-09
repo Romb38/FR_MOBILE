@@ -109,7 +109,6 @@ export class HomepageComponent implements OnInit {
 
   deleteTopic(topic: Topic): void {
     this.topicService.removeTopic(topic);
-    this.router.navigate(['/']);
   }
 
   async presentActionSheet(topic: Topic) {
