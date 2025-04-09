@@ -28,6 +28,8 @@ import { DateService } from '../services/date.service';
 import { catchError, takeUntil } from 'rxjs/operators';
 import { ActionSheetController } from '@ionic/angular';
 import { TranslateConfigService } from '../services/translate-config.service';
+import { TopicPopoverComponent } from '../topic-popover/topic-popover.component';
+import { PopoverController } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-topic-details',
@@ -66,6 +68,7 @@ export class TopicDetailsComponent implements OnInit {
   private actionSheetCtrl = inject(ActionSheetController);
   private translateConfigService: TranslateConfigService = inject(TranslateConfigService);
   private destroy$: Subject<void> = new Subject<void>();
+  private popoverController = inject(PopoverController);
 
   topicId: string = '';
   topic$: Observable<Topic | undefined> = new Observable<Topic | undefined>();
@@ -167,27 +170,34 @@ export class TopicDetailsComponent implements OnInit {
   }
 
   async presentPostActionSheet(post: Post) {
-    const actionSheet = await this.actionSheetCtrl.create({
-      header: this.translate.instant('POST') + ': ' + post.description,
-      buttons: [
-        {
-          text: this.translate.instant('EDIT'),
-          icon: 'create',
-          handler: () => this.editPost(post.id),
-        },
-        {
-          text: this.translate.instant('DELETE'),
-          icon: 'trash-outline',
-          role: 'destructive',
-          handler: () => this.deletePost(post),
-        },
-        {
-          text: this.translate.instant('CANCEL'),
-          icon: 'close',
-          role: 'cancel',
-        },
-      ],
+    const popover = await this.popoverController.create({
+      component: TopicPopoverComponent,
+      componentProps: {
+        topicId: post.id,
+      },
+      translucent: true,
     });
-    await actionSheet.present();
+
+    popover.onDidDismiss().then((result) => {
+      if (result.data) {
+        this.handleTopicAction(result.data);
+      }
+    });
+
+    await popover.present();
+  }
+
+  handleTopicAction(actionData: { action: string; topicId: string }) {
+    if (actionData.action === 'edit') {
+      this.editPost(actionData.topicId);
+    } else if (actionData.action === 'delete') {
+      this.topicService
+        .getPost(this.topicId, actionData.topicId)
+        .subscribe((post: Post | undefined) => {
+          if (post) {
+            this.deletePost(post);
+          }
+        });
+    }
   }
 }
